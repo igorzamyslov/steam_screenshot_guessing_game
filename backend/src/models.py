@@ -1,7 +1,7 @@
 from datetime import date
 from typing import List, Optional
 
-from pydantic import BaseModel, HttpUrl
+from pydantic import BaseModel, Field, HttpUrl
 
 
 class MinimalAppInfo(BaseModel):
@@ -17,5 +17,8 @@ class ParsedAppData(BaseModel):
     """
     id: int
     screenshots: List[HttpUrl]
-    release_date: Optional[date]
-    reviews_count: Optional[int]
+    release_date: Optional[date] = Field(..., alias="releaseDate")
+    reviews_count: Optional[int] = Field(..., alias="reviewsCount")
+
+    class Config:
+        allow_population_by_field_name = True
