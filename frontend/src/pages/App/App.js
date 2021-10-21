@@ -1,6 +1,6 @@
-import logo from './logo.svg';
-import './App.css';
 import SteamService from 'services/SteamService';
+import './App.css';
+import logo from './logo.svg';
 
 const App = () => (
   <div className="App">
@@ -8,7 +8,7 @@ const App = () => (
       <img src={logo} className="App-logo" alt="logo" />
       {
         SteamService.apps.map(app => (
-          <p key={app.appid}>{app.appid} {app.name}</p>
+          <p key={app.id}>{app.id} {app.name}</p>
         ))
       }
       <a
