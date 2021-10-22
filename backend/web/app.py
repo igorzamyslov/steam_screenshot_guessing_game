@@ -4,8 +4,8 @@ from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic.main import BaseModel
 
-from models import AppInfo
-from steam_handler import SteamStorePageParser, get_steam_apps
+from .models import AppInfo
+from .steam_handler import SteamStorePageParser, get_steam_apps
 
 app = FastAPI()
 origins = ["http://localhost:3000"]

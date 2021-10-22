@@ -6,7 +6,7 @@ from typing import Dict, List, Optional
 import requests
 from bs4 import BeautifulSoup
 
-from models import AppInfo
+from .models import AppInfo
 
 
 @cache
