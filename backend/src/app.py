@@ -1,5 +1,4 @@
 import random
-from typing import Optional
 
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -28,10 +27,15 @@ class ErrorResponse(BaseModel):
 @app.get("/app/random", response_model=AppInfo)
 async def get_random_app_info(all_apps=Depends(get_steam_apps)):
     """ Get information about a random Steam app, which contains screenshots """
-    app_info: Optional[AppInfo] = None
-    while app_info is None or len(app_info.screenshots) == 0:
+    while True:
+        # Select an app fitting the filters
         random_app_id = random.choice(list(all_apps.keys()))
         app_info = SteamStorePageParser(random_app_id).get_app_info()
+        if len(app_info.screenshots) == 0:
+            continue
+        # elif app_info.reviews_count and app_info.reviews_count < 1000:
+        #     continue
+        break
     return app_info
 
 
