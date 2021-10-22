@@ -1,13 +1,14 @@
 import { Component } from 'react';
 import SteamService from 'services/SteamService';
-import './App.css';
+import MainTemplate from 'templates/MainTemplate';
+import './style.css';
 
 const messages = {
   loading: 'Steam app loading ...',
   error: 'Error during Steam app loading!',
 };
 
-class App extends Component {
+class MainPage extends Component {
   constructor (props) {
     super(props);
     this.state = {
@@ -26,20 +27,24 @@ class App extends Component {
     return Math.floor(Math.random() * app.screenshots.length);
   };
 
+  showMessage = (message) => {
+    this.setState({
+      currentApp: null,
+      currentScreenshot: null,
+      message,
+    });
+  };
+
   loadNextApp = () => {
-    this.setState({ message: messages.loading });
+    this.showMessage(messages.loading);
     SteamService.getRandomAppData()
       .then(response => {
         const currentApp = response.body;
-        const currentScreenshot = App.selectRandomScreenshot(currentApp);
+        const currentScreenshot = this.constructor.selectRandomScreenshot(currentApp);
         this.setState({ currentApp, currentScreenshot, message: null });
       })
       .catch(() => {
-        this.setState({
-          currentApp: null,
-          currentScreenshot: null,
-          message: messages.error,
-        });
+        this.showMessage(messages.error);
       });
   };
 
@@ -47,27 +52,26 @@ class App extends Component {
     const { currentApp, currentScreenshot, message } = this.state;
     let content;
     if (message && !currentApp) {
-      content = <p>{message}</p>;
+      content = <p key="message">{message}</p>;
     } else {
       content = [
         <img
+          key="steam-app-image"
           onClick={this.loadNextApp}
           style={{ maxWidth: '80%', maxHeight: '80%' }}
           src={currentApp.screenshots[currentScreenshot]}
           alt="The whole purpose of this website"
         />,
-        <center className="title">{currentApp.name}</center>,
+        <center
+          key="steam-app-title"
+          className="steam-app-title"
+        >
+          {currentApp.name}
+        </center>,
       ];
     }
-    return (
-      <div className="App">
-        <header className="App-header">
-          {content}
-        </header>
-      </div>
-    );
+    return <MainTemplate>{content}</MainTemplate>;
   }
-
 }
 
-export default App;
+export default MainPage;
