@@ -33,7 +33,7 @@ async def get_random_app_info(all_apps=Depends(get_steam_apps)):
         app_info = SteamStorePageParser(random_app_id).get_app_info()
         if len(app_info.screenshots) == 0:
             continue
-        elif app_info.reviews_count and app_info.reviews_count < 2000:
+        elif not app_info.reviews_count or app_info.reviews_count < 2000:
             continue
         break
     return app_info
