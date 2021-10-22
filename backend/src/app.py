@@ -22,7 +22,7 @@ app.add_middleware(
 
 @cache
 def get_steam_apps():
-    # TODO: Make a database
+    """ Acquires all Steam apps """
     response = requests.get("https://api.steampowered.com/ISteamApps/GetAppList/v2")
     return [MinimalAppInfo(id=steam_app["appid"], name=steam_app["name"])
             for steam_app in response.json()["applist"]["apps"]]

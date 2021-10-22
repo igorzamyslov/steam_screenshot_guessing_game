@@ -9,10 +9,19 @@ services:
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
     ports:
-      - 0.0.0.0:80:80
+      - 127.0.0.1:9000:80
 
   backend:
     build: ./backend
+    volumes:
+      - ./backend/src:/app
+    command: "uvicorn app:app --host 0.0.0.0 --port 80 --reload"
 
   frontend:
-    build: ./frontend
+    image: node:slim
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+    environment:
+      PORT: 80
+    command: "npm run start"
