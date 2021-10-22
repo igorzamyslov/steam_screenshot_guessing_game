@@ -2,79 +2,72 @@ import { Component } from 'react';
 import SteamService from 'services/SteamService';
 import './App.css';
 
+const messages = {
+  loading: 'Steam app loading ...',
+  error: 'Error during Steam app loading!',
+};
+
 class App extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
-    const apps = [...SteamService.apps];
     this.state = {
-      apps: apps,
-      currentApp: {
-        id: null,
-        name: null,
-        screenshots: null,
-        reviewsCount: null,
-        releaseDate: null,
-      },
-      currentScreenshot: 0,
+      currentApp: null,
+      currentScreenshot: null,
+      message: messages.loading,
     };
     this.currentIndex = null;
   }
 
-  componentDidMount() {
-    if (this.state.apps.length) {
-      this.loadNextApp();
-    }
+  componentDidMount () {
+    this.loadNextApp();
   }
 
-  // deleteCurrentApp() {
-  //   const newApps = [...this.state.apps]
-  //   newApps.splice(this.currentIndex, 1);
-  //   return newApps
-  // }
-
-  selectNextApp = () => {
-    this.currentIndex = Math.floor(Math.random() * this.state.apps.length);
-  }
+  static selectRandomScreenshot = (app) => {
+    return Math.floor(Math.random() * app.screenshots.length);
+  };
 
   loadNextApp = () => {
-    this.selectNextApp()
-    const { apps }  = this.state;
-    let currentApp = apps[this.currentIndex];
-    SteamService.getAppData(currentApp.id).then(response => {
-      currentApp = {...currentApp, ...response.body}
-      if (currentApp.screenshots.length) {
-        this.setState({ currentApp });
-      } else {
-        this.loadNextApp()
-      }
-    });
-  }
+    this.setState({ message: messages.loading });
+    SteamService.getRandomAppData()
+      .then(response => {
+        const currentApp = response.body;
+        const currentScreenshot = App.selectRandomScreenshot(currentApp);
+        this.setState({ currentApp, currentScreenshot, message: null });
+      })
+      .catch(() => {
+        this.setState({
+          currentApp: null,
+          currentScreenshot: null,
+          message: messages.error,
+        });
+      });
+  };
 
-  render() {
-    const { currentApp, currentScreenshot } = this.state;
-    if (currentApp.id) {
-      return (
-        <div className="App">
-          <header className="App-header">
-            <img
-              onClick={this.loadNextApp}
-              style={{maxWidth: '80%', maxHeight: '80%'}}
-              src={currentApp.screenshots[currentScreenshot]}
-              alt="The whole purpose of this website"
-            />
-            <center className="title">{currentApp.name}</center>
-          </header>
-        </div>
-      );
+  render () {
+    const { currentApp, currentScreenshot, message } = this.state;
+    let content;
+    if (message && !currentApp) {
+      content = <p>{message}</p>;
+    } else {
+      content = [
+        <img
+          onClick={this.loadNextApp}
+          style={{ maxWidth: '80%', maxHeight: '80%' }}
+          src={currentApp.screenshots[currentScreenshot]}
+          alt="The whole purpose of this website"
+        />,
+        <center className="title">{currentApp.name}</center>,
+      ];
     }
     return (
       <div className="App">
         <header className="App-header">
-          App loading ...
+          {content}
         </header>
       </div>
     );
   }
+
 }
 
 export default App;

@@ -1,17 +1,30 @@
 from dataclasses import dataclass
 from datetime import date, datetime
-from functools import cached_property
-from typing import List, Optional
+from functools import cache, cached_property
+from typing import Dict, List, Optional
 
 import requests
 from bs4 import BeautifulSoup
 
-from models import ParsedAppData
+from models import AppInfo
+
+
+@cache
+def get_steam_apps() -> Dict[int, str]:
+    """ Acquires all Steam apps and returns them as dictionary {id: name} """
+    json_response = requests.get("https://api.steampowered.com/ISteamApps/GetAppList/v2").json()
+    return {steam_app["appid"]: steam_app["name"]
+            for steam_app in json_response["applist"]["apps"]}
 
 
 @dataclass
-class SteamParser:
+class SteamStorePageParser:
     app_id: int
+
+    @cached_property
+    def app_name(self) -> str:
+        """ Returns name of the app """
+        return get_steam_apps()[self.app_id]
 
     @cached_property
     def app_store_page_soup(self) -> BeautifulSoup:
@@ -47,10 +60,11 @@ class SteamParser:
         except (AttributeError, ValueError):
             return None
 
-    def get_enriched_app_info(self) -> ParsedAppData:
+    def get_app_info(self) -> AppInfo:
         """ Get enriched information about the application """
-        return ParsedAppData(
+        return AppInfo(
             id=self.app_id,
+            name=self.app_name,
             screenshots=self.get_screenshot_urls(),
             release_date=self.get_release_date(),
             reviews_count=self.get_reviews_count())

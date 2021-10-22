@@ -1,12 +1,12 @@
-from functools import cache
-from typing import List
+import random
+from typing import Optional
 
-import requests
-from fastapi import Depends, FastAPI
+from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic.main import BaseModel
 
-from models import MinimalAppInfo, ParsedAppData
-from steam_parser import SteamParser
+from models import AppInfo
+from steam_handler import SteamStorePageParser, get_steam_apps
 
 app = FastAPI()
 origins = ["http://localhost:3000"]
@@ -20,21 +20,25 @@ app.add_middleware(
 )
 
 
-@cache
-def get_steam_apps():
-    """ Acquires all Steam apps """
-    response = requests.get("https://api.steampowered.com/ISteamApps/GetAppList/v2")
-    return [MinimalAppInfo(id=steam_app["appid"], name=steam_app["name"])
-            for steam_app in response.json()["applist"]["apps"]]
+class ErrorResponse(BaseModel):
+    """ Response for HTTPException """
+    detail: str
 
 
-@app.get("/apps", response_model=List[MinimalAppInfo])
-async def get_apps(apps: List[MinimalAppInfo] = Depends(get_steam_apps)):
-    """ Get all Steam apps """
-    return apps
+@app.get("/app/random", response_model=AppInfo)
+async def get_random_app_info(all_apps=Depends(get_steam_apps)):
+    """ Get information about a random Steam app, which contains screenshots """
+    app_info: Optional[AppInfo] = None
+    while app_info is None or len(app_info.screenshots) == 0:
+        random_app_id = random.choice(list(all_apps.keys()))
+        app_info = SteamStorePageParser(random_app_id).get_app_info()
+    return app_info
 
 
-@app.get("/app/{app_id}", response_model=ParsedAppData)
-async def get_app_info(app_id: int):
-    """ Get information about the App """
-    return SteamParser(app_id).get_enriched_app_info()
+@app.get("/app/{app_id}", response_model=AppInfo,
+         responses={404: {"model": ErrorResponse}})
+async def get_app_info(app_id: int, all_apps=Depends(get_steam_apps)):
+    """ Get information about the requested Steam app """
+    if app_id not in all_apps:
+        raise HTTPException(status_code=404, detail=f"App ID {app_id} is not found")
+    return SteamStorePageParser(app_id).get_app_info()
