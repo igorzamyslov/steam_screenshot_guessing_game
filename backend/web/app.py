@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic.main import BaseModel
 
 from .models import AppInfo
-from .steam_handler import SteamStorePageParser, get_steam_apps
+from common.steam_handler import SteamStorePageParser, get_steam_apps
 
 app = FastAPI()
 origins = ["http://localhost:3000"]
@@ -30,13 +30,20 @@ async def get_random_app_info(all_apps=Depends(get_steam_apps)):
     while True:
         # Select an app fitting the filters
         random_app_id = random.choice(list(all_apps.keys()))
-        app_info = SteamStorePageParser(random_app_id).get_app_info()
-        if len(app_info.screenshots) == 0:
+        app_parser = SteamStorePageParser(random_app_id)
+        screenshots = app_parser.get_screenshot_urls()
+        if len(screenshots) == 0:
             continue
-        elif not app_info.reviews_count or app_info.reviews_count < 2000:
+        
+        reviews_count = app_parser.get_reviews_count()
+        if not reviews_count or reviews_count < 500:
             continue
-        break
-    return app_info
+
+        return AppInfo(id=app_parser.app_id,
+                       name=app_parser.app_name,
+                       screenshots=screenshots,
+                       reviews_count=reviews_count,
+                       release_date=app_parser.get_release_date())
 
 
 @app.get("/app/{app_id}", response_model=AppInfo,

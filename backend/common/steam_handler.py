@@ -6,10 +6,7 @@ from typing import Dict, List, Optional
 import requests
 from bs4 import BeautifulSoup
 
-from .models import AppInfo
 
-
-@cache
 def get_steam_apps() -> Dict[int, str]:
     """ Acquires all Steam apps and returns them as dictionary {id: name} """
     json_response = requests.get("https://api.steampowered.com/ISteamApps/GetAppList/v2").json()
@@ -20,11 +17,6 @@ def get_steam_apps() -> Dict[int, str]:
 @dataclass
 class SteamStorePageParser:
     app_id: int
-
-    @cached_property
-    def app_name(self) -> str:
-        """ Returns name of the app """
-        return get_steam_apps()[self.app_id]
 
     @cached_property
     def app_store_page_soup(self) -> BeautifulSoup:
@@ -59,12 +51,3 @@ class SteamStorePageParser:
             return datetime.strptime(date_div.string, "%d %b, %Y").date()
         except (AttributeError, ValueError):
             return None
-
-    def get_app_info(self) -> AppInfo:
-        """ Get enriched information about the application """
-        return AppInfo(
-            id=self.app_id,
-            name=self.app_name,
-            screenshots=self.get_screenshot_urls(),
-            release_date=self.get_release_date(),
-            reviews_count=self.get_reviews_count())
