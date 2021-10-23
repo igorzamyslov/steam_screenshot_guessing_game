@@ -28,8 +28,8 @@ services:
     build: 
       context: ./backend
       dockerfile: database_handler/Dockerfile
-    # depends_on:
-    #   - backend-db-upgrade
+    depends_on:
+      - backend-db-upgrade
     volumes:
       - ssgg_database:/database
     environment:

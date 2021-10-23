@@ -38,8 +38,8 @@ def main():
             if steam_app_id in known_app_ids:
                 continue
             create_db_app(steam_app_id, steam_app_name)
-            time.sleep(2)  # wait between apps
-        time.sleep(60 * 60)  # 1 hour
+            time.sleep(2)  # wait between apps (being polite)
+        time.sleep(2 * 60 * 60)  # 2 hours
 
 
 if __name__ == "__main__":
