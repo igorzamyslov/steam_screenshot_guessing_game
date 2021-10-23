@@ -60,7 +60,7 @@ class MainPage extends Component {
           key="steam-app-image"
           onClick={this.loadNextApp}
           style={{ maxWidth: '80%', maxHeight: '80%' }}
-          src={currentApp.screenshots[currentScreenshot]}
+          src={currentApp.screenshots[currentScreenshot].url}
           alt="The whole purpose of this website"
         />,
         <a
