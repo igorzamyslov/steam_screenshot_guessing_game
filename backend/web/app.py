@@ -1,9 +1,9 @@
 import random
 
 from fastapi import Depends, FastAPI, HTTPException
-# from fastapi.middleware.cors import CORSMiddleware
 from pydantic.main import BaseModel
 from sqlalchemy.orm import selectinload
+from sqlalchemy.sql.functions import func
 
 from common import schema
 from common.database import SessionLocal
@@ -11,13 +11,6 @@ from .models import AppInfo
 
 app = FastAPI(servers=[{"url": "/api", "description": "Behind proxy"},
                        {"url": "/", "description": "Direct"}])
-
-# app.add_middleware(CORSMiddleware, 
-#                    allow_origins=["http://localhost:3000"], 
-#                    allow_credentials=True, 
-#                    allow_methods=["*"], 
-#                    allow_headers=["*"])
-
 
 class ErrorResponse(BaseModel):
     """ Response for HTTPException """
@@ -32,8 +25,10 @@ async def get_random_app_info():
     """
     with SessionLocal() as session:
         query = (session.query(schema.Application.id)
-                 .filter(schema.Application.screenshots.any())
-                 .filter(schema.Application.reviews_count >= 100))
+                 .join(schema.Screenshot)
+                 .filter(schema.Application.reviews_count >= 100)
+                 .group_by(schema.Application.id)
+                 .having(func.count(schema.Screenshot.id) > 0))
         app_id = random.choice(query.all())
         return (session.query(schema.Application)
                 .options(selectinload(schema.Application.screenshots))

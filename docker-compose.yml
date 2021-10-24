@@ -44,6 +44,19 @@ services:
     environment:
       SQLITE_PATH: $DB_PATH
 
+  backend-db-revision:
+    build:
+      context: ./backend
+      dockerfile: alembic/Dockerfile
+    volumes:
+      - ssgg_database:$DB_FOLDER
+      - ./backend/alembic/alembic/versions:/app/alembic/versions
+    environment:
+      SQLITE_PATH: $DB_PATH
+    profiles:
+      - disabled
+    command: alembic revision --autogenerate
+
   frontend:
     image: node:slim
     working_dir: /app
