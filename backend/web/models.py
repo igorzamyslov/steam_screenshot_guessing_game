@@ -4,6 +4,14 @@ from typing import List, Optional
 from pydantic import BaseModel, Field, HttpUrl
 
 
+class Screenshot(BaseModel):
+    """ Model for an App screenshot """
+    url: HttpUrl
+
+    class Config:
+        orm_mode = True
+
+
 class AppInfo(BaseModel):
     """
     Parsed data about a steam app
@@ -11,9 +19,10 @@ class AppInfo(BaseModel):
     """
     id: int
     name: str
-    screenshots: List[HttpUrl]
+    screenshots: List[Screenshot]
     release_date: Optional[date] = Field(..., alias="releaseDate")
     reviews_count: Optional[int] = Field(..., alias="reviewsCount")
 
     class Config:
         allow_population_by_field_name = True
+        orm_mode = True

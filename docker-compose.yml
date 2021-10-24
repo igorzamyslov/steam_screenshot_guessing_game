@@ -1,21 +1,48 @@
 version: "3.5"
 
 services:
-  web:
+  proxy:
     image: nginx:alpine
     depends_on:
       - frontend
-      - backend
+      - backend-web
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
     ports:
       - 127.0.0.1:9000:80
 
-  backend:
-    build: ./backend
+  backend-web:
+    build: 
+      context: ./backend
+      dockerfile: web/Dockerfile
+    depends_on:
+      - backend-db-upgrade
     volumes:
-      - ./backend/src:/app
-    command: "uvicorn app:app --host 0.0.0.0 --port 80 --reload"
+      - ./backend:/app
+      - ssgg_database:$DB_FOLDER
+    environment:
+      SQLITE_PATH: $DB_PATH
+    command: "uvicorn web.app:app --host 0.0.0.0 --port 80 --reload"
+
+  backend-db-handler:
+    build: 
+      context: ./backend
+      dockerfile: database_handler/Dockerfile
+    depends_on:
+      - backend-db-upgrade
+    volumes:
+      - ssgg_database:$DB_FOLDER
+    environment:
+      SQLITE_PATH: $DB_PATH
+
+  backend-db-upgrade:
+    build:
+      context: ./backend
+      dockerfile: alembic/Dockerfile
+    volumes:
+      - ssgg_database:$DB_FOLDER
+    environment:
+      SQLITE_PATH: $DB_PATH
 
   frontend:
     image: node:slim
@@ -25,3 +52,7 @@ services:
     environment:
       PORT: 80
     command: "bash -c 'npm install; npm run start'"
+
+volumes: 
+  ssgg_database:
+    external: true
