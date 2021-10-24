@@ -9,7 +9,7 @@ Base = declarative_base()
 class Application(Base):
     """ Steam application model """
     __tablename__ = "applications"
-    id = Column(Integer, primary_key=True, autoincrement=False)
+    id = Column(Integer, primary_key=True, autoincrement=False, index=True)
     name = Column(String, nullable=False)
     reviews_count = Column(Integer)
     release_date = Column(Date)
@@ -19,6 +19,6 @@ class Application(Base):
 class Screenshot(Base):
     """ Screenshot model """
     __tablename__ = "screenshots"
-    id = Column(Integer, primary_key=True)
-    app_id = Column(Integer, ForeignKey("applications.id"), nullable=False)
+    id = Column(Integer, primary_key=True, index=True)
+    app_id = Column(Integer, ForeignKey("applications.id"), nullable=False, index=True)
     url = Column(String, nullable=False)  # not clear if URL can be persistent
