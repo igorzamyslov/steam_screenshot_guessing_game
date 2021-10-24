@@ -5,12 +5,12 @@ from fastapi import Depends, FastAPI, HTTPException
 from pydantic.main import BaseModel
 from sqlalchemy.orm import selectinload
 
-from .models import AppInfo
 from common import schema
 from common.database import SessionLocal
-from common.steam_handler import SteamStorePageParser, get_steam_apps
+from .models import AppInfo
 
-app = FastAPI()
+app = FastAPI(servers=[{"url": "/api", "description": "Behind proxy"},
+                       {"url": "/", "description": "Direct"}])
 
 # app.add_middleware(CORSMiddleware, 
 #                    allow_origins=["http://localhost:3000"], 

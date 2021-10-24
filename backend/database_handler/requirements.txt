@@ -1,1 +1,2 @@
-alembic
+beautifulsoup4
+requests

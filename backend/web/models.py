@@ -5,7 +5,7 @@ from pydantic import BaseModel, Field, HttpUrl
 
 
 class Screenshot(BaseModel):
-    """ Model for and App screenshot """
+    """ Model for an App screenshot """
     url: HttpUrl
 
     class Config:

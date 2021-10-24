@@ -1,8 +1,9 @@
 import time
 from typing import Set
-from common.steam_handler import get_steam_apps, SteamStorePageParser
+
 from common.database import SessionLocal
 from common import schema
+from .steam_handler import get_steam_apps, SteamStorePageParser
 
 
 def get_db_app_ids() -> Set[int]:

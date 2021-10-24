@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from datetime import date, datetime
-from functools import cache, cached_property
+from functools import cached_property
 from typing import Dict, List, Optional
 
 import requests

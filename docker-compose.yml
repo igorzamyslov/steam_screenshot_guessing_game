@@ -19,9 +19,9 @@ services:
       - backend-db-upgrade
     volumes:
       - ./backend:/app
-      - ssgg_database:/database
+      - ssgg_database:$DB_FOLDER
     environment:
-      SQLITE_PATH: "/database/sqlite.db"
+      SQLITE_PATH: $DB_PATH
     command: "uvicorn web.app:app --host 0.0.0.0 --port 80 --reload"
 
   backend-db-handler:
@@ -31,18 +31,18 @@ services:
     depends_on:
       - backend-db-upgrade
     volumes:
-      - ssgg_database:/database
+      - ssgg_database:$DB_FOLDER
     environment:
-      SQLITE_PATH: "/database/sqlite.db"
+      SQLITE_PATH: $DB_PATH
 
   backend-db-upgrade:
     build:
       context: ./backend
       dockerfile: alembic/Dockerfile
     volumes:
-      - ssgg_database:/database
+      - ssgg_database:$DB_FOLDER
     environment:
-      SQLITE_PATH: "/database/sqlite.db"
+      SQLITE_PATH: $DB_PATH
 
   frontend:
     image: node:slim
