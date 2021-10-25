@@ -1,6 +1,6 @@
 import random
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from pydantic.main import BaseModel
 from sqlalchemy.orm import selectinload
 from sqlalchemy.sql.functions import func
@@ -27,10 +27,19 @@ async def get_random_app_info():
     with SessionLocal() as session:
         query = (session.query(schema.Application.id)
                  .join(schema.Screenshot)
-                 .filter(schema.Application.reviews_count >= 100)
                  .group_by(schema.Application.id)
                  .having(func.count(schema.Screenshot.id) > 0))
-        app_id = random.choice(query.all())
+        query_with_filters = query.filter(schema.Application.reviews_count >= 500)
+        try:
+            app_id = random.choice(query_with_filters.all())
+        except IndexError:
+            # For dev purposes:
+            # If app with filters is not found - fallback to any app
+            try:
+                app_id = random.choice(query.all())
+            except IndexError as error:
+                raise HTTPException(status_code=500, detail="No applications found") from error
+
         return (session.query(schema.Application)
                 .options(selectinload(schema.Application.screenshots))
                 .get(app_id))
@@ -40,7 +49,11 @@ async def get_random_app_info():
          responses={404: {"model": ErrorResponse}})
 async def get_app_info(app_id: int):
     """ Get information about the requested Steam app """
+
     with SessionLocal() as session:
-        return (session.query(schema.Application)
-                .options(selectinload(schema.Application.screenshots))
-                .get(app_id))
+        steam_app = (session.query(schema.Application)
+                     .options(selectinload(schema.Application.screenshots))
+                     .get(app_id))
+    if steam_app is None:
+        raise HTTPException(status_code=404, detail=f"Application with ID {app_id} not found")
+    return steam_app
