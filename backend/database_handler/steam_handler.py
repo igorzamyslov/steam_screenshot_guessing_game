@@ -57,3 +57,31 @@ class SteamAppHandler:
             except ValueError:
                 return None
         return None
+
+    def get_is_free(self) -> Optional[bool]:
+        """ Parse app data and return whether the app is free """
+        return self.app_data.get("is_free")
+
+    def get_type(self) -> str:
+        """ Parse app data and return the type of the app """
+        return self.app_data["type"]
+
+    def get_description(self) -> Optional[str]:
+        """ Parse app data and return the type of the app """
+        return self.app_data.get("short_description")
+
+    def get_categories(self) -> List[str]:
+        """ Parse app data and return categories of the app """
+        return [c["description"] for c in self.app_data.get("categories", [])]
+
+    def get_developers(self) -> List[str]:
+        """ Parse app data and return developers of the app """
+        return self.app_data.get("developers", [])
+
+    def get_publishers(self) -> List[str]:
+        """ Parse app data and return publishers of the app """
+        return self.app_data.get("publishers", [])
+
+    def get_genres(self) -> List[str]:
+        """ Parse app data and return genres of the app """
+        return [c["description"] for c in self.app_data.get("genres", [])]
