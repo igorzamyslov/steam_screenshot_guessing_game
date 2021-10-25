@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from datetime import date, datetime
-from typing import Dict, List, Optional
+from typing import Dict, Optional, Set
 
 import requests
 
@@ -38,9 +38,9 @@ class SteamAppHandler:
         return {steam_app["appid"]: steam_app["name"]
                 for steam_app in json_response["applist"]["apps"]}
 
-    def get_screenshot_urls(self) -> List[str]:
+    def get_screenshot_urls(self) -> Set[str]:
         """ Parse app data and return all screenshot URLs """
-        return [s["path_full"] for s in self.app_data.get("screenshots", [])]
+        return set(s["path_full"] for s in self.app_data.get("screenshots", []))
 
     def get_reviews_count(self) -> Optional[int]:
         """ Parse app data and return reviews count """
@@ -70,18 +70,18 @@ class SteamAppHandler:
         """ Parse app data and return the type of the app """
         return self.app_data.get("short_description")
 
-    def get_categories(self) -> List[str]:
+    def get_categories(self) -> Set[str]:
         """ Parse app data and return categories of the app """
-        return [c["description"] for c in self.app_data.get("categories", [])]
+        return set(c["description"] for c in self.app_data.get("categories", []))
 
-    def get_developers(self) -> List[str]:
+    def get_developers(self) -> Set[str]:
         """ Parse app data and return developers of the app """
-        return self.app_data.get("developers", [])
+        return set(self.app_data.get("developers", []))
 
-    def get_publishers(self) -> List[str]:
+    def get_publishers(self) -> Set[str]:
         """ Parse app data and return publishers of the app """
-        return self.app_data.get("publishers", [])
+        return set(self.app_data.get("publishers", []))
 
-    def get_genres(self) -> List[str]:
+    def get_genres(self) -> Set[str]:
         """ Parse app data and return genres of the app """
-        return [c["description"] for c in self.app_data.get("genres", [])]
+        return set(c["description"] for c in self.app_data.get("genres", []))
