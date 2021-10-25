@@ -6,3 +6,8 @@
 .steam-app-title:hover {
     opacity: inherit;
 }
+
+.btn-primary {
+    min-width: 240px;
+    padding: 8px;
+}

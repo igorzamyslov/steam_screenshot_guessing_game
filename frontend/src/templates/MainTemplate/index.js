@@ -2,9 +2,9 @@ import './style.css';
 
 const MainTemplate = ({ children }) => (
   <div className="main-template">
-    <header className="main-template-header">
-      STEAM SCREENSHOT GUESSING GAME
-    </header>
+    <nav class="nav">
+      <a class="nav-link active" href="#"> STEAM SCREENSHOT GUESSING GAME</a>      
+    </nav>
     {children}
   </div>
 );

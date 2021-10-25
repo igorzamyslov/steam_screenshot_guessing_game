@@ -3,6 +3,7 @@ import SteamService from 'services/SteamService';
 import MainTemplate from 'templates/MainTemplate';
 import './style.css';
 import Button from 'react-bootstrap/Button';
+import { Container, Row, Col } from 'react-bootstrap';
 
 
 const messages = {
@@ -11,7 +12,7 @@ const messages = {
 };
 
 class MainPage extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.state = {
       currentApp: null,
@@ -24,7 +25,7 @@ class MainPage extends Component {
     return Math.floor(Math.random() * app.screenshots.length);
   };
 
-  componentDidMount () {
+  componentDidMount() {
     this.loadNextApp();
   }
 
@@ -50,36 +51,61 @@ class MainPage extends Component {
       });
   };
 
-  render () {
+  render() {
     const { currentApp, currentScreenshot, message } = this.state;
     let content;
     if (message && !currentApp) {
       content = <p key="message">{message}</p>;
     } else {
-      content = [       
-        <img
-          key="steam-app-image"
-          onClick={this.loadNextApp}
-          style={{ maxWidth: '80%', maxHeight: '80%' }}
-          src={currentApp.screenshots[currentScreenshot].url}
-          alt="The whole purpose of this website"
-        />,        
-        <a
-          key="steam-app-title"
-          href={`https://store.steampowered.com/app/${currentApp.id}`}
-          target="_blank"
-          className="steam-app-title"
-          rel="noreferrer"
-        >
-          {currentApp.name}
-        </a>,        
-        <Button >I am button</Button>,
+      content = [
+        <Container>
+          <Row>
+            <Col xs={1}>Factorio</Col>
+            <Col>
+              <img
+                key="steam-app-image"
+                onClick={this.loadNextApp}
+                style={{ maxWidth: '80%', maxHeight: '80%' }}
+                src={currentApp.screenshots[currentScreenshot].url}
+                alt="The whole purpose of this website"
+              />
+            </Col>
+            <Col xs={1}>High Score</Col>
+          </Row>
+          <Row>
+            <a
+              key="steam-app-title"
+              href={`https://store.steampowered.com/app/${currentApp.id}`}
+              target="_blank"
+              className="steam-app-title"
+              rel="noreferrer"
+            >
+              {currentApp.name}
+            </a>
+          </Row>
+          <Row>
+            <Col xs={1}></Col>
+            <Col className='input-block-level'>
+              <Button sm={1} >1. I am button</Button>
+            <Button sm={1} >2. I am button two</Button>
+            </Col>
+            <Col xs={1}></Col>
+          </Row>
+          <Row>
+            <Col xs={1}></Col>
+            <Col>
+              <Button >3. I am b</Button>
+            <Button >4. I am </Button>
+            </Col>
+            <Col xs={1}></Col>
+          </Row>
+        </Container>
       ];
     }
     return <MainTemplate>{content}</MainTemplate>;
   }
 
-  main_layout(){
+  main_layout() {
 
   }
 
