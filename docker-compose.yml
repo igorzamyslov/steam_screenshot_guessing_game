@@ -57,6 +57,14 @@ services:
       - disabled
     command: alembic revision --autogenerate
 
+  backend-db-reset:
+    image: node:slim  # any already used image
+    volumes:
+      - ssgg_database:$DB_FOLDER
+    profiles:
+      - disabled
+    command: rm $DB_FOLDER/$DB_NAME
+
   frontend:
     image: node:slim
     working_dir: /app

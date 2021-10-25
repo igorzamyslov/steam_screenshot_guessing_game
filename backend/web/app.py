@@ -3,7 +3,6 @@ import random
 from fastapi import FastAPI, HTTPException
 from pydantic.main import BaseModel
 from sqlalchemy.orm import selectinload
-from sqlalchemy.sql.functions import func
 
 from common import schema
 from common.database import SessionLocal
@@ -26,9 +25,9 @@ async def get_random_app_info():
     """
     with SessionLocal() as session:
         query = (session.query(schema.Application.id)
-                 .join(schema.Screenshot)
-                 .group_by(schema.Application.id)
-                 .having(func.count(schema.Screenshot.id) > 0))
+                 .join(schema.Screenshot, schema.Type)
+                 .filter(schema.Type.name == "game")
+                 .group_by(schema.Application.id))
         query_with_filters = query.filter(schema.Application.reviews_count >= 500)
         try:
             app_id = random.choice(query_with_filters.all())
