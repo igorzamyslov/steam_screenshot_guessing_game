@@ -1,3 +1,4 @@
+import re
 from dataclasses import dataclass
 from datetime import date, datetime
 from typing import Dict, Optional, Set
@@ -37,6 +38,10 @@ class SteamAppHandler:
         json_response = requests.get("https://api.steampowered.com/ISteamApps/GetAppList/v2").json()
         return {steam_app["appid"]: steam_app["name"]
                 for steam_app in json_response["applist"]["apps"]}
+
+    def get_name(self):
+        """ Parse app data and return name """
+        return self.app_data["name"]
 
     def get_screenshot_urls(self) -> Set[str]:
         """ Parse app data and return all screenshot URLs """
@@ -85,3 +90,9 @@ class SteamAppHandler:
     def get_genres(self) -> Set[str]:
         """ Parse app data and return genres of the app """
         return set(c["description"] for c in self.app_data.get("genres", []))
+
+    def get_similar_app_ids(self) -> Set[int]:
+        """ Parse app store page ("More like this" section) to get similar app ids """
+        response = requests.get(f"https://store.steampowered.com/app/{self.app_id}")
+        ids_string = re.search(r"RenderMoreLikeThisBlock\( \[(.*?)\]", response.text).group(0)
+        return set(map(int, re.findall(r"\"(.*?)\"", ids_string)))

@@ -28,6 +28,12 @@ _app_genres = Table(
     Column("app_id", ForeignKey("applications.id"), primary_key=True, index=True),
     Column("genre_id", ForeignKey("genres.id"), primary_key=True, index=True))
 
+_similar_apps = Table(
+    "_similar_applications",
+    Base.metadata,
+    Column("app_id", ForeignKey("applications.id"), primary_key=True, index=True),
+    Column("similar_app_id", ForeignKey("application_references.id"), primary_key=True, index=True))
+
 
 class Application(Base):
     """ Steam application model """
@@ -46,6 +52,13 @@ class Application(Base):
     genres = relationship("Genre", secondary=_app_genres, back_populates="applications")
     screenshots = relationship("Screenshot")
     type = relationship("Type")
+    similar_apps = relationship("ApplicationReference", secondary=_similar_apps)
+
+
+class ApplicationReference(Base):
+    """ Reference to steam app (avoiding self-referencing for now) """
+    __tablename__ = "application_references"
+    id = Column(Integer, primary_key=True, autoincrement=False, index=True)  # Use Steam App ID
 
 
 class Screenshot(Base):

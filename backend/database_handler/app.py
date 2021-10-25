@@ -8,7 +8,7 @@ from common import schema
 from common.database import SessionLocal
 from .steam_handler import SteamAppDataError, SteamAppHandler, SteamAppResponseError
 
-REQUESTS_DELAY = 0.5
+REQUESTS_DELAY = 0  # sec
 
 
 def get_db_app_ids() -> Set[int]:
@@ -78,10 +78,13 @@ def populate_app_from_parser(app: schema.Application, parser: SteamAppHandler):
                           for p in parser.get_publishers()]
         app.genres = [get_from_db_or_create(session, schema.Genre, {"name": g})
                       for g in parser.get_genres()]
+        app.similar_apps = [schema.ApplicationReference(id=s_app_id) 
+                            for s_app_id in parser.get_similar_app_ids()]
 
 
-def create_db_app(app_id: int, app_name: str):
+def create_db_app(app_id: int, app_name: str) -> schema.Application:
     """ Create app in the database """
+    # Create db instance
     db_app = schema.Application(id=app_id, name=app_name)
     if (parser := init_parser(app_id)) is not None:
         try:
@@ -89,15 +92,13 @@ def create_db_app(app_id: int, app_name: str):
         except Exception as error:
             print(f"ERROR: Parse App ID {app_id}: {error}")
             return
-
     # Commit
     with SessionLocal() as session:
-        session.add(db_app)
+        session.merge(db_app)
         try:
             session.commit()
         except IntegrityError as error:
             print(f"ERROR: Commit App ID {app_id}: {error}")
-
     # Log
     empty = "" if parser else " (empty)"
     print(f"INFO: Added to DB{empty}: App '{app_name}' (ID: {app_id})")
@@ -109,11 +110,12 @@ def main():
     2. Gradually populate database with unknown apps
     """
     while True:
-        known_app_ids = get_db_app_ids()
+        added_apps = get_db_app_ids()
         steam_apps = SteamAppHandler.get_steam_apps()
-        for steam_app_id, steam_app_name in steam_apps.items():
-            if steam_app_id in known_app_ids:
-                continue
+        apps_to_add = list(set(steam_apps.keys()) - added_apps)
+        while apps_to_add:
+            steam_app_id = apps_to_add.pop()
+            steam_app_name = steam_apps[steam_app_id]
             create_db_app(steam_app_id, steam_app_name)
             time.sleep(REQUESTS_DELAY)  # wait between apps (avoiding "Too Many Requests")
         time.sleep(2 * 60 * 60)  # 2 hours
