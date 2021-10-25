@@ -3,8 +3,8 @@ from logging.config import fileConfig
 from alembic import context
 
 from common.configs import get_sqlite_connection_config
-from common.schema import Base
 from common.database import engine
+from common.schema import Base
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -17,14 +17,7 @@ fileConfig(config.config_file_name)
 
 # add your model's MetaData object here
 # for 'autogenerate' support
-# from myapp import mymodel
-# target_metadata = mymodel.Base.metadata
 target_metadata = Base.metadata
-
-# other values from the config, defined by the needs of env.py,
-# can be acquired:
-# my_important_option = config.get_main_option("my_important_option")
-# ... etc.
 
 
 def run_migrations_offline():
@@ -58,8 +51,7 @@ def run_migrations_online():
 
     """
     with engine.connect() as connection:
-        context.configure(connection=connection, 
-                          target_metadata=target_metadata)
+        context.configure(connection=connection, target_metadata=target_metadata)
         with context.begin_transaction():
             context.run_migrations()
 

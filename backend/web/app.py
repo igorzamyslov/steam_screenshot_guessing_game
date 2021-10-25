@@ -1,6 +1,6 @@
 import random
 
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi import FastAPI
 from pydantic.main import BaseModel
 from sqlalchemy.orm import selectinload
 from sqlalchemy.sql.functions import func
@@ -12,6 +12,7 @@ from .models import AppInfo
 app = FastAPI(servers=[{"url": "/api", "description": "Behind proxy"},
                        {"url": "/", "description": "Direct"}])
 
+
 class ErrorResponse(BaseModel):
     """ Response for HTTPException """
     detail: str
@@ -19,9 +20,9 @@ class ErrorResponse(BaseModel):
 
 @app.get("/app/random", response_model=AppInfo)
 async def get_random_app_info():
-    """ 
-    Get information about a random Steam app, which contains screenshots 
-    NOTE: FIlters are hardcoded for now
+    """
+    Get information about a random Steam app, which contains screenshots
+    NOTE: Filters are hardcoded for now
     """
     with SessionLocal() as session:
         query = (session.query(schema.Application.id)

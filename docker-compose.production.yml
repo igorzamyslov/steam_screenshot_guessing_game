@@ -12,7 +12,7 @@ services:
       - 0.0.0.0:80:80
 
   backend-web:
-    build: 
+    build:
       context: ./backend
       dockerfile: web/Dockerfile
     depends_on:
@@ -23,7 +23,7 @@ services:
       SQLITE_PATH: $DB_PATH
 
   backend-db-handler:
-    build: 
+    build:
       context: ./backend
       dockerfile: database_handler/Dockerfile
     depends_on:
@@ -45,6 +45,6 @@ services:
   frontend:
     build: ./frontend
 
-volumes: 
+volumes:
   ssgg_database:
     external: true

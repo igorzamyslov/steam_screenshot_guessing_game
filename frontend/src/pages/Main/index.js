@@ -16,16 +16,15 @@ class MainPage extends Component {
       currentScreenshot: null,
       message: messages.loading,
     };
-    this.currentIndex = null;
-  }
-
-  componentDidMount () {
-    this.loadNextApp();
   }
 
   static selectRandomScreenshot = (app) => {
     return Math.floor(Math.random() * app.screenshots.length);
   };
+
+  componentDidMount () {
+    this.loadNextApp();
+  }
 
   showMessage = (message) => {
     this.setState({

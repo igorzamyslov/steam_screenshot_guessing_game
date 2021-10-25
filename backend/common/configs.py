@@ -1,5 +1,5 @@
 from functools import cache
-from typing import Any
+
 from pydantic import BaseSettings
 
 

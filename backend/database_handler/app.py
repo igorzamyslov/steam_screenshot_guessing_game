@@ -1,15 +1,12 @@
-from datetime import datetime
-import time
 from typing import Set
 
-from requests.sessions import Request
+import time
 
-from common.database import SessionLocal
 from common import schema
-from .steam_handler import SteamAppHandler, SteamAppDataError, SteamAppResponseError
+from common.database import SessionLocal
+from .steam_handler import SteamAppDataError, SteamAppHandler, SteamAppResponseError
 
-
-REQUESTS_DELAY = 0.1
+REQUESTS_DELAY = 0.5
 
 
 def get_db_app_ids() -> Set[int]:
@@ -24,9 +21,9 @@ def create_db_app(app_id: int, app_name: str):
     while True:
         try:
             parser = SteamAppHandler(app_id)
-            break 
+            break
         except SteamAppResponseError:
-            # Too Many Requests ban, try to wait it out for current app 
+            # Too Many Requests ban, try to wait it out for current app
             # + Increase global delay between requests
             if not global_delay_increased:
                 global REQUESTS_DELAY
@@ -41,9 +38,10 @@ def create_db_app(app_id: int, app_name: str):
     db_app = schema.Application(id=app_id, name=app_name)
     if parser:
         try:
-            db_app.reviews_count=parser.get_reviews_count()
-            db_app.release_date=parser.get_release_date()
-            db_app.screenshots=[schema.Screenshot(url=url) for url in parser.get_screenshot_urls()]
+            db_app.reviews_count = parser.get_reviews_count()
+            db_app.release_date = parser.get_release_date()
+            db_app.screenshots = [schema.Screenshot(url=url) for url in
+                                  parser.get_screenshot_urls()]
         except Exception as error:
             print(f"ERROR: App ID {app_id}: {error}")
             return
@@ -56,7 +54,7 @@ def create_db_app(app_id: int, app_name: str):
 
 
 def main():
-    """ 
+    """
     1. Request apps from Steam
     2. Gradually populate database with unknown apps
     """

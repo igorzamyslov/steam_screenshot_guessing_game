@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 from datetime import date, datetime
-from functools import cached_property
 from typing import Dict, List, Optional
 
 import requests
@@ -17,7 +16,7 @@ class SteamAppResponseError(Exception):
 @dataclass
 class SteamAppHandler:
     app_id: int
-    
+
     def __post_init__(self):
         """ Init app data """
         response = requests.get("https://store.steampowered.com/api/"

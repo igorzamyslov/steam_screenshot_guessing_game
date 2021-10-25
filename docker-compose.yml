@@ -12,7 +12,7 @@ services:
       - 127.0.0.1:9000:80
 
   backend-web:
-    build: 
+    build:
       context: ./backend
       dockerfile: web/Dockerfile
     depends_on:
@@ -25,7 +25,7 @@ services:
     command: "uvicorn web.app:app --host 0.0.0.0 --port 80 --reload"
 
   backend-db-handler:
-    build: 
+    build:
       context: ./backend
       dockerfile: database_handler/Dockerfile
     depends_on:
@@ -66,6 +66,6 @@ services:
       PORT: 80
     command: "bash -c 'npm install; npm run start'"
 
-volumes: 
+volumes:
   ssgg_database:
     external: true
