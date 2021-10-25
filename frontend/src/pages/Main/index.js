@@ -2,6 +2,8 @@ import { Component } from 'react';
 import SteamService from 'services/SteamService';
 import MainTemplate from 'templates/MainTemplate';
 import './style.css';
+import Button from 'react-bootstrap/Button';
+
 
 const messages = {
   loading: 'Steam app loading ...',
@@ -54,14 +56,14 @@ class MainPage extends Component {
     if (message && !currentApp) {
       content = <p key="message">{message}</p>;
     } else {
-      content = [
+      content = [       
         <img
           key="steam-app-image"
           onClick={this.loadNextApp}
           style={{ maxWidth: '80%', maxHeight: '80%' }}
           src={currentApp.screenshots[currentScreenshot].url}
           alt="The whole purpose of this website"
-        />,
+        />,        
         <a
           key="steam-app-title"
           href={`https://store.steampowered.com/app/${currentApp.id}`}
@@ -70,11 +72,19 @@ class MainPage extends Component {
           rel="noreferrer"
         >
           {currentApp.name}
-        </a>,
+        </a>,        
+        <Button >I am button</Button>,
       ];
     }
     return <MainTemplate>{content}</MainTemplate>;
   }
+
+  main_layout(){
+
+  }
+
 }
+
+
 
 export default MainPage;
