@@ -1,7 +1,9 @@
+import "./style.css";
+
 import { Component } from "react";
+import Button from "react-bootstrap/Button";
 import SteamService from "services/SteamService";
 import MainTemplate from "templates/MainTemplate";
-import "./style.css";
 
 const messages = {
   loading: "Steam app loading ...",
@@ -71,10 +73,13 @@ class MainPage extends Component {
         >
           {currentApp.name}
         </a>,
+        <Button>I am button</Button>,
       ];
     }
     return <MainTemplate>{content}</MainTemplate>;
   }
+
+  main_layout() {}
 }
 
 export default MainPage;
