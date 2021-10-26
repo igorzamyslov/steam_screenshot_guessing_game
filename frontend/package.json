@@ -18,7 +18,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "prettify": "npx prettier -w ./ && npx stylelint --fix **/*.css"
   },
   "eslintConfig": {
     "extends": [
@@ -37,5 +38,17 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "importSort": {
+    ".js, .jsx, .ts, .tsx": {
+      "style": "module"
+    }
+  },
+  "devDependencies": {
+    "import-sort-style-module": "^6.0.0",
+    "prettier": "^2.4.1",
+    "prettier-plugin-import-sort": "^0.0.7",
+    "stylelint": "^14.0.0",
+    "stylelint-config-standard": "^23.0.0"
   }
 }
