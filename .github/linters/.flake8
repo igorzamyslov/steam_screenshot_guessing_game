@@ -1,3 +1,3 @@
 [flake8]
 max-line-length = 100
-exclude = /github/workspace/backend/database_migration/alembic/versions/*
+exclude = backend/database_migration/alembic/versions/*
