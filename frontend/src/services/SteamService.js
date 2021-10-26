@@ -1,4 +1,4 @@
-import request from 'superagent';
+import request from "superagent";
 
 class SteamService {
   static getAppData = (appId) => request.get(`/api/app/${appId}`);

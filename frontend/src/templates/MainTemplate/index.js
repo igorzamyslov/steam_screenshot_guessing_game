@@ -1,4 +1,4 @@
-import './style.css';
+import "./style.css";
 
 const MainTemplate = ({ children }) => (
   <div className="main-template">

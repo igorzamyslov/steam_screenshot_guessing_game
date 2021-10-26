@@ -1,8 +1,8 @@
 .steam-app-title {
-    opacity: 0;
-    width: 100%;
+  opacity: 0%;
+  width: 100%;
 }
 
 .steam-app-title:hover {
-    opacity: inherit;
+  opacity: inherit;
 }
