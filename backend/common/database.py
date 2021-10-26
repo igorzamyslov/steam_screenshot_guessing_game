@@ -1,4 +1,5 @@
-from sqlalchemy import Boolean, Column, Date, ForeignKey, Integer, String, Table, create_engine
+from sqlalchemy import (Boolean, Column, Date, ForeignKey, Integer, MetaData, String, Table,
+                        create_engine)
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import sessionmaker
@@ -7,7 +8,7 @@ from .configs import get_sqlite_connection_config
 
 engine = create_engine(get_sqlite_connection_config().connection_string)
 Session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-Base = declarative_base()
+Base = declarative_base(metadata=MetaData())
 
 _app_categories = Table(
     "_application_categories",

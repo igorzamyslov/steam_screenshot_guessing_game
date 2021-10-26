@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 import common.database as db
 from .steam_handler import SteamAppDataError, SteamAppHandler, SteamAppResponseError
 
-REQUESTS_DELAY = 0  # sec
+REQUESTS_DELAY = 0.0  # sec
 
 
 def get_db_app_ids() -> Set[int]:
@@ -40,7 +40,7 @@ def init_parser(app_id: int) -> Optional[SteamAppHandler]:
     return parser
 
 
-InputModel = TypeVar("InputModel")
+InputModel = TypeVar("InputModel", bound=db.Base)
 
 
 def get_from_db_or_create(session: Session,

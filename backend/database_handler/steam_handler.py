@@ -94,5 +94,7 @@ class SteamAppHandler:
     def get_similar_app_ids(self) -> Set[int]:
         """ Parse app store page ("More like this" section) to get similar app ids """
         response = requests.get(f"https://store.steampowered.com/app/{self.app_id}")
-        ids_string = re.search(r"RenderMoreLikeThisBlock\( \[(.*?)\]", response.text).group(0)
-        return set(map(int, re.findall(r"\"(.*?)\"", ids_string)))
+        ids_string_match = re.search(r"RenderMoreLikeThisBlock\( \[(.*?)]", response.text)
+        if ids_string_match is None:
+            raise RuntimeError("Similar apps not found in returned HTML")
+        return set(map(int, re.findall(r"\"(.*?)\"", ids_string_match.group(0))))
