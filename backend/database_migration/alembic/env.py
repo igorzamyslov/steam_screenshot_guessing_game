@@ -1,6 +1,7 @@
 from logging.config import fileConfig
 
 from alembic import context
+
 from common.configs import get_sqlite_connection_config
 from common.database import Base, engine
 

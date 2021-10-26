@@ -36,7 +36,7 @@ services:
   backend-db-upgrade:
     build:
       context: ./backend
-      dockerfile: alembic/Dockerfile
+      dockerfile: database_migration/Dockerfile
     volumes:
       - ssgg_database:$DB_FOLDER
     environment:

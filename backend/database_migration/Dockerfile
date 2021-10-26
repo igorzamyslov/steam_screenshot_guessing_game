@@ -1,6 +1,6 @@
 FROM python:3-slim
 WORKDIR /app
-ARG SERVICE=alembic
+ARG SERVICE=database_migration
 
 COPY common/requirements.txt ./common_requirements.txt
 COPY ${SERVICE}/requirements.txt ./main_requirements.txt
