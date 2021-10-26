@@ -92,16 +92,16 @@ class MainPage extends Component {
           <Row>
             <Col xs={1}></Col>
             <Col className='input-block-level'>
-              <Button sm={1} >{this.state.answerOptions.opt1}</Button>
-            <Button sm={1} >{this.state.answerOptions.opt2}</Button>
+              <Button className="option-btn"  >{this.state.answerOptions.opt1}</Button>
+            <Button className="option-btn" >{this.state.answerOptions.opt2}</Button>
             </Col>
             <Col xs={1}></Col>
           </Row>
           <Row>
             <Col xs={1}></Col>
             <Col>
-              <Button >{this.state.answerOptions.opt3}</Button>
-            <Button >{this.state.answerOptions.opt4}</Button>
+              <Button className="option-btn" >{this.state.answerOptions.opt3}</Button>
+            <Button className="option-btn" >{this.state.answerOptions.opt4}</Button>
             </Col>
             <Col xs={1}></Col>
           </Row>

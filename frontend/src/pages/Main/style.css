@@ -7,9 +7,9 @@
     opacity: inherit;
 }
 
-.btn-primary {
-    min-width: 240px;
-    padding: 8px;
+.option-btn {
+    min-width: 320px;    
+    margin: 8px;    
 }
 
 .screenshot{
