@@ -5,7 +5,7 @@
   ],
   "ignore": [
     "**/__snapshots__/**",
-    "backend/database_migration/alembic/**"
+    "**/backend/database_migration/alembic/versions/*"
   ],
   "absolute": true
 }
