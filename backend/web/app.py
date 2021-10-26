@@ -15,7 +15,7 @@ class ErrorResponse(BaseModel):
     detail: str
 
 
-def get_session() -> Session:
+async def get_session() -> Session:
     session = db.Session()
     try:
         yield session
