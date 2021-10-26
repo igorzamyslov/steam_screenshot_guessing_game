@@ -18,6 +18,12 @@ class MainPage extends Component {
       currentApp: null,
       currentScreenshot: null,
       message: messages.loading,
+      answerOptions: {
+        opt1: "Factorio",
+        opt2: "Battlefield Overwatch",
+        opt3: "Divinity Original Sin 2",
+        opt4: "Doom",
+      }
     };
   }
 
@@ -59,18 +65,18 @@ class MainPage extends Component {
     } else {
       content = [
         <Container>
-          <Row>
-            <Col xs={1}>Factorio</Col>
-            <Col>
+          <Row className='main-row'>
+            <Col lg={1}>Factorio</Col>
+            <Col lg={10}>
               <img
+                className="screenshot"
                 key="steam-app-image"
                 onClick={this.loadNextApp}
-                style={{ maxWidth: '80%', maxHeight: '80%' }}
                 src={currentApp.screenshots[currentScreenshot].url}
                 alt="The whole purpose of this website"
               />
             </Col>
-            <Col xs={1}>High Score</Col>
+            <Col lg={1}>High Score</Col>
           </Row>
           <Row>
             <a
@@ -86,16 +92,16 @@ class MainPage extends Component {
           <Row>
             <Col xs={1}></Col>
             <Col className='input-block-level'>
-              <Button sm={1} >1. I am button</Button>
-            <Button sm={1} >2. I am button two</Button>
+              <Button sm={1} >{this.state.answerOptions.opt1}</Button>
+            <Button sm={1} >{this.state.answerOptions.opt2}</Button>
             </Col>
             <Col xs={1}></Col>
           </Row>
           <Row>
             <Col xs={1}></Col>
             <Col>
-              <Button >3. I am b</Button>
-            <Button >4. I am </Button>
+              <Button >{this.state.answerOptions.opt3}</Button>
+            <Button >{this.state.answerOptions.opt4}</Button>
             </Col>
             <Col xs={1}></Col>
           </Row>
@@ -103,14 +109,8 @@ class MainPage extends Component {
       ];
     }
     return <MainTemplate>{content}</MainTemplate>;
-  }
-
-  main_layout() {
-
-  }
-
+  } 
 }
-
 
 
 export default MainPage;
