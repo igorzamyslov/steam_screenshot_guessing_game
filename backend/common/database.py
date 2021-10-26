@@ -3,14 +3,23 @@ from typing import Any
 from sqlalchemy import (Boolean, Column, Date, ForeignKey, Integer, MetaData,
                         String, Table, create_engine)
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import Session, relationship
 from sqlalchemy.orm import sessionmaker
 
 from .configs import get_sqlite_connection_config
 
 engine = create_engine(get_sqlite_connection_config().connection_string)
-Session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+DBSession = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base: Any = declarative_base(metadata=MetaData())
+
+
+async def get_session() -> Session:
+    session = DBSession()
+    try:
+        yield session
+    finally:
+        session.close()
+
 
 _app_categories = Table(
     "_application_categories",

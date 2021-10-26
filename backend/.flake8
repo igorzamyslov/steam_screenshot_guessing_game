@@ -1,3 +1,0 @@
-[flake8]
-exclude = database_migration/alembic
-max-line-length = 100

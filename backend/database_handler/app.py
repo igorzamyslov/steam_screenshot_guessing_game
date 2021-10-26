@@ -21,6 +21,7 @@ def init_parser(app_id: int) -> Optional[SteamAppHandler]:
     On "Too Many Requests" increases the global delay between requests for the app.
     """
     global_delay_increased = False
+    parser: Optional[SteamAppHandler]
     while True:
         try:
             parser = SteamAppHandler(app_id)
