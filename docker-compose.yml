@@ -7,7 +7,7 @@ services:
       - frontend
       - backend-web
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./proxy.nginx.conf:/etc/nginx/nginx.conf
     ports:
       - 127.0.0.1:9000:80
 
@@ -38,7 +38,7 @@ services:
   backend-db-upgrade:
     build:
       context: ./backend
-      dockerfile: alembic/Dockerfile
+      dockerfile: database_migration/Dockerfile
     volumes:
       - ssgg_database:$DB_FOLDER
     environment:
@@ -47,10 +47,10 @@ services:
   backend-db-revision:
     build:
       context: ./backend
-      dockerfile: alembic/Dockerfile
+      dockerfile: database_migration/Dockerfile
     volumes:
       - ssgg_database:$DB_FOLDER
-      - ./backend/alembic/alembic/versions:/app/alembic/versions
+      - ./backend/database_migration/alembic/versions:/app/alembic/versions
     environment:
       SQLITE_PATH: $DB_PATH
     profiles:
