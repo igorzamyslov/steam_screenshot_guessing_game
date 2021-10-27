@@ -39,7 +39,7 @@
 }
 
 .correct {
-    /* background-color: #97CC04; */
+    background-color: #97CC04;
 }
 
 .incorrect {
@@ -47,7 +47,7 @@
 }
 
 .base {
-  /* background-color: rgba(42,71,94,1); */
+  background-color: #1D62D7;
 }
 
 
