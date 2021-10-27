@@ -24,10 +24,10 @@ class SteamAppHandler:
                                 f"appdetails?appids={self.app_id}")
         try:
             response.raise_for_status()
+            app_dict = response.json()[str(self.app_id)]
         except Exception as error:
             raise SteamAppResponseError from error
 
-        app_dict = response.json()[str(self.app_id)]
         if not app_dict["success"]:
             raise SteamAppDataError(f"Response for the app with ID {self.app_id} is not successful")
         self.app_data = app_dict["data"]
