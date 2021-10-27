@@ -1,5 +1,5 @@
 a {
-    color: #61dafb;
+  color: #61dafb;
 }
 
 .main-template {
@@ -12,16 +12,6 @@ a {
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-    background: rgb(23,26,33);
-    background:linear-gradient(135deg, rgb(23, 26, 33) 0%, rgba(42,71,94,1) 35%, rgba(27,40,56,1) 100%);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
 }
 
 .main-template-header {

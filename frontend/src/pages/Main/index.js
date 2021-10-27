@@ -45,7 +45,7 @@ class MainPage extends Component {
 
   loadNextApp = () => {
     this.showMessage(messages.loading);
-    SteamService.getRandomAppData()
+    SteamService.getQuizRandomAppData()
       .then((response) => {
         const currentApp = response.body;
         const currentScreenshot =
@@ -63,25 +63,7 @@ class MainPage extends Component {
     if (message && !currentApp) {
       content = <p key="message">{message}</p>;
     } else {
-      content = [
-        <img
-          key="steam-app-image"
-          onClick={this.loadNextApp}
-          style={{ maxWidth: "80%", maxHeight: "80%" }}
-          src={currentApp.screenshots[currentScreenshot].url}
-          alt="The whole purpose of this website"
-        />,
-        <a
-          key="steam-app-title"
-          href={`https://store.steampowered.com/app/${currentApp.id}`}
-          target="_blank"
-          className="steam-app-title"
-          rel="noreferrer"
-        >
-          {currentApp.name}
-        </a>,
-        <Button>I am button</Button>,
-      content = [
+      content = (
         <Container>
           <Row className='main-row'>
             <Col lg={1}>Factorio</Col>
@@ -124,11 +106,9 @@ class MainPage extends Component {
             <Col xs={1}></Col>
           </Row>
         </Container>
-      ];
+      );
     }
     return <MainTemplate>{content}</MainTemplate>;
-  }
-
   }
 }
 
