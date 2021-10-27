@@ -11,19 +11,73 @@ const messages = {
   error: "Error during Steam app loading!",
 };
 
+/*
+{
+  "screenshotUrl": "string",
+  "answers": [
+    {
+      "appId": 0,
+      "appMame": "string",
+      "url": "string",
+      "correct": true
+    }
+  ]
+}
+*/
+
+class OptionButton extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      color: null
+    }
+    this.blinkInterval = null
+  }
+  
+  componentDidMount() {
+    this.updateBlink({}, this.props)
+  }
+
+  componentDidUpdate(prevProps) {
+    this.updateBlink(prevProps, this.props)
+  }
+
+  updateBlink = (prevProps, props) => {
+    const { blink: prevBlink } = prevProps;
+    const { blink, color } = this.props;
+    if (!prevBlink && blink) {
+      // create blinking interval
+      this.blinkInterval = setInterval(() => {
+        this.setState({ color: this.state.color ? null : color })
+      }, 300)
+    } else if (prevBlink && !blink) {
+      // remove blinking interval
+      clearInterval(this.blinkInterval)
+    }
+  }
+
+  render() {
+    const { answer } = this.props;
+    const { color } = this.state;
+    return (
+      <Button 
+        className="option-btn"
+        style={color && { backgroundColor: color }}
+      >
+        {answer.appName}
+      </Button>
+    )
+  }
+}
+
+
 class MainPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentApp: null,
-      currentScreenshot: null,
+      screenshotUrl: null,
       message: messages.loading,
-      answerOptions: {
-        opt1: "Factorio",
-        opt2: "Battlefield Overwatch",
-        opt3: "Divinity Original Sin 2",
-        opt4: "Doom",
-      }
+      answers: [],
     };
   }
 
@@ -47,10 +101,9 @@ class MainPage extends Component {
     this.showMessage(messages.loading);
     SteamService.getQuizRandomAppData()
       .then((response) => {
-        const currentApp = response.body;
-        const currentScreenshot =
-          this.constructor.selectRandomScreenshot(currentApp);
-        this.setState({ currentApp, currentScreenshot, message: null });
+        const quiz = response.body;
+        const { screenshotUrl, answers } = quiz;
+        this.setState({ screenshotUrl, answers, message: null });
       })
       .catch(() => {
         this.showMessage(messages.error);
@@ -58,9 +111,14 @@ class MainPage extends Component {
   };
 
   render() {
-    const { currentApp, currentScreenshot, message } = this.state;
+    const { answers, screenshotUrl, message } = this.state;
     let content;
-    if (message && !currentApp) {
+
+    const answerOptions = answers.map((answer, i) => (
+      <OptionButton key={`option_button_${i}`} answer={answer} blink color="green" />
+    ))
+
+    if (message && answerOptions.length !== 0) {
       content = <p key="message">{message}</p>;
     } else {
       content = (
@@ -72,38 +130,14 @@ class MainPage extends Component {
                 className="screenshot"
                 key="steam-app-image"
                 onClick={this.loadNextApp}
-                src={currentApp.screenshots[currentScreenshot].url}
+                src={screenshotUrl}
                 alt="The whole purpose of this website"
               />
             </Col>
             <Col lg={1}>High Score</Col>
-          </Row>
+          </Row>          
           <Row>
-            <a
-              key="steam-app-title"
-              href={`https://store.steampowered.com/app/${currentApp.id}`}
-              target="_blank"
-              className="steam-app-title"
-              rel="noreferrer"
-            >
-              {currentApp.name}
-            </a>
-          </Row>
-          <Row>
-            <Col xs={1}></Col>
-            <Col className='input-block-level'>
-              <Button className="option-btn"  >{this.state.answerOptions.opt1}</Button>
-            <Button className="option-btn" >{this.state.answerOptions.opt2}</Button>
-            </Col>
-            <Col xs={1}></Col>
-          </Row>
-          <Row>
-            <Col xs={1}></Col>
-            <Col>
-              <Button className="option-btn" >{this.state.answerOptions.opt3}</Button>
-            <Button className="option-btn" >{this.state.answerOptions.opt4}</Button>
-            </Col>
-            <Col xs={1}></Col>
+            {answerOptions}
           </Row>
         </Container>
       );
@@ -111,6 +145,5 @@ class MainPage extends Component {
     return <MainTemplate>{content}</MainTemplate>;
   }
 }
-
 
 export default MainPage;

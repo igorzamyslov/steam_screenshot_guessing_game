@@ -13,6 +13,14 @@
     margin: 8px;
     color: aqua;
 }
+.correct {
+    color: green;
+}
+
+.incorrect {
+    color: red;
+}
+
 
 .screenshot{
     max-width: 100%;    
