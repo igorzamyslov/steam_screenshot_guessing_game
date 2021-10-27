@@ -3,8 +3,7 @@ from logging.config import fileConfig
 from alembic import context
 
 from common.configs import get_sqlite_connection_config
-from common.database import engine
-from common.schema import Base
+from common.database import Base, engine
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
