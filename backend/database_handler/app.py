@@ -12,7 +12,8 @@ REQUESTS_DELAY = 0.0  # sec
 
 def get_db_app_ids() -> Set[int]:
     """ Get all App IDs from the database """
-    return {_id for [_id] in db.Session().query(db.Application.id).all()}
+    with db.DBSession() as session:
+        return {_id for [_id] in session.query(db.Application.id).all()}
 
 
 def init_parser(app_id: int) -> Optional[SteamAppHandler]:
@@ -66,7 +67,7 @@ def populate_app_from_parser(app: db.Application, parser: SteamAppHandler):
     app.reviews_count = parser.get_reviews_count()
     app.screenshots = [db.Screenshot(url=url) for url in parser.get_screenshot_urls()]
     # Populate dependent fields in the app
-    with db.Session() as session:
+    with db.DBSession() as session:
         # Get existing db instances or create new ones if they don't exist
         app.type = get_from_db_or_create(session, db.Type, {"name": parser.get_type()})
         app.categories = [get_from_db_or_create(session, db.Category, {"name": c})
@@ -92,7 +93,7 @@ def create_db_app(app_id: int, app_name: str):
             print(f"ERROR: Parse App ID {app_id}: {error}")
             return
     # Commit
-    with db.Session() as session:
+    with db.DBSession() as session:
         session.merge(db_app)
         try:
             session.commit()
