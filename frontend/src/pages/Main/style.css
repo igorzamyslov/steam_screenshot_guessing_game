@@ -11,14 +11,25 @@
     background-color: rgba(42,71,94,1);
     min-width: 320px;    
     margin: 8px;
-    color: aqua;
+    color: #C7D5E0;
+    border-color: rgba(27,40,56,1);
 }
+
+.buttons-row{
+    padding-left: 160px ;
+    padding-right: 160px ;
+    max-width: 100%;
+}
+
 .correct {
-    color: green;
+    background-color: #97CC04;
 }
 
 .incorrect {
-    color: red;
+    background-color: #F10472;
+}
+.base {
+  background-color: rgba(42,71,94,1);
 }
 
 

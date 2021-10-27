@@ -5,6 +5,7 @@ import { Component } from "react";
 import Button from "react-bootstrap/Button";
 import SteamService from "services/SteamService";
 import MainTemplate from "templates/MainTemplate";
+import OptionButton from "pages/Main/OptionButton"
 
 const messages = {
   loading: "Steam app loading ...",
@@ -24,52 +25,6 @@ const messages = {
   ]
 }
 */
-
-class OptionButton extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      color: null
-    }
-    this.blinkInterval = null
-  }
-  
-  componentDidMount() {
-    this.updateBlink({}, this.props)
-  }
-
-  componentDidUpdate(prevProps) {
-    this.updateBlink(prevProps, this.props)
-  }
-
-  updateBlink = (prevProps, props) => {
-    const { blink: prevBlink } = prevProps;
-    const { blink, color } = this.props;
-    if (!prevBlink && blink) {
-      // create blinking interval
-      this.blinkInterval = setInterval(() => {
-        this.setState({ color: this.state.color ? null : color })
-      }, 300)
-    } else if (prevBlink && !blink) {
-      // remove blinking interval
-      clearInterval(this.blinkInterval)
-    }
-  }
-
-  render() {
-    const { answer } = this.props;
-    const { color } = this.state;
-    return (
-      <Button 
-        className="option-btn"
-        style={color && { backgroundColor: color }}
-      >
-        {answer.appName}
-      </Button>
-    )
-  }
-}
-
 
 class MainPage extends Component {
   constructor(props) {
@@ -115,7 +70,7 @@ class MainPage extends Component {
     let content;
 
     const answerOptions = answers.map((answer, i) => (
-      <OptionButton key={`option_button_${i}`} answer={answer} blink color="green" />
+      <OptionButton key={`option_button_${i}`} answer={answer} blink class="base" />
     ))
 
     if (message && answerOptions.length !== 0) {
@@ -135,8 +90,8 @@ class MainPage extends Component {
               />
             </Col>
             <Col lg={1}>High Score</Col>
-          </Row>          
-          <Row>
+          </Row>
+          <Row className="buttons-row">
             {answerOptions}
           </Row>
         </Container>
