@@ -70,7 +70,7 @@ class MainPage extends Component {
     let content;
 
     const answerOptions = answers.map((answer, i) => (
-      <OptionButton key={`option_button_${i}`} answer={answer} blink class="base" />
+      <OptionButton key={`option_button_${i}`} answer={answer} blink btnClass="correct" />
     ))
 
     if (message && answerOptions.length !== 0) {
@@ -79,7 +79,7 @@ class MainPage extends Component {
       content = (
         <Container>
           <Row className='main-row'>
-            <Col lg={1}>Factorio</Col>
+            <Col lg={1}>Games:</Col>
             <Col lg={10}>
               <img
                 className="screenshot"

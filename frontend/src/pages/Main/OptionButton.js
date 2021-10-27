@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 class OptionButton extends Component {
     constructor(props) {
       super(props)
+      console.log("Props ",props)
       this.state = {
         btnClass : "base",      
       }
@@ -21,11 +22,12 @@ class OptionButton extends Component {
     updateBlink = (prevProps, props) => {
       const { blink: prevBlink } = prevProps;
       const { blink, btnClass } = this.props;
+      console.log(btnClass,blink)
       if (!prevBlink && blink) {
         // create blinking interval
-        this.blinkInterval = setInterval(() => {
-          this.setState({ btnClass: this.state.btnClass ? null : btnClass })
-        }, 1000)
+        // this.blinkInterval = setInterval(() => {
+        //   this.setState({ btnClass: this.state.btnClass ? null : btnClass })
+        // }, 2000)
       } else if (prevBlink && !blink) {
         // remove blinking interval
         clearInterval(this.blinkInterval)
