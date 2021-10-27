@@ -39,7 +39,7 @@ class AppInfo(BaseModel):
 class QuizAnswer(BaseModel):
     """ One of the answers for a quiz """
     app_id: int = Field(..., alias="appId")
-    app_name: str
+    app_name: str = Field(..., alias="appName")
     url: HttpUrl
     correct: bool
 
