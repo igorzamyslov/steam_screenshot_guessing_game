@@ -1,10 +1,8 @@
 import "./style.css";
 
 const MainTemplate = ({ children }) => (
-  <div className="main-template">
-    <nav className="nav">
-      <h2 className="" href="/">GUESS STEAM GAME</h2>      
-    </nav>
+  <div className="main-template">  
+    <h2 className="" href="/">GUESS STEAM GAME</h2>          
     {children}
   </div>
 );

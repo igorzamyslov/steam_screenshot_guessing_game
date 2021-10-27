@@ -19,7 +19,7 @@ a {
   text-align: left;
   width: 100vw;
   position: fixed;
-  padding: 10px;
+  padding: 8px;
   top: 0;
   left: 0;
   font-size: 30px;
@@ -30,4 +30,5 @@ h2 {
   color: white;
   font-family: "Motiva Sans", Sans-serif;
   text-shadow: 0px 0px 2px rgb(23, 26, 33);
+  margin-bottom: 0px;
 }

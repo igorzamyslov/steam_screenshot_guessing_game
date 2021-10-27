@@ -1,4 +1,5 @@
 import "./style.css";
+import './layout.css'
 import { Container, Row, Col } from 'react-bootstrap';
 
 import { Component } from "react";
@@ -77,10 +78,10 @@ class MainPage extends Component {
       content = <p key="message">{message}</p>;
     } else {
       content = (
-        <Container>
-          <Row className='main-row'>
-            <Col lg={1}>Games:</Col>
-            <Col lg={10}>
+        <div className = "dark-back">
+          <div className="container">
+            <div className="item">Games:</div>
+            <div className="image-item">
               <img
                 className="screenshot"
                 key="steam-app-image"
@@ -88,13 +89,13 @@ class MainPage extends Component {
                 src={screenshotUrl}
                 alt="The whole purpose of this website"
               />
-            </Col>
-            <Col lg={1}>High Score</Col>
-          </Row>
-          <Row className="buttons-row">
-            {answerOptions}
-          </Row>
-        </Container>
+            </div>
+            <div className="item">High Score</div>
+          </div>
+          <div className="container buttons-block">   
+            {answerOptions}                        
+          </div>
+        </div>
       );
     }
     return <MainTemplate>{content}</MainTemplate>;

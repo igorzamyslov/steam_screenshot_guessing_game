@@ -25,11 +25,11 @@ class OptionButton extends Component {
         console.log(btnClass, blink)
         if (!prevBlink && blink) {
             // create blinking interval
-            if (props.answer.correct) {
-                this.blinkInterval = setInterval(() => {
-                    this.setState({ btnClass: this.state.btnClass ? null : btnClass })
-                }, 300)
-            }
+            // if (props.answer.correct) {
+            //     this.blinkInterval = setInterval(() => {
+            //         this.setState({ btnClass: this.state.btnClass ? null : btnClass })
+            //     }, 300)
+            // }
         } else if (prevBlink && !blink) {
             // remove blinking interval
             clearInterval(this.blinkInterval)
