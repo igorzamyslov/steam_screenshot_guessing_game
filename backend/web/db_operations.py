@@ -21,9 +21,10 @@ def get_application(session: Session, app_id: int) -> db.Application:
     """ Get application by its id """
     try:
         return (session.query(db.Application)
+                .filter_by(id=app_id)
                 .options(selectinload(db.Application.screenshots),
                          selectinload(db.Application.similar_apps))
-                .one(app_id))
+                .one())
     except (NoResultFound, MultipleResultsFound) as error:
         raise DatabaseOperationError from error
 
@@ -39,12 +40,12 @@ def get_random_application(session: Session) -> db.Application:
              .group_by(db.Application.id))
     query_with_filters = query.filter(db.Application.reviews_count >= 500)
     try:
-        app_id = random.choice(query_with_filters.all())
+        [app_id] = random.choice(query_with_filters.all())
     except IndexError:
         # For dev purposes:
         # If app with filters is not found - fallbck to any app
         try:
-            app_id = random.choice(query.all())
+            [app_id] = random.choice(query.all())
         except IndexError as error:
             raise DatabaseOperationError from error
     return get_application(session, app_id)
