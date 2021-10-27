@@ -34,6 +34,12 @@ class MainPage extends Component {
       screenshotUrl: null,
       message: messages.loading,
       answers: [],
+      shownGames: [
+        "Factorio",
+        "Interplanetary Hunter Demo",
+        "Divinity: Original Sin 2 - Definitive Edition",
+        "Doom"        
+      ] 
     };
   }
 
@@ -67,20 +73,28 @@ class MainPage extends Component {
   };
 
   render() {
-    const { answers, screenshotUrl, message } = this.state;
+    const { answers, screenshotUrl, message, shownGames } = this.state;
     let content;
 
     const answerOptions = answers.map((answer, i) => (
       <OptionButton key={`option_button_${i}`} answer={answer} blink btnClass="correct" />
     ))
-
+    
+    let shownGamesList = shownGames.map( (name) => (
+      <a href="#"><li className="shown-game">{name}</li> </a> 
+    ))
+    
     if (message && answerOptions.length !== 0) {
       content = <p key="message">{message}</p>;
     } else {
       content = (
         <div className = "dark-back">
           <div className="container">
-            <div className="item">Games:</div>
+            <div className="item">Games:
+            <ul>
+              {shownGamesList}
+            </ul>
+            </div>
             <div className="image-item">
               <img
                 className="screenshot"
@@ -90,7 +104,7 @@ class MainPage extends Component {
                 alt="The whole purpose of this website"
               />
             </div>
-            <div className="item">High Score</div>
+            <div className="item">Score</div>
           </div>
           <div className="container buttons-block">   
             {answerOptions}                        
