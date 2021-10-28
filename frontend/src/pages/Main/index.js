@@ -104,7 +104,10 @@ class MainPage extends Component {
                 alt="The whole purpose of this website"
               />
             </div>
-            <div className="item">Score</div>
+            <div className="item">
+              Score:
+              <h1>7</h1>
+            </div>
           </div>
           <div className="container buttons-block">   
             {answerOptions}                        
