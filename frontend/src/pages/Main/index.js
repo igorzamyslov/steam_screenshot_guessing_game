@@ -1,12 +1,12 @@
 import "./style.css";
-import './layout.css'
-import { Container, Row, Col } from 'react-bootstrap';
+import "./layout.css";
 
+import OptionButton from "pages/Main/OptionButton";
 import { Component } from "react";
+import { Col, Container, Row } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import SteamService from "services/SteamService";
 import MainTemplate from "templates/MainTemplate";
-import OptionButton from "pages/Main/OptionButton"
 
 const messages = {
   loading: "Steam app loading ...",
@@ -38,8 +38,8 @@ class MainPage extends Component {
         "Factorio",
         "Interplanetary Hunter Demo",
         "Divinity: Original Sin 2 - Definitive Edition",
-        "Doom"        
-      ] 
+        "Doom",
+      ],
     };
   }
 
@@ -77,23 +77,29 @@ class MainPage extends Component {
     let content;
 
     const answerOptions = answers.map((answer, i) => (
-      <OptionButton key={`option_button_${i}`} answer={answer} blink btnClass="correct" />
-    ))
-    
-    let shownGamesList = shownGames.map( (name) => (
-      <a href="#"><li className="shown-game">{name}</li> </a> 
-    ))
-    
+      <OptionButton
+        key={`option_button_${i}`}
+        answer={answer}
+        blink
+        btnClass="correct"
+      />
+    ));
+
+    let shownGamesList = shownGames.map((name) => (
+      <a href="#">
+        <li className="shown-game">{name}</li>{" "}
+      </a>
+    ));
+
     if (message && answerOptions.length !== 0) {
       content = <p key="message">{message}</p>;
     } else {
       content = (
-        <div className = "dark-back">
+        <div className="dark-back">
           <div className="container">
-            <div className="item">Games:
-            <ul>
-              {shownGamesList}
-            </ul>
+            <div className="item">
+              Games:
+              <ul>{shownGamesList}</ul>
             </div>
             <div className="image-item">
               <img
@@ -109,9 +115,7 @@ class MainPage extends Component {
               <h1>7</h1>
             </div>
           </div>
-          <div className="container buttons-block">   
-            {answerOptions}                        
-          </div>
+          <div className="container buttons-block">{answerOptions}</div>
         </div>
       );
     }
