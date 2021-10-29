@@ -1,10 +1,10 @@
 .flex-container {
   display: flex;
   flex-wrap: nowrap;
-  justify-content: center;
-  max-height: 75vh;
+  justify-content: center;  
   max-width: 1600px;
   margin: auto;
+  align-items: stretch;
 }
 
 .flex-item {
