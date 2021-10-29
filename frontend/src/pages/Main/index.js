@@ -103,12 +103,12 @@ class MainPage extends Component {
 
     const answerOptions = answers.map((answer, i) => (
       <OptionButton
-        key={`option_button_${i}`}
-        label={answer.appName}
+        answer={answer}
+        chosenAnswer={chosenAnswer}
+        correctAnswer={correctAnswer}
+        onClick={!chosenAnswer && this.makeGuess(answer)}
         className="flex-item"
-        blink={[chosenAnswer, correctAnswer].includes(answer)}
-        blinkClass={answer === correctAnswer ? "correct" : "incorrect"}
-        onClick={this.makeGuess(answer)}
+        key={`option_button_${i}`}
       />
     ));
 

@@ -28,10 +28,28 @@
   box-shadow: 2px 2px 4px 0 rgb(23 26 33);
 }
 
-.correct {
-  background-color: #97cc04;
+.blink {
+  animation-duration: 300ms;
+  animation-timing-function: step-start;
+  animation-delay: 0s;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+  animation-fill-mode: none;
+  animation-play-state: running;
 }
 
-.incorrect {
-  background-color: #f10472;
+.blink.correct {
+  animation-name: blink-correct;
+}
+
+.blink.incorrect {
+  animation-name: blink-incorrect;
+}
+
+@keyframes blink-correct {
+  50% { background-color: #97cc04; }
+}
+
+@keyframes blink-incorrect {
+  50% { background-color: #f10472; }
 }

@@ -1,61 +1,28 @@
 // import Button from 'react-bootstrap/Button';
 import "./style.css";
 
-import { Component } from "react";
-
-class OptionButton extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      blinkClass: "",
-    };
-    this.blinkInterval = null;
+const OptionButton = (props) => {
+  let { answer, chosenAnswer, correctAnswer, className, ...otherProps } = props;
+  // init/update className
+  if (!className) {
+    className = "option-btn";
+  } else {
+    className += " option-btn";
   }
-
-  componentDidMount() {
-    this.updateBlink({}, this.props);
-  }
-
-  componentDidUpdate(prevProps) {
-    this.updateBlink(prevProps, this.props);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.blinkInterval);
-  }
-
-  updateBlink(prevProps, props) {
-    const { blink: prevBlink } = prevProps;
-    const { blink, blinkClass } = props;
-    if (!prevBlink && blink) {
-      // create blinking interval
-      this.blinkInterval = setInterval(() => {
-        this.setState({ blinkClass: this.state.blinkClass ? "" : blinkClass });
-      }, 300);
-    } else if (prevBlink && !blink) {
-      // remove blinking interval
-      clearInterval(this.blinkInterval);
+  // check if button should be blinking
+  if ([chosenAnswer, correctAnswer].includes(answer)) {
+    className += " blink";
+    if (answer === correctAnswer) {
+      className += " correct";
+    } else {
+      className += " incorrect";
     }
   }
-
-  render() {
-    const {
-      label,
-      className,
-      blink,
-      blinkClass: _,
-      ...otherProps
-    } = this.props;
-    const { blinkClass } = this.state;
-    return (
-      <button
-        className={["option-btn", className, blinkClass].join(" ")}
-        {...otherProps}
-      >
-        {label}
-      </button>
-    );
-  }
-}
+  return (
+    <button className={className} {...otherProps}>
+      {answer.appName}
+    </button>
+  );
+};
 
 export default OptionButton;
