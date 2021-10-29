@@ -1,8 +1,52 @@
-.steam-app-title {
-  opacity: 0%;
+.flex-container {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  max-height: 75vh;
+  max-width: 1600px;
+  margin: auto;
+}
+
+.flex-item {
+  flex-grow: 1;
+}
+
+.flex-image-item {
+  flex-grow: 2;
+  margin: auto 5%;
+}
+
+.buttons-block {
+  flex-wrap: wrap;
+  margin-top: 8px;
+  padding: 0;
+}
+
+.buttons-block > .flex-item {
+  flex-basis: 40%;
+  margin: 4px;
+}
+
+.dark-back {
+  padding: 16px;
+  background-color: rgb(0 0 0 / 10%);
+  border-radius: 0.5rem;
   width: 100%;
 }
 
-.steam-app-title:hover {
-  opacity: inherit;
+.screenshot {
+  box-shadow: 0 0 8px 0 rgb(23 26 33);
+  max-width: 100%;
+  max-height: 100%;
+  height: auto;
+}
+
+.shown-game {
+  font-size: small;
+  text-align: left;
+}
+
+ul {
+  margin-right: 8px;
+  list-style-type: decimal;
 }

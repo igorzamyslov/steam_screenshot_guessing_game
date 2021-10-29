@@ -1,7 +1,7 @@
 """ Includes common DB Operations relevant for the web application """
-import random
 from typing import Set
 
+from sqlalchemy import func
 from sqlalchemy.exc import MultipleResultsFound, NoResultFound
 from sqlalchemy.orm import Session, selectinload
 
@@ -34,18 +34,19 @@ def get_random_application(session: Session) -> db.Application:
     Get random application based on the filters
     NOTE: Filters are hardcoded for now
     """
-    query = (session.query(db.Application.id)
+    query = (session.query(db.Application)
              .join(db.Screenshot, db.Type)
              .filter(db.Type.name == "game")
-             .group_by(db.Application.id))
+             .group_by(db.Application.id)
+             .order_by(func.random())
+             .options(selectinload(db.Application.screenshots),
+                      selectinload(db.Application.similar_apps)))
     query_with_filters = query.filter(db.Application.reviews_count >= 500)
-    try:
-        [app_id] = random.choice(query_with_filters.all())
-    except IndexError:
+    app = query_with_filters.first()
+    if app is None:
         # For dev purposes:
-        # If app with filters is not found - fallbck to any app
-        try:
-            [app_id] = random.choice(query.all())
-        except IndexError as error:
-            raise DatabaseOperationError from error
-    return get_application(session, app_id)
+        # If app with filters is not found - fallback to any app
+        app = query_with_filters.first()
+    if app is None:
+        raise DatabaseOperationError("No applications found")
+    return app

@@ -3,7 +3,8 @@ a {
 }
 
 .main-template {
-  background-color: #282c34;
+  background: rgb(23 26 33);
+  background: linear-gradient(135deg, rgb(23 26 33) 0%, rgb(42 71 94 / 100%) 35%, rgb(27 40 56 / 100%) 100%);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -18,8 +19,16 @@ a {
   text-align: left;
   width: 100vw;
   position: fixed;
-  padding: 10px;
+  padding: 8px;
   top: 0;
   left: 0;
   font-size: 30px;
+}
+
+h2 {
+  padding: 8px;
+  color: white;
+  font-family: "Motiva Sans", sans-serif;
+  text-shadow: 0 0 2px rgb(23 26 33);
+  margin-bottom: 0;
 }

@@ -1,23 +1,47 @@
 import "./style.css";
 
+import OptionButton from "components/OptionButton";
 import { Component } from "react";
-import Button from "react-bootstrap/Button";
 import SteamService from "services/SteamService";
 import MainTemplate from "templates/MainTemplate";
+
+/*
+{
+  "screenshotUrl": "string",
+  "answers": [
+    {
+      "appId": 0,
+      "appMame": "string",
+      "url": "string",
+      "correct": true
+    }
+  ]
+}
+*/
 
 const messages = {
   loading: "Steam app loading ...",
   error: "Error during Steam app loading!",
 };
 
+const cleanState = {
+  screenshotUrl: null,
+  message: null,
+  answers: [],
+  chosenAnswer: null,
+  correctAnswer: null,
+};
+
 class MainPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentApp: null,
-      currentScreenshot: null,
+      ...cleanState,
       message: messages.loading,
+      score: 0,
+      shownGames: [],
     };
+    this.loadingMessageTimeout = null;
   }
 
   static selectRandomScreenshot = (app) => {
@@ -25,61 +49,110 @@ class MainPage extends Component {
   };
 
   componentDidMount() {
-    this.loadNextApp();
+    this.loadNextQuiz();
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.loadingMessageTimeout);
   }
 
   showMessage = (message) => {
-    this.setState({
-      currentApp: null,
-      currentScreenshot: null,
-      message,
-    });
+    this.setState({ ...cleanState, message });
   };
 
-  loadNextApp = () => {
-    this.showMessage(messages.loading);
-    SteamService.getRandomAppData()
+  loadNextQuiz = () => {
+    // show loading message after 1 second
+    this.loadingMessageTimeout = setTimeout(() => {
+      this.showMessage(messages.loading);
+    }, 1000);
+    SteamService.getQuizRandomAppData()
       .then((response) => {
-        const currentApp = response.body;
-        const currentScreenshot =
-          this.constructor.selectRandomScreenshot(currentApp);
-        this.setState({ currentApp, currentScreenshot, message: null });
+        clearTimeout(this.loadingMessageTimeout);
+        const quiz = response.body;
+        const { screenshotUrl, answers } = quiz;
+        this.setState({ ...cleanState, screenshotUrl, answers });
       })
       .catch(() => {
         this.showMessage(messages.error);
       });
   };
 
-  render() {
-    const { currentApp, currentScreenshot, message } = this.state;
-    let content;
-    if (message && !currentApp) {
-      content = <p key="message">{message}</p>;
-    } else {
-      content = [
-        <img
-          key="steam-app-image"
-          onClick={this.loadNextApp}
-          style={{ maxWidth: "80%", maxHeight: "80%" }}
-          src={currentApp.screenshots[currentScreenshot].url}
-          alt="The whole purpose of this website"
-        />,
-        <a
-          key="steam-app-title"
-          href={`https://store.steampowered.com/app/${currentApp.id}`}
-          target="_blank"
-          className="steam-app-title"
-          rel="noreferrer"
-        >
-          {currentApp.name}
-        </a>,
-        <Button>I am button</Button>,
-      ];
-    }
-    return <MainTemplate>{content}</MainTemplate>;
-  }
+  makeGuess = (answer) => () => {
+    const correctAnswer = this.state.answers.find((a) => a.correct);
+    const shownGames = [...this.state.shownGames, correctAnswer];
+    const score = this.state.score + (answer === correctAnswer);
+    this.setState({
+      chosenAnswer: answer,
+      correctAnswer,
+      shownGames,
+      score,
+    });
+    setTimeout(this.loadNextQuiz, 2500);
+  };
 
-  main_layout() {}
+  render() {
+    const {
+      answers,
+      screenshotUrl,
+      message,
+      score,
+      shownGames,
+      chosenAnswer,
+      correctAnswer,
+    } = this.state;
+
+    const answerOptions = answers.map((answer, i) => (
+      <OptionButton
+        answer={answer}
+        chosenAnswer={chosenAnswer}
+        correctAnswer={correctAnswer}
+        onClick={!chosenAnswer && this.makeGuess(answer)}
+        className="flex-item"
+        key={`option_button_${i}`}
+      />
+    ));
+
+    let content;
+    if (message) {
+      content = <p className="flex-item">{message}</p>;
+    } else {
+      content = (
+        <img
+          className="screenshot"
+          src={screenshotUrl}
+          alt="The whole purpose of this website"
+        />
+      );
+    }
+    return (
+      <MainTemplate>
+        <div className="dark-back">
+          <div className="flex-container">
+            <div className="flex-item">
+              Games:
+              <ul>
+                {shownGames.map(({ appName, url }) => (
+                  <a href={url} target="_blank">
+                    <li className="shown-game">{appName}</li>
+                  </a>
+                ))}
+              </ul>
+            </div>
+            <div className="flex-image-item">
+              {content}
+              <div className="flex-container buttons-block">
+                {answerOptions}
+              </div>
+            </div>
+            <div className="flex-item">
+              Score:
+              <h1>{score}</h1>
+            </div>
+          </div>
+        </div>
+      </MainTemplate>
+    );
+  }
 }
 
 export default MainPage;

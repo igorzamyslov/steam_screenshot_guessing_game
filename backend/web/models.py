@@ -9,7 +9,7 @@ from sqlalchemy.orm import Session
 import common.database as db
 from .db_operations import get_application
 
-STEAM_STORE_URL = "https://store.steampowered.com/app"
+STEAM_STORE_URL = "https://store.steampowered.com/app/"
 
 
 class Screenshot(BaseModel):
@@ -39,7 +39,7 @@ class AppInfo(BaseModel):
 class QuizAnswer(BaseModel):
     """ One of the answers for a quiz """
     app_id: int = Field(..., alias="appId")
-    app_name: str
+    app_name: str = Field(..., alias="appName")
     url: HttpUrl
     correct: bool
 
