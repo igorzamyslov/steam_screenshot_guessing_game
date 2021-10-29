@@ -41,6 +41,7 @@ class MainPage extends Component {
       score: 0,
       shownGames: [],
     };
+    this.loadingMessageTimeout = null;
   }
 
   static selectRandomScreenshot = (app) => {
@@ -51,14 +52,22 @@ class MainPage extends Component {
     this.loadNextQuiz();
   }
 
+  componentWillUnmount() {
+    clearTimeout(this.loadingMessageTimeout);
+  }
+
   showMessage = (message) => {
     this.setState({ ...cleanState, message });
   };
 
   loadNextQuiz = () => {
-    this.showMessage(messages.loading);
+    // show loading message after 1 second
+    this.loadingMessageTimeout = setTimeout(() => {
+      this.showMessage(messages.loading);
+    }, 300);
     SteamService.getQuizRandomAppData()
       .then((response) => {
+        clearTimeout(this.loadingMessageTimeout);
         const quiz = response.body;
         const { screenshotUrl, answers } = quiz;
         this.setState({ ...cleanState, screenshotUrl, answers });
@@ -96,7 +105,7 @@ class MainPage extends Component {
       <OptionButton
         key={`option_button_${i}`}
         label={answer.appName}
-        className="item"
+        className="flex-item"
         blink={[chosenAnswer, correctAnswer].includes(answer)}
         blinkClass={answer === correctAnswer ? "correct" : "incorrect"}
         onClick={this.makeGuess(answer)}
@@ -105,41 +114,44 @@ class MainPage extends Component {
 
     let content;
     if (message) {
-      content = <p>{message}</p>;
+      content = <p className="flex-item">{message}</p>;
     } else {
       content = (
+        <img
+          className="screenshot"
+          src={screenshotUrl}
+          alt="The whole purpose of this website"
+        />
+      );
+    }
+    return (
+      <MainTemplate>
         <div className="dark-back">
-          <div className="container">
-            <div className="item">
+          <div className="flex-container">
+            <div className="flex-item">
               Games:
               <ul>
-                {shownGames.map(({ appId, appName }) => (
-                  <a
-                    href={`https://store.steampowered.com/app/${appId}`}
-                    target="_blank"
-                  >
+                {shownGames.map(({ appName, url }) => (
+                  <a href={url} target="_blank">
                     <li className="shown-game">{appName}</li>
                   </a>
                 ))}
               </ul>
             </div>
-            <div className="image-item">
-              <img
-                className="screenshot"
-                src={screenshotUrl}
-                alt="The whole purpose of this website"
-              />
-              <div className="container buttons-block">{answerOptions}</div>
+            <div className="flex-image-item">
+              {content}
+              <div className="flex-container buttons-block">
+                {answerOptions}
+              </div>
             </div>
-            <div className="item">
+            <div className="flex-item">
               Score:
               <h1>{score}</h1>
             </div>
           </div>
         </div>
-      );
-    }
-    return <MainTemplate>{content}</MainTemplate>;
+      </MainTemplate>
+    );
   }
 }
 
