@@ -1,8 +1,9 @@
-import OptionButton from 'components/OptionButton';
-import { Component } from 'react';
-import SteamService from 'services/SteamService';
-import MainTemplate from 'templates/MainTemplate';
-import './style.css';
+import "./style.css";
+
+import OptionButton from "components/OptionButton";
+import { Component } from "react";
+import SteamService from "services/SteamService";
+import MainTemplate from "templates/MainTemplate";
 
 /*
 {
