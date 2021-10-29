@@ -1,16 +1,12 @@
-import "./style.css";
-import "./layout.css";
-
-import OptionButton from "pages/Main/OptionButton";
-import { Component } from "react";
-import { Col, Container, Row } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
-import SteamService from "services/SteamService";
-import MainTemplate from "templates/MainTemplate";
+import OptionButton from 'components/OptionButton';
+import { Component } from 'react';
+import SteamService from 'services/SteamService';
+import MainTemplate from 'templates/MainTemplate';
+import './style.css';
 
 const messages = {
-  loading: "Steam app loading ...",
-  error: "Error during Steam app loading!",
+  loading: 'Steam app loading ...',
+  error: 'Error during Steam app loading!',
 };
 
 /*
@@ -28,18 +24,16 @@ const messages = {
 */
 
 class MainPage extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.state = {
       screenshotUrl: null,
       message: messages.loading,
       answers: [],
-      shownGames: [
-        "Factorio",
-        "Interplanetary Hunter Demo",
-        "Divinity: Original Sin 2 - Definitive Edition",
-        "Doom",
-      ],
+      chosenAnswer: null,
+      correctAnswer: null,
+      score: 0,
+      shownGames: [],
     };
   }
 
@@ -47,8 +41,8 @@ class MainPage extends Component {
     return Math.floor(Math.random() * app.screenshots.length);
   };
 
-  componentDidMount() {
-    this.loadNextApp();
+  componentDidMount () {
+    this.loadNextQuiz();
   }
 
   showMessage = (message) => {
@@ -59,7 +53,7 @@ class MainPage extends Component {
     });
   };
 
-  loadNextApp = () => {
+  loadNextQuiz = () => {
     this.showMessage(messages.loading);
     SteamService.getQuizRandomAppData()
       .then((response) => {
@@ -72,50 +66,62 @@ class MainPage extends Component {
       });
   };
 
-  render() {
-    const { answers, screenshotUrl, message, shownGames } = this.state;
-    let content;
+  makeGuess = (answer) => () => {
+
+  };
+
+  render () {
+    const {
+      answers,
+      screenshotUrl,
+      message,
+      score,
+      shownGames,
+      chosenAnswer,
+      correctAnswer,
+    } = this.state;
 
     const answerOptions = answers.map((answer, i) => (
       <OptionButton
         key={`option_button_${i}`}
         answer={answer}
-        blink
-        btnClass="correct"
+        className="item"
+        blink={chosenAnswer}
+        blinkClass={chosenAnswer === correctAnswer ? 'correct' : 'incorrect'}
+        onClick={this.makeGuess(answer)}
       />
     ));
 
-    let shownGamesList = shownGames.map((name) => (
-      <a href="#">
-        <li className="shown-game">{name}</li>{" "}
-      </a>
-    ));
-
-    if (message && answerOptions.length !== 0) {
-      content = <p key="message">{message}</p>;
+    let content;
+    if (message) {
+      content = <p>{message}</p>;
     } else {
       content = (
         <div className="dark-back">
           <div className="container">
             <div className="item">
               Games:
-              <ul>{shownGamesList}</ul>
+              <ul>
+                {shownGames.map((name) => (
+                  <a href="#">
+                    <li className="shown-game">{name}</li>
+                  </a>
+                ))}
+              </ul>
             </div>
             <div className="image-item">
               <img
                 className="screenshot"
-                key="steam-app-image"
-                onClick={this.loadNextApp}
                 src={screenshotUrl}
                 alt="The whole purpose of this website"
               />
+              <div className="container buttons-block">{answerOptions}</div>
             </div>
             <div className="item">
               Score:
-              <h1>7</h1>
+              <h1>{score}</h1>
             </div>
           </div>
-          <div className="container buttons-block">{answerOptions}</div>
         </div>
       );
     }

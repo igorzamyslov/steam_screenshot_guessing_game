@@ -1,12 +1,12 @@
-import { Component } from "react";
-import Button from "react-bootstrap/Button";
+import { Component } from 'react';
+import Button from 'react-bootstrap/Button';
+import './style.css';
 
 class OptionButton extends Component {
   constructor(props) {
     super(props);
-    console.log("Props ", props);
     this.state = {
-      btnClass: "base",
+      blinkClass: "",
     };
     this.blinkInterval = null;
   }
@@ -21,15 +21,14 @@ class OptionButton extends Component {
 
   updateBlink = (prevProps, props) => {
     const { blink: prevBlink } = prevProps;
-    const { blink, btnClass } = this.props;
-    console.log(btnClass, blink);
+    const { blink, blinkClass } = this.props;
     if (!prevBlink && blink) {
       // create blinking interval
-      // if (props.answer.correct) {
-      //     this.blinkInterval = setInterval(() => {
-      //         this.setState({ btnClass: this.state.btnClass ? null : btnClass })
-      //     }, 300)
-      // }
+      if (props.answer.correct) {
+          this.blinkInterval = setInterval(() => {
+              this.setState({ blinkClass: this.state.blinkClass ? "" : blinkClass })
+          }, 300)
+      }
     } else if (prevBlink && !blink) {
       // remove blinking interval
       clearInterval(this.blinkInterval);
@@ -37,10 +36,15 @@ class OptionButton extends Component {
   };
 
   render() {
-    const { answer } = this.props;
-    const { btnClass } = this.state;
+    const { answer, className, ...otherProps } = this.props;
+    const { blinkClass } = this.state;
     return (
-      <Button className={"option-btn " + btnClass}>{answer.appName}</Button>
+      <Button
+        className={["option-btn", className, blinkClass].join(" ")}
+        {...otherProps}
+      >
+        {answer.appName}
+      </Button>
     );
   }
 }
