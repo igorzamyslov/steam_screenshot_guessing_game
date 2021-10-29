@@ -1,13 +1,9 @@
-import OptionButton from 'components/OptionButton';
-import { Component } from 'react';
-import SteamService from 'services/SteamService';
-import MainTemplate from 'templates/MainTemplate';
-import './style.css';
+import "./style.css";
 
-const messages = {
-  loading: 'Steam app loading ...',
-  error: 'Error during Steam app loading!',
-};
+import OptionButton from "components/OptionButton";
+import { Component } from "react";
+import SteamService from "services/SteamService";
+import MainTemplate from "templates/MainTemplate";
 
 /*
 {
@@ -23,15 +19,25 @@ const messages = {
 }
 */
 
+const messages = {
+  loading: "Steam app loading ...",
+  error: "Error during Steam app loading!",
+};
+
+const cleanState = {
+  screenshotUrl: null,
+  message: null,
+  answers: [],
+  chosenAnswer: null,
+  correctAnswer: null,
+};
+
 class MainPage extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.state = {
-      screenshotUrl: null,
+      ...cleanState,
       message: messages.loading,
-      answers: [],
-      chosenAnswer: null,
-      correctAnswer: null,
       score: 0,
       shownGames: [],
     };
@@ -41,16 +47,12 @@ class MainPage extends Component {
     return Math.floor(Math.random() * app.screenshots.length);
   };
 
-  componentDidMount () {
+  componentDidMount() {
     this.loadNextQuiz();
   }
 
   showMessage = (message) => {
-    this.setState({
-      currentApp: null,
-      currentScreenshot: null,
-      message,
-    });
+    this.setState({ ...cleanState, message });
   };
 
   loadNextQuiz = () => {
@@ -59,7 +61,7 @@ class MainPage extends Component {
       .then((response) => {
         const quiz = response.body;
         const { screenshotUrl, answers } = quiz;
-        this.setState({ screenshotUrl, answers, message: null });
+        this.setState({ ...cleanState, screenshotUrl, answers });
       })
       .catch(() => {
         this.showMessage(messages.error);
@@ -67,10 +69,19 @@ class MainPage extends Component {
   };
 
   makeGuess = (answer) => () => {
-
+    const correctAnswer = this.state.answers.find((a) => a.correct);
+    const shownGames = [...this.state.shownGames, correctAnswer];
+    const score = this.state.score + (answer === correctAnswer);
+    this.setState({
+      chosenAnswer: answer,
+      correctAnswer,
+      shownGames,
+      score,
+    });
+    setTimeout(this.loadNextQuiz, 3000);
   };
 
-  render () {
+  render() {
     const {
       answers,
       screenshotUrl,
@@ -84,10 +95,10 @@ class MainPage extends Component {
     const answerOptions = answers.map((answer, i) => (
       <OptionButton
         key={`option_button_${i}`}
-        answer={answer}
+        label={answer.appName}
         className="item"
-        blink={chosenAnswer}
-        blinkClass={chosenAnswer === correctAnswer ? 'correct' : 'incorrect'}
+        blink={[chosenAnswer, correctAnswer].includes(answer)}
+        blinkClass={answer === correctAnswer ? "correct" : "incorrect"}
         onClick={this.makeGuess(answer)}
       />
     ));
@@ -102,9 +113,12 @@ class MainPage extends Component {
             <div className="item">
               Games:
               <ul>
-                {shownGames.map((name) => (
-                  <a href="#">
-                    <li className="shown-game">{name}</li>
+                {shownGames.map(({ appId, appName }) => (
+                  <a
+                    href={`https://store.steampowered.com/app/${appId}`}
+                    target="_blank"
+                  >
+                    <li className="shown-game">{appName}</li>
                   </a>
                 ))}
               </ul>
