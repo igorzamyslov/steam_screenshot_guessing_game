@@ -3,6 +3,8 @@
   flex-wrap: nowrap;
   justify-content: center;
   max-height: 75vh;
+  max-width: 1600px;
+  margin: auto;
 }
 
 .flex-item {
@@ -21,8 +23,7 @@
 }
 
 .buttons-block > .flex-item {
-  flex-grow: 1;
-  flex-basis: 25%;
+  flex-basis: 40%;
   margin: 4px;
 }
 
