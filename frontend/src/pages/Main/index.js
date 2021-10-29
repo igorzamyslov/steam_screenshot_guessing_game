@@ -1,9 +1,8 @@
-import "./style.css";
-
-import OptionButton from "components/OptionButton";
-import { Component } from "react";
-import SteamService from "services/SteamService";
-import MainTemplate from "templates/MainTemplate";
+import OptionButton from 'components/OptionButton';
+import { Component } from 'react';
+import SteamService from 'services/SteamService';
+import MainTemplate from 'templates/MainTemplate';
+import './style.css';
 
 /*
 {
@@ -64,7 +63,7 @@ class MainPage extends Component {
     // show loading message after 1 second
     this.loadingMessageTimeout = setTimeout(() => {
       this.showMessage(messages.loading);
-    }, 300);
+    }, 1000);
     SteamService.getQuizRandomAppData()
       .then((response) => {
         clearTimeout(this.loadingMessageTimeout);
@@ -87,7 +86,7 @@ class MainPage extends Component {
       shownGames,
       score,
     });
-    setTimeout(this.loadNextQuiz, 3000);
+    setTimeout(this.loadNextQuiz, 2500);
   };
 
   render() {
