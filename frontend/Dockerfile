@@ -1,4 +1,4 @@
-FROM node:slim as frontend_builder
+FROM node:lts-slim as frontend_builder
 WORKDIR /app
 COPY package* jsconfig.json ./
 RUN npm ci
