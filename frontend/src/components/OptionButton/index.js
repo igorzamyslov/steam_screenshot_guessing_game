@@ -4,10 +4,11 @@ import "./style.css";
 const OptionButton = (props) => {
   let { answer, chosenAnswer, correctAnswer, className, ...otherProps } = props;
   // init/update className
+  // todo: remove it?
   if (!className) {
-    className = "option-btn";
+    className = "";
   } else {
-    className += " option-btn";
+    className += " ";
   }
   // check if button should be blinking
   if ([chosenAnswer, correctAnswer].includes(answer)) {
@@ -19,7 +20,7 @@ const OptionButton = (props) => {
     }
   }
   return (
-    <button className={className} {...otherProps}>
+    <button className={"nice-button " + className} {...otherProps}>
       {answer.appName}
     </button>
   );
