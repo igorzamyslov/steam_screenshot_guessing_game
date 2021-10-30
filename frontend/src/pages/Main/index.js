@@ -5,6 +5,13 @@ import { Component } from "react";
 import SteamService from "services/SteamService";
 import MainTemplate from "templates/MainTemplate";
 
+import {
+  BrowserRouter as Router,
+  Link  ,
+  useHistory,
+  useLocation
+} from "react-router-dom";
+
 const TIMEOUT_BEFORE_NEXT_QUESTION = 600;
 /*
 {
@@ -91,6 +98,12 @@ class MainPage extends Component {
     setTimeout(this.loadNextQuiz, TIMEOUT_BEFORE_NEXT_QUESTION);
   };
 
+  navigateToResult () {
+    // DOESNT WORK GOD KNOWS WHY
+    routerHistory = useHistory();
+    routerHistory.push("/result");
+  }
+
   render() {
     const {
       answers,
@@ -146,8 +159,8 @@ class MainPage extends Component {
               </div>
             </div>
             <div className="flex-item">
-              Score:
-              <h1>{score}</h1>
+              <Link to="/result">Score:</Link>
+              <h1 onClick={this.navigateToResult} >{score}</h1>
             </div>
           </div>
         </div>

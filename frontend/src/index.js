@@ -6,12 +6,30 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import Main from "./pages/Main";
+import Result from "./pages/Result";
+
+import {
+  BrowserRouter as BrowserRouter,
+  Switch,
+  Route
+} from "react-router-dom";
+
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Main />
-  </React.StrictMode>,
+    <BrowserRouter>
+      <Switch>
+        <Route path="/result">
+          <Result />
+        </Route>
+        <Route path="/">
+          <Main />
+        </Route>
+      </Switch>
+    </BrowserRouter>
+  </React.StrictMode>
+  ,
   document.getElementById("root")
 );
 

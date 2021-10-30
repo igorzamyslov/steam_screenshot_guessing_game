@@ -1,0 +1,87 @@
+.score-block {
+  min-width: 50%;
+  background-color: rgb(0 0 0 / 10%);
+  border-radius: 8px;
+}
+
+.shown-game {
+  font-size: large;
+
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;  
+  max-width: 800px;
+  margin: auto;
+  align-items: center;
+}
+
+.play-again-button {
+  margin: 8px;
+}
+
+.glow-on-hover {
+  width: 220px;
+  height: 50px;
+  border: none;
+  outline: none;
+  color: white;
+  background: #6fa720;
+  cursor: pointer;
+  position: relative;
+  z-index: 0;
+  border-radius: 10px;
+  box-shadow: 0 1px 8px rgb(0 0 0 / 10%);
+  text-shadow: 0px 0px 1px black;
+  font-size: xx-large;
+}
+
+.glow-on-hover:before {
+  content: '';
+  background: linear-gradient(45deg, #F83A90, #B081EE, #00D8F5, #1D4E89, #00A2B8, #6FA720);
+  position: absolute;
+  top: -2px;
+  left:-2px;
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(8px);
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  animation: glowing 20s linear infinite;
+  opacity: 0;
+  transition: opacity .3s ease-in-out;
+  border-radius: 10px;
+}
+
+.glow-on-hover:active {
+  color: white
+}
+
+.glow-on-hover:active:after {
+  background: transparent;
+}
+
+.glow-on-hover:hover:before {
+  opacity: 1;
+}
+
+.glow-on-hover:after {
+  z-index: -1;
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #6fa720;
+  left: 0;
+  top: 0;
+  border-radius: 10px;
+}
+
+@keyframes glowing {
+  0% { background-position: 0 0; }
+  50% { background-position: 400% 0; }
+  100% { background-position: 0 0; }
+}
