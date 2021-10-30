@@ -45,6 +45,7 @@ class MainPage extends Component {
       ...cleanState,
       message: messages.loading,
       score: 0,
+      lives: 3,
       shownGames: [],
     };
     this.loadingMessageTimeout = null;
@@ -86,20 +87,45 @@ class MainPage extends Component {
   makeGuess = (answer) => () => {
     const correctAnswer = this.state.answers.find((a) => a.correct);
     const shownGames = [...this.state.shownGames, correctAnswer];
-    const score = this.state.score + (answer === correctAnswer);
+    let score = this.state.score
+    let lives = this.state.lives
+    if (answer === correctAnswer) {
+      score = this.state.score + 1;      
+    } else {
+      lives = this.state.lives - 1;
+    }    
+
     this.setState({
       chosenAnswer: answer,
       correctAnswer,
       shownGames,
       score,
+      lives
     });
+    if(lives<=0){
+      setTimeout(this.navigateToResult, TIMEOUT_BEFORE_NEXT_QUESTION);
+      
+      return ;
+    }
     setTimeout(this.loadNextQuiz, TIMEOUT_BEFORE_NEXT_QUESTION);
   };
 
-  navigateToResult() {
+  navigateToResult = () => { 
     // DOESNT WORK GOD KNOWS WHY
     // routerHistory = useHistory();
+    console.log(this)
     this.history.push("/result");
+  }
+
+  renderLives(lives) {
+    let res = []
+    for (let i = 0; i < lives; i++) {
+      res.push(<LiveHeart className="flex-item" fill={true} />)
+    }
+    for (let i = 0; i < (3 - lives); i++) {
+      res.push(<LiveHeart className="flex-item" fill={false} />)
+    }
+    return res
   }
 
   render() {
@@ -108,6 +134,7 @@ class MainPage extends Component {
       screenshotUrl,
       message,
       score,
+      lives,
       shownGames,
       chosenAnswer,
       correctAnswer,
@@ -141,13 +168,11 @@ class MainPage extends Component {
     return (
       <MainTemplate>
         <div className="dark-back">
-          <div className="flex-container">            
+          <div className="flex-container">
             <div className="flex-item">
-            <div className="flex-coulmn-container">
-              <LiveHeart className="flex-item" />
-              <LiveHeart className="flex-item"/>
-              <LiveHeart className="flex-item"/>
-            </div>
+              <div className="flex-coulmn-container">
+                {this.renderLives(lives)}
+              </div>
               Games:
               <ul>
                 {shownGames.map(({ appName, url }) => (

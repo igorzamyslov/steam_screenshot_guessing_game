@@ -7,6 +7,17 @@
   align-items: stretch;
 }
 
+.flex-coulmn-container {
+  flex-direction: column;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  max-width: 1600px;
+  margin: auto;
+  align-items: stretch;
+}
+
+
 .flex-item {
   flex-grow: 1;
 }
