@@ -5,7 +5,7 @@ import { Component } from "react";
 import SteamService from "services/SteamService";
 import MainTemplate from "templates/MainTemplate";
 
-const TIMEOUT_BEFORE_NEXT_QUESTION = 600
+const TIMEOUT_BEFORE_NEXT_QUESTION = 600;
 /*
 {
   "screenshotUrl": "string",
@@ -78,7 +78,7 @@ class MainPage extends Component {
       });
   };
 
-  makeGuess = (answer) => () => {    
+  makeGuess = (answer) => () => {
     const correctAnswer = this.state.answers.find((a) => a.correct);
     const shownGames = [...this.state.shownGames, correctAnswer];
     const score = this.state.score + (answer === correctAnswer);
@@ -90,7 +90,6 @@ class MainPage extends Component {
     });
     setTimeout(this.loadNextQuiz, TIMEOUT_BEFORE_NEXT_QUESTION);
   };
- 
 
   render() {
     const {
@@ -134,7 +133,7 @@ class MainPage extends Component {
               Games:
               <ul>
                 {shownGames.map(({ appName, url }) => (
-                  <a href={url} target="_blank">
+                  <a href={url} target="_blank" rel="noreferrer">
                     <li className="shown-game">{appName}</li>
                   </a>
                 ))}
@@ -142,9 +141,9 @@ class MainPage extends Component {
             </div>
             <div className="flex-image-item">
               {content}
-               <div className="flex-container buttons-block">
+              <div className="flex-container buttons-block">
                 {answerOptions}
-              </div>              
+              </div>
             </div>
             <div className="flex-item">
               Score:
