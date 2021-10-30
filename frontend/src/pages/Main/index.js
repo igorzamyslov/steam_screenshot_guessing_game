@@ -141,13 +141,13 @@ class MainPage extends Component {
     return (
       <MainTemplate>
         <div className="dark-back">
-          <div className="flex-container">
-            <div>
-              <LiveHeart />
-              <LiveHeart />
-              <LiveHeart />
-            </div>
+          <div className="flex-container">            
             <div className="flex-item">
+            <div className="flex-coulmn-container">
+              <LiveHeart className="flex-item" />
+              <LiveHeart className="flex-item"/>
+              <LiveHeart className="flex-item"/>
+            </div>
               Games:
               <ul>
                 {shownGames.map(({ appName, url }) => (
