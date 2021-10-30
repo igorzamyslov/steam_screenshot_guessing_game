@@ -9,7 +9,7 @@
 
 }
 
-.flex-container {
+.flex-container-result {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;

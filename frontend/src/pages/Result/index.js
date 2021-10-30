@@ -19,7 +19,7 @@ class ResultPage extends Component {
           <h2>Your score:</h2>
           <h1>{this.state.score}</h1>
           <button className="play-again-button glow-on-hover">Play again</button>
-          <div className="flex-container">
+          <div className="flex-container-result">
             <h2>Your games:</h2>
             <ul>
               {this.state.shownGames.map(({ appName, url }) => (
