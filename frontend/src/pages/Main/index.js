@@ -4,28 +4,20 @@ import OptionButton from "components/OptionButton";
 import { Component } from "react";
 import SteamService from "services/SteamService";
 import MainTemplate from "templates/MainTemplate";
+import { withRouter } from "react-router";
+import PropTypes from "prop-types";
+
 
 import {
   BrowserRouter as Router,
-  Link  ,
-  useHistory,
-  useLocation
+  Link,
+  useHistory
 } from "react-router-dom";
+import LiveHeart from "components/LiveHeart";
 
 const TIMEOUT_BEFORE_NEXT_QUESTION = 600;
-/*
-{
-  "screenshotUrl": "string",
-  "answers": [
-    {
-      "appId": 0,
-      "appMame": "string",
-      "url": "string",
-      "correct": true
-    }
-  ]
-}
-*/
+
+
 
 const messages = {
   loading: "Steam app loading ...",
@@ -41,6 +33,12 @@ const cleanState = {
 };
 
 class MainPage extends Component {
+  static propTypes = {
+    match: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -98,10 +96,10 @@ class MainPage extends Component {
     setTimeout(this.loadNextQuiz, TIMEOUT_BEFORE_NEXT_QUESTION);
   };
 
-  navigateToResult () {
+  navigateToResult() {
     // DOESNT WORK GOD KNOWS WHY
-    routerHistory = useHistory();
-    routerHistory.push("/result");
+    // routerHistory = useHistory();
+    this.history.push("/result");
   }
 
   render() {
@@ -114,6 +112,8 @@ class MainPage extends Component {
       chosenAnswer,
       correctAnswer,
     } = this.state;
+
+    const { match, location, history } = this.props;
 
     const answerOptions = answers.map((answer, i) => (
       <OptionButton
@@ -142,6 +142,11 @@ class MainPage extends Component {
       <MainTemplate>
         <div className="dark-back">
           <div className="flex-container">
+            <div>
+              <LiveHeart />
+              <LiveHeart />
+              <LiveHeart />
+            </div>
             <div className="flex-item">
               Games:
               <ul>
