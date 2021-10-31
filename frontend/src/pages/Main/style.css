@@ -37,7 +37,6 @@
   padding: 8px;
   min-height: 200px;
   max-height: 400px;
-  box-shadow: 0 0 8px 0 rgb(23 26 33);
 }
 
 .buttons-block > .flex-item {
@@ -47,7 +46,8 @@
 }
 
 .screenshot {
-  box-shadow: 0 0 8px 0 rgb(23 26 33);
+  padding-top: 8px;
+  background-color: rgb(27 40 56 / 100%);
   object-fit: contain;
   max-width: 100%;
   max-height: calc(100% - 200px);
