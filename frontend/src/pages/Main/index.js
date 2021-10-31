@@ -40,10 +40,8 @@ class MainPage extends Component {
       shownGames: [],
     };
     this.loadingMessageTimeout = null;
-    this.navigateToResult = createNavigationHandler(
-      props.history,
-      routes.resultPage
-    );
+    this.navigateToResult = (score) =>
+      createNavigationHandler(props.history, routes.resultPage, { score });
   }
 
   static selectRandomScreenshot = (app) => {
@@ -100,7 +98,7 @@ class MainPage extends Component {
     if (lives > 0) {
       setTimeout(this.loadNextQuiz, TIMEOUT_BEFORE_NEXT_QUESTION);
     } else {
-      setTimeout(this.navigateToResult, TIMEOUT_BEFORE_NEXT_QUESTION);
+      setTimeout(this.navigateToResult(score), TIMEOUT_BEFORE_NEXT_QUESTION);
     }
   };
 
@@ -144,16 +142,14 @@ class MainPage extends Component {
       />
     ));
 
-    return (
-      <div>
-        <img
-          className="screenshot"
-          src={screenshotUrl}
-          alt="The whole purpose of this website"
-        />
-        <div className="flex-container buttons-block">{answerOptions}</div>
-      </div>
-    );
+    return [
+      <img
+        className="screenshot"
+        src={screenshotUrl}
+        alt="The whole purpose of this website"
+      />,
+      <div className="flex-container buttons-block">{answerOptions}</div>,
+    ];
   }
 
   render() {
@@ -182,19 +178,15 @@ class MainPage extends Component {
 
     return (
       <MainTemplate>
-        <div className="dark-back">
-          <div className="flex-container">
-            <div className="flex-item">
-              {this.renderLives(lives)}
-              Games:
-              {this.renderGames(shownGames)}
-            </div>
-            <div className="flex-image-item">{content}</div>
-            <div className="flex-item">
-              Score:
-              <h1>{score}</h1>
-            </div>
+        <div className="flex-container main">
+          <div className="flex-item">
+            {this.renderLives(lives)}
+            Score:
+            <h1>{score}</h1>
+            Games:
+            {this.renderGames(shownGames)}
           </div>
+          <div className="flex-image-item">{content}</div>
         </div>
       </MainTemplate>
     );

@@ -1,10 +1,12 @@
 .flex-container {
   display: flex;
+  height: 100%;
+  width: 100%;
   flex-wrap: nowrap;
   justify-content: center;
   max-width: 1600px;
-  margin: auto;
   align-items: stretch;
+  padding: 8px;
 }
 
 .flex-column-container {
@@ -17,12 +19,15 @@
 }
 
 .flex-item {
-  flex-grow: 1;
+  width: 300px;
 }
 
 .flex-image-item {
-  flex-grow: 2;
   margin: 0 5%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: flex-start;
 }
 
 .buttons-block {
@@ -30,26 +35,22 @@
   background-color: rgb(27 40 56 / 100%);
   width: 100%;
   padding: 8px;
+  min-height: 200px;
+  max-height: 400px;
   box-shadow: 0 0 8px 0 rgb(23 26 33);
 }
 
 .buttons-block > .flex-item {
   flex-basis: 40%;
+  flex-grow: 1;
   margin: 8px;
-}
-
-.dark-back {
-  padding: 16px;
-  background-color: rgb(0 0 0 / 10%);
-  border-radius: 0.5rem;
-  width: 100%;
 }
 
 .screenshot {
   box-shadow: 0 0 8px 0 rgb(23 26 33);
+  object-fit: contain;
   max-width: 100%;
-  max-height: 100%;
-  height: auto;
+  max-height: calc(100% - 200px);
 }
 
 .shown-game {

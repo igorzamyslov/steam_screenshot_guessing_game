@@ -8,9 +8,17 @@ export const routes = {
   mainPage: "/",
 };
 
-export function createNavigationHandler(history, route) {
+export function createNavigationHandler(history, route, queryParams = {}) {
+  let queryParamsString = new URLSearchParams(queryParams).toString();
+  if (queryParamsString) {
+    queryParamsString = `?${queryParamsString}`;
+  }
+
   return () => {
-    history.push(route);
+    history.push({
+      pathname: route,
+      search: queryParamsString,
+    });
   };
 }
 
