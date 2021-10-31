@@ -107,11 +107,10 @@ class MainPage extends Component {
 
   renderLives(lives) {
     let res = []
-    for (let i = 0; i < lives; i++) {
-      res.push(<LiveHeart key={`live_heart_${i}`} className="flex-item" fill={true} />)
-    }
-    for (let i = 0; i < (3 - lives); i++) {
-      res.push(<LiveHeart key={`live_heart_${i}`} className="flex-item" fill={false} />)
+    for (let i = 0; i < 3; i++) {
+      const key = `live_heart_${i}`;
+      const fill = ((i + 1) <= lives);
+      res.push(<LiveHeart className="flex-item" fill={fill} key={key} />)
     }
     return res
   }
