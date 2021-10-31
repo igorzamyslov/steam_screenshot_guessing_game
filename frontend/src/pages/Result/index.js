@@ -1,14 +1,14 @@
 import "./style.css";
 
+import ShareBlock from "components/ShareBlock";
 import { Component } from "react";
 import MainTemplate from "templates/MainTemplate";
-import ShareBlock from "components/ShareBlock";
 
 class ResultPage extends Component {
   constructor(props) {
     super(props);
     let queryParams = new URLSearchParams(props.location.search);
-    const score = queryParams.get("score") || 0
+    const score = queryParams.get("score") || 0;
     this.state = {
       score: score,
       shownGames: [],
@@ -33,7 +33,7 @@ class ResultPage extends Component {
           </a>
         </ul>
       </div>
-    )
+    );
   }
 
   render() {
@@ -48,7 +48,6 @@ class ResultPage extends Component {
           <div>
             <ShareBlock />
           </div>
-
         </div>
       </MainTemplate>
     );
