@@ -46,7 +46,7 @@
   margin: 8px;
 }
 
-.screenshot {  
+.screenshot {
   background-color: rgb(27 40 56 / 50%);
   object-fit: contain;
   max-width: 100%;
@@ -64,10 +64,11 @@ ul {
   list-style-type: decimal;
   overflow: hidden;
   overflow-y: scroll;
-  max-height: 50vh;    
+  max-height: 50vh;
+
   /* background-color: rgb(27 40 56 / 50%) */
 }
 
 .answers-block {
-  
+
 }
