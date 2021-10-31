@@ -4,32 +4,13 @@ import "./index.css";
 
 import React from "react";
 import ReactDOM from "react-dom";
-
-import Main from "./pages/Main";
-import Result from "./pages/Result";
-
-import {
-  BrowserRouter as BrowserRouter,
-  Switch,
-  Route
-} from "react-router-dom";
-
 import reportWebVitals from "./reportWebVitals";
+import { Router } from "Router";
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Switch>
-        <Route path="/result">
-          <Result />
-        </Route>
-        <Route path="/">
-          <Main />
-        </Route>
-      </Switch>
-    </BrowserRouter>
-  </React.StrictMode>
-  ,
+    <Router /> 
+  </React.StrictMode>,
   document.getElementById("root")
 );
 

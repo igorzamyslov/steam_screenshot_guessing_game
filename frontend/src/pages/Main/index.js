@@ -4,19 +4,14 @@ import OptionButton from "components/OptionButton";
 import { Component } from "react";
 import SteamService from "services/SteamService";
 import MainTemplate from "templates/MainTemplate";
-import { withRouter } from "react-router";
 import PropTypes from "prop-types";
 
 
-import {
-  BrowserRouter as Router,
-  Link,
-  useHistory
-} from "react-router-dom";
+import { createNavigationHandler, routes } from "Router";
+import { Link } from "react-router-dom";
 import LiveHeart from "components/LiveHeart";
 
 const TIMEOUT_BEFORE_NEXT_QUESTION = 600;
-
 
 
 const messages = {
@@ -49,6 +44,7 @@ class MainPage extends Component {
       shownGames: [],
     };
     this.loadingMessageTimeout = null;
+    this.navigateToResult = createNavigationHandler(props.history, routes.resultPage)
   }
 
   static selectRandomScreenshot = (app) => {
@@ -90,10 +86,10 @@ class MainPage extends Component {
     let score = this.state.score
     let lives = this.state.lives
     if (answer === correctAnswer) {
-      score = this.state.score + 1;      
+      score = this.state.score + 1;
     } else {
       lives = this.state.lives - 1;
-    }    
+    }
 
     this.setState({
       chosenAnswer: answer,
@@ -102,28 +98,20 @@ class MainPage extends Component {
       score,
       lives
     });
-    if(lives<=0){
+    if(lives > 0){
+      setTimeout(this.loadNextQuiz, TIMEOUT_BEFORE_NEXT_QUESTION);
+    } else {
       setTimeout(this.navigateToResult, TIMEOUT_BEFORE_NEXT_QUESTION);
-      
-      return ;
     }
-    setTimeout(this.loadNextQuiz, TIMEOUT_BEFORE_NEXT_QUESTION);
   };
-
-  navigateToResult = () => { 
-    // DOESNT WORK GOD KNOWS WHY
-    // routerHistory = useHistory();
-    console.log(this)
-    this.history.push("/result");
-  }
 
   renderLives(lives) {
     let res = []
     for (let i = 0; i < lives; i++) {
-      res.push(<LiveHeart className="flex-item" fill={true} />)
+      res.push(<LiveHeart key={`live_heart_${i}`} className="flex-item" fill={true} />)
     }
     for (let i = 0; i < (3 - lives); i++) {
-      res.push(<LiveHeart className="flex-item" fill={false} />)
+      res.push(<LiveHeart key={`live_heart_${i}`} className="flex-item" fill={false} />)
     }
     return res
   }
@@ -139,8 +127,6 @@ class MainPage extends Component {
       chosenAnswer,
       correctAnswer,
     } = this.state;
-
-    const { match, location, history } = this.props;
 
     const answerOptions = answers.map((answer, i) => (
       <OptionButton
@@ -175,8 +161,13 @@ class MainPage extends Component {
               </div>
               Games:
               <ul>
-                {shownGames.map(({ appName, url }) => (
-                  <a href={url} target="_blank" rel="noreferrer">
+                {shownGames.map(({ appName, url }, i) => (
+                  <a
+                    href={url}
+                    target="_blank"
+                    rel="noreferrer"
+                    key={`shown-game-${i}`}
+                  >
                     <li className="shown-game">{appName}</li>
                   </a>
                 ))}
@@ -190,7 +181,7 @@ class MainPage extends Component {
             </div>
             <div className="flex-item">
               <Link to="/result">Score:</Link>
-              <h1 onClick={this.navigateToResult} >{score}</h1>
+              <h1 onClick={this.navigateToResult}>{score}</h1>
             </div>
           </div>
         </div>

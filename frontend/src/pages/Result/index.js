@@ -23,14 +23,14 @@ class ResultPage extends Component {
             <h2>Your games:</h2>
             <ul>
               {this.state.shownGames.map(({ appName, url }) => (
-                <a href={url} target="_blank">
+                <a href={url} target="_blank" rel="noreferrer">
                   <li className="shown-game">{appName}</li>
                 </a>
               ))}
-              <a href={"/"} target="_blank">
+              <a href={"/"} target="_blank" rel="noreferrer">
                 <li className="shown-game">Factorio</li>
               </a>
-              <a href={"/"} target="_blank">
+              <a href={"/"} target="_blank" rel="noreferrer">
                 <li className="shown-game">Original Sin 2</li>
               </a>
             </ul>
