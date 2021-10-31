@@ -40,11 +40,8 @@ class MainPage extends Component {
       shownGames: [],
     };
     this.loadingMessageTimeout = null;
-    this.navigateToResult = (score) => createNavigationHandler(
-      props.history,
-      routes.resultPage,
-      { score }
-    );
+    this.navigateToResult = (score) =>
+      createNavigationHandler(props.history, routes.resultPage, { score });
   }
 
   static selectRandomScreenshot = (app) => {
@@ -145,15 +142,14 @@ class MainPage extends Component {
       />
     ));
 
-    return (      [
-        <img
-          className="screenshot"
-          src={screenshotUrl}
-          alt="The whole purpose of this website"
-        />,
-        <div className="flex-container buttons-block">{answerOptions}</div>
-    ]
-    );
+    return [
+      <img
+        className="screenshot"
+        src={screenshotUrl}
+        alt="The whole purpose of this website"
+      />,
+      <div className="flex-container buttons-block">{answerOptions}</div>,
+    ];
   }
 
   render() {
