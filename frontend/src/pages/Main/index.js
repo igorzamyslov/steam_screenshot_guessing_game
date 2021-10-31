@@ -124,11 +124,7 @@ class MainPage extends Component {
             key={`shown-game-${i}`}
           >
             <li className="shown-game">{appName}</li>
-          </a>,
-          <a href={url}><li className="shown-game">My supper long game title about flashbacks and so on</li></a>,
-          <a href={url}><li className="shown-game">My supper lond so on</li></a>,
-          <a href={url}><li className="shown-game">My supper</li></a>,
-          <a href={url}><li className="shown-game">My supper long game title about flashbacks and so on</li></a>,    
+          </a>          
         ]
         ))}
       </ul>
@@ -184,7 +180,7 @@ class MainPage extends Component {
     return (
       <MainTemplate>
         <div className="flex-container main">
-          <div className="flex-item">
+          <div className="flex-item answers-block">
             {this.renderLives(lives)}
             Score:
             <h1>{score}</h1>
