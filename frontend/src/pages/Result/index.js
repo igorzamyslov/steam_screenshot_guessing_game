@@ -3,6 +3,7 @@ import "./style.css";
 import ShareBlock from "components/ShareBlock";
 import { Component } from "react";
 import MainTemplate from "templates/MainTemplate";
+import { createNavigationHandler, routes } from "Router";
 
 class ResultPage extends Component {
   constructor(props) {
@@ -13,8 +14,12 @@ class ResultPage extends Component {
       score: score,
       shownGames: [],
     };
+    this.navigateToMain = createNavigationHandler(
+      props.history,
+      routes.mainPage
+    );
   }
-
+  
   renderYourGames() {
     return (
       <div className="flex-container-result">
@@ -42,7 +47,7 @@ class ResultPage extends Component {
         <div className="score-block">
           <h2>Your score:</h2>
           <h1>{this.state.score}</h1>
-          <button className="play-again-button glow-on-hover">
+          <button className="play-again-button glow-on-hover" onClick={this.navigateToMain}>
             Play again
           </button>
           <div>
