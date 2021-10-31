@@ -116,7 +116,7 @@ class MainPage extends Component {
   renderGames(shownGames) {
     return (
       <ul>
-        {shownGames.map(({ appName, url }, i) => (
+        {shownGames.map(({ appName, url }, i) => [
           <a
             href={url}
             target="_blank"
@@ -124,8 +124,8 @@ class MainPage extends Component {
             key={`shown-game-${i}`}
           >
             <li className="shown-game">{appName}</li>
-          </a>
-        ))}
+          </a>,
+        ])}
       </ul>
     );
   }
@@ -179,7 +179,7 @@ class MainPage extends Component {
     return (
       <MainTemplate>
         <div className="flex-container main">
-          <div className="flex-item">
+          <div className="flex-item answers-block">
             {this.renderLives(lives)}
             Score:
             <h1>{score}</h1>
