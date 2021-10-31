@@ -1,18 +1,15 @@
 import "./style.css";
 
+import LiveHeart from "components/LiveHeart";
 import OptionButton from "components/OptionButton";
+import PropTypes from "prop-types";
 import { Component } from "react";
+import { Link } from "react-router-dom";
+import { createNavigationHandler, routes } from "Router";
 import SteamService from "services/SteamService";
 import MainTemplate from "templates/MainTemplate";
-import PropTypes from "prop-types";
-
-
-import { createNavigationHandler, routes } from "Router";
-import { Link } from "react-router-dom";
-import LiveHeart from "components/LiveHeart";
 
 const TIMEOUT_BEFORE_NEXT_QUESTION = 600;
-
 
 const messages = {
   loading: "Steam app loading ...",
@@ -31,7 +28,7 @@ class MainPage extends Component {
   static propTypes = {
     match: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
-    history: PropTypes.object.isRequired
+    history: PropTypes.object.isRequired,
   };
 
   constructor(props) {
@@ -44,7 +41,10 @@ class MainPage extends Component {
       shownGames: [],
     };
     this.loadingMessageTimeout = null;
-    this.navigateToResult = createNavigationHandler(props.history, routes.resultPage)
+    this.navigateToResult = createNavigationHandler(
+      props.history,
+      routes.resultPage
+    );
   }
 
   static selectRandomScreenshot = (app) => {
@@ -83,8 +83,8 @@ class MainPage extends Component {
   makeGuess = (answer) => () => {
     const correctAnswer = this.state.answers.find((a) => a.correct);
     const shownGames = [...this.state.shownGames, correctAnswer];
-    let score = this.state.score
-    let lives = this.state.lives
+    let score = this.state.score;
+    let lives = this.state.lives;
     if (answer === correctAnswer) {
       score = this.state.score + 1;
     } else {
@@ -96,9 +96,9 @@ class MainPage extends Component {
       correctAnswer,
       shownGames,
       score,
-      lives
+      lives,
     });
-    if(lives > 0){
+    if (lives > 0) {
       setTimeout(this.loadNextQuiz, TIMEOUT_BEFORE_NEXT_QUESTION);
     } else {
       setTimeout(this.navigateToResult, TIMEOUT_BEFORE_NEXT_QUESTION);
@@ -106,18 +106,14 @@ class MainPage extends Component {
   };
 
   renderLives(lives) {
-    let res = []
+    let res = [];
     for (let i = 0; i < 3; i++) {
       const key = `live_heart_${i}`;
-      const fill = ((i + 1) <= lives);
-      res.push(<LiveHeart className="flex-item" fill={fill} key={key} />)
+      const fill = i + 1 <= lives;
+      res.push(<LiveHeart className="flex-item" fill={fill} key={key} />);
     }
 
-    return (
-      <div className="flex-coulmn-container">
-        {res}
-      </div>
-    );
+    return <div className="flex-column-container">{res}</div>;
   }
 
   renderGames(shownGames) {
@@ -156,11 +152,9 @@ class MainPage extends Component {
           src={screenshotUrl}
           alt="The whole purpose of this website"
         />
-        <div className="flex-container buttons-block">
-          {answerOptions}
-        </div>
+        <div className="flex-container buttons-block">{answerOptions}</div>
       </div>
-    )
+    );
   }
 
   render() {
@@ -175,6 +169,18 @@ class MainPage extends Component {
       correctAnswer,
     } = this.state;
 
+    let content;
+    if (message) {
+      content = <p className="flex-item">{message}</p>;
+    } else {
+      content = this.renderQuiz(
+        screenshotUrl,
+        answers,
+        chosenAnswer,
+        correctAnswer
+      );
+    }
+
     return (
       <MainTemplate>
         <div className="dark-back">
@@ -184,11 +190,7 @@ class MainPage extends Component {
               Games:
               {this.renderGames(shownGames)}
             </div>
-            <div className="flex-image-item">
-              {(message
-                ? <p className="flex-item">{message}</p>
-                : this.renderQuiz(screenshotUrl, answers, chosenAnswer, correctAnswer))}
-            </div>
+            <div className="flex-image-item">{content}</div>
             <div className="flex-item">
               Score:
               <h1>{score}</h1>

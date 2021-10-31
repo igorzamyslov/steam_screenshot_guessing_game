@@ -1,15 +1,15 @@
 import "./style.css";
+
 import { Component } from "react";
-import MainTemplate from "templates/MainTemplate"
+import MainTemplate from "templates/MainTemplate";
 
 class ResultPage extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
       score: 10,
-      shownGames: []
-    }
+      shownGames: [],
+    };
   }
 
   render() {
@@ -18,7 +18,9 @@ class ResultPage extends Component {
         <div className="score-block">
           <h2>Your score:</h2>
           <h1>{this.state.score}</h1>
-          <button className="play-again-button glow-on-hover">Play again</button>
+          <button className="play-again-button glow-on-hover">
+            Play again
+          </button>
           <div className="flex-container-result">
             <h2>Your games:</h2>
             <ul>
@@ -37,7 +39,7 @@ class ResultPage extends Component {
           </div>
         </div>
       </MainTemplate>
-    )
+    );
   }
 }
 
