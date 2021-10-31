@@ -40,9 +40,10 @@ class MainPage extends Component {
       shownGames: [],
     };
     this.loadingMessageTimeout = null;
-    this.navigateToResult = createNavigationHandler(
+    this.navigateToResult = (score) => createNavigationHandler(
       props.history,
-      routes.resultPage
+      routes.resultPage,
+      { score }
     );
   }
 
@@ -100,7 +101,7 @@ class MainPage extends Component {
     if (lives > 0) {
       setTimeout(this.loadNextQuiz, TIMEOUT_BEFORE_NEXT_QUESTION);
     } else {
-      setTimeout(this.navigateToResult, TIMEOUT_BEFORE_NEXT_QUESTION);
+      setTimeout(this.navigateToResult(score), TIMEOUT_BEFORE_NEXT_QUESTION);
     }
   };
 
@@ -144,15 +145,14 @@ class MainPage extends Component {
       />
     ));
 
-    return (
-      <div>
+    return (      [
         <img
           className="screenshot"
           src={screenshotUrl}
           alt="The whole purpose of this website"
-        />
-        <div className="flex-container buttons-block">{answerOptions}</div>
-      </div>
+        />,
+        <div className="flex-container buttons-block">{answerOptions}</div>      
+    ]
     );
   }
 
