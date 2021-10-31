@@ -151,7 +151,7 @@ class MainPage extends Component {
           src={screenshotUrl}
           alt="The whole purpose of this website"
         />,
-        <div className="flex-container buttons-block">{answerOptions}</div>      
+        <div className="flex-container buttons-block">{answerOptions}</div>
     ]
     );
   }
@@ -182,18 +182,16 @@ class MainPage extends Component {
 
     return (
       <MainTemplate>
-        <div className="dark-back">
-          <div className="flex-container">
-            <div className="flex-item">
-              {this.renderLives(lives)}
-              Games:
-              {this.renderGames(shownGames)}
-            </div>
-            <div className="flex-image-item">{content}</div>
-            <div className="flex-item">
-              Score:
-              <h1>{score}</h1>
-            </div>
+        <div className="flex-container main">
+          <div className="flex-item">
+            {this.renderLives(lives)}
+            Games:
+            {this.renderGames(shownGames)}
+          </div>
+          <div className="flex-image-item">{content}</div>
+          <div className="flex-item">
+            Score:
+            <h1>{score}</h1>
           </div>
         </div>
       </MainTemplate>

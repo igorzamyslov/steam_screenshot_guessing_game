@@ -2,10 +2,12 @@ import "./style.css";
 
 const MainTemplate = ({ children }) => (
   <div className="main-template">
-    <h2 className="" href="/">
+    <h2 className="header" href="/">
       GUESS STEAM GAME
     </h2>
-    {children}
+    <div className="content">
+      {children}
+    </div>
   </div>
 );
 
