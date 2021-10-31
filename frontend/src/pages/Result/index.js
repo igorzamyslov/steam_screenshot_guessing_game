@@ -1,15 +1,39 @@
 import "./style.css";
 
+import ShareBlock from "components/ShareBlock";
 import { Component } from "react";
 import MainTemplate from "templates/MainTemplate";
 
 class ResultPage extends Component {
   constructor(props) {
     super(props);
+    let queryParams = new URLSearchParams(props.location.search);
+    const score = queryParams.get("score") || 0;
     this.state = {
-      score: 10,
+      score: score,
       shownGames: [],
     };
+  }
+
+  renderYourGames() {
+    return (
+      <div className="flex-container-result">
+        <h2>Your games:</h2>
+        <ul>
+          {this.state.shownGames.map(({ appName, url }) => (
+            <a href={url} target="_blank" rel="noreferrer">
+              <li className="shown-game">{appName}</li>
+            </a>
+          ))}
+          <a href={"/"} target="_blank" rel="noreferrer">
+            <li className="shown-game">Factorio</li>
+          </a>
+          <a href={"/"} target="_blank" rel="noreferrer">
+            <li className="shown-game">Original Sin 2</li>
+          </a>
+        </ul>
+      </div>
+    );
   }
 
   render() {
@@ -21,21 +45,8 @@ class ResultPage extends Component {
           <button className="play-again-button glow-on-hover">
             Play again
           </button>
-          <div className="flex-container-result">
-            <h2>Your games:</h2>
-            <ul>
-              {this.state.shownGames.map(({ appName, url }) => (
-                <a href={url} target="_blank" rel="noreferrer">
-                  <li className="shown-game">{appName}</li>
-                </a>
-              ))}
-              <a href={"/"} target="_blank" rel="noreferrer">
-                <li className="shown-game">Factorio</li>
-              </a>
-              <a href={"/"} target="_blank" rel="noreferrer">
-                <li className="shown-game">Original Sin 2</li>
-              </a>
-            </ul>
+          <div>
+            <ShareBlock />
           </div>
         </div>
       </MainTemplate>
