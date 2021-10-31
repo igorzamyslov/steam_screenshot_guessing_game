@@ -112,7 +112,55 @@ class MainPage extends Component {
       const fill = ((i + 1) <= lives);
       res.push(<LiveHeart className="flex-item" fill={fill} key={key} />)
     }
-    return res
+
+    return (
+      <div className="flex-coulmn-container">
+        {res}
+      </div>
+    );
+  }
+
+  renderGames(shownGames) {
+    return (
+      <ul>
+        {shownGames.map(({ appName, url }, i) => (
+          <a
+            href={url}
+            target="_blank"
+            rel="noreferrer"
+            key={`shown-game-${i}`}
+          >
+            <li className="shown-game">{appName}</li>
+          </a>
+        ))}
+      </ul>
+    );
+  }
+
+  renderQuiz(screenshotUrl, answers, chosenAnswer, correctAnswer) {
+    const answerOptions = answers.map((answer, i) => (
+      <OptionButton
+        answer={answer}
+        chosenAnswer={chosenAnswer}
+        correctAnswer={correctAnswer}
+        onClick={chosenAnswer ? undefined : this.makeGuess(answer)}
+        className="flex-item"
+        key={`option_button_${i}`}
+      />
+    ));
+
+    return (
+      <div>
+        <img
+          className="screenshot"
+          src={screenshotUrl}
+          alt="The whole purpose of this website"
+        />
+        <div className="flex-container buttons-block">
+          {answerOptions}
+        </div>
+      </div>
+    )
   }
 
   render() {
@@ -127,60 +175,23 @@ class MainPage extends Component {
       correctAnswer,
     } = this.state;
 
-    const answerOptions = answers.map((answer, i) => (
-      <OptionButton
-        answer={answer}
-        chosenAnswer={chosenAnswer}
-        correctAnswer={correctAnswer}
-        onClick={this.makeGuess(answer)}
-        className="flex-item"
-        key={`option_button_${i}`}
-      />
-    ));
-
-    let content;
-    if (message) {
-      content = <p className="flex-item">{message}</p>;
-    } else {
-      content = (
-        <img
-          className="screenshot"
-          src={screenshotUrl}
-          alt="The whole purpose of this website"
-        />
-      );
-    }
     return (
       <MainTemplate>
         <div className="dark-back">
           <div className="flex-container">
             <div className="flex-item">
-              <div className="flex-coulmn-container">
-                {this.renderLives(lives)}
-              </div>
+              {this.renderLives(lives)}
               Games:
-              <ul>
-                {shownGames.map(({ appName, url }, i) => (
-                  <a
-                    href={url}
-                    target="_blank"
-                    rel="noreferrer"
-                    key={`shown-game-${i}`}
-                  >
-                    <li className="shown-game">{appName}</li>
-                  </a>
-                ))}
-              </ul>
+              {this.renderGames(shownGames)}
             </div>
             <div className="flex-image-item">
-              {content}
-              <div className="flex-container buttons-block">
-                {answerOptions}
-              </div>
+              {(message
+                ? <p className="flex-item">{message}</p>
+                : this.renderQuiz(screenshotUrl, answers, chosenAnswer, correctAnswer))}
             </div>
             <div className="flex-item">
-              <Link to="/result">Score:</Link>
-              <h1 onClick={this.navigateToResult}>{score}</h1>
+              Score:
+              <h1>{score}</h1>
             </div>
           </div>
         </div>
