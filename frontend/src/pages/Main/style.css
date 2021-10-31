@@ -19,11 +19,10 @@
 }
 
 .flex-item {
-  flex-grow: 1;
+  width: 300px;
 }
 
 .flex-image-item {
-  flex-grow: 2;
   margin: 0 5%;
   display: flex;
   flex-direction: column;

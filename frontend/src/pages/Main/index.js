@@ -185,14 +185,12 @@ class MainPage extends Component {
         <div className="flex-container main">
           <div className="flex-item">
             {this.renderLives(lives)}
+            Score:
+            <h1>{score}</h1>
             Games:
             {this.renderGames(shownGames)}
           </div>
           <div className="flex-image-item">{content}</div>
-          <div className="flex-item">
-            Score:
-            <h1>{score}</h1>
-          </div>
         </div>
       </MainTemplate>
     );
