@@ -2,6 +2,7 @@ import "./style.css";
 
 import { Component } from "react";
 import MainTemplate from "templates/MainTemplate";
+import ShareBlock from "components/ShareBlock";
 
 class ResultPage extends Component {
   constructor(props) {
@@ -21,6 +22,9 @@ class ResultPage extends Component {
           <button className="play-again-button glow-on-hover">
             Play again
           </button>
+          <div>
+            <ShareBlock/>            
+          </div>
           <div className="flex-container-result">
             <h2>Your games:</h2>
             <ul>
