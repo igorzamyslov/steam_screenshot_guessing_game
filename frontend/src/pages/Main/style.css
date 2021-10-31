@@ -9,7 +9,7 @@
 
 .flex-column-container {
   display: flex;
-  flex-flow: column nowrap;
+  flex-flow: row nowrap;
   justify-content: center;
   max-width: 1600px;
   margin: auto;
