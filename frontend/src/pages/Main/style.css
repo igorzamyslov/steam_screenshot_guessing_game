@@ -61,4 +61,7 @@
 ul {
   margin-right: 8px;
   list-style-type: decimal;
+  overflow: hidden;
+  overflow-y: scroll;
+  max-height: 50vh;
 }

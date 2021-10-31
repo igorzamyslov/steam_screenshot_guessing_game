@@ -117,14 +117,19 @@ class MainPage extends Component {
     return (
       <ul>
         {shownGames.map(({ appName, url }, i) => (
-          <a
+          [<a
             href={url}
             target="_blank"
             rel="noreferrer"
             key={`shown-game-${i}`}
           >
             <li className="shown-game">{appName}</li>
-          </a>
+          </a>,
+          <a href={url}><li className="shown-game">My supper long game title about flashbacks and so on</li></a>,
+          <a href={url}><li className="shown-game">My supper lond so on</li></a>,
+          <a href={url}><li className="shown-game">My supper</li></a>,
+          <a href={url}><li className="shown-game">My supper long game title about flashbacks and so on</li></a>,    
+        ]
         ))}
       </ul>
     );
