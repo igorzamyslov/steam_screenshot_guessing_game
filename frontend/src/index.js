@@ -4,13 +4,13 @@ import "./index.css";
 
 import React from "react";
 import ReactDOM from "react-dom";
+import { Router } from "Router";
 
-import Main from "./pages/Main";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Main />
+    <Router />
   </React.StrictMode>,
   document.getElementById("root")
 );
