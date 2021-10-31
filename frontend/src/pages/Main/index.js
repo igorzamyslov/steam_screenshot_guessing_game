@@ -4,7 +4,6 @@ import LiveHeart from "components/LiveHeart";
 import OptionButton from "components/OptionButton";
 import PropTypes from "prop-types";
 import { Component } from "react";
-import { Link } from "react-router-dom";
 import { createNavigationHandler, routes } from "Router";
 import SteamService from "services/SteamService";
 import MainTemplate from "templates/MainTemplate";
