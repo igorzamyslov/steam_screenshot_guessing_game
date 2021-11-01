@@ -8,12 +8,9 @@ import combinedReducers from "reducers"
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { Router } from "Router";
-
 import reportWebVitals from "./reportWebVitals";
 
-console.log(combinedReducers);
 const store = createStore(combinedReducers);
-console.log(store.getState());
 
 ReactDOM.render(
   <React.StrictMode>
