@@ -2,12 +2,12 @@ import "./style.css";
 
 import LiveHeart from "components/LiveHeart";
 import OptionButton from "components/OptionButton";
+import { TIMEOUT_BEFORE_NEXT_QUESTION } from "config";
 import PropTypes from "prop-types";
 import { Component } from "react";
 import { createNavigationHandler, routes } from "Router";
 import SteamService from "services/SteamService";
 import MainTemplate from "templates/MainTemplate";
-import { TIMEOUT_BEFORE_NEXT_QUESTION } from "config";
 
 const messages = {
   loading: "Steam app loading ...",
@@ -47,35 +47,39 @@ class MainPage extends Component {
   };
 
   componentDidMount() {
-    this.loadNextScreen(undefined, this.props, 0)
+    this.loadNextScreen(undefined, this.props, 0);
   }
 
   componentDidUpdate(prevProps) {
-    this.loadNextScreen(prevProps, this.props)
+    this.loadNextScreen(prevProps, this.props);
   }
 
   showMessage = (message) => {
     this.setState({ ...cleanState, message });
   };
 
-  loadNextScreen = (prevProps, currentProps, timeout = TIMEOUT_BEFORE_NEXT_QUESTION) => {
+  loadNextScreen = (
+    prevProps,
+    currentProps,
+    timeout = TIMEOUT_BEFORE_NEXT_QUESTION
+  ) => {
     // Depending on the current state of the game (lives, score),
     // loads either the next quiz or the results page
     let callback = null;
     if (!prevProps || prevProps.lives !== currentProps.lives) {
       if (currentProps.lives > 0) {
-        callback = this.loadNextQuiz
+        callback = this.loadNextQuiz;
       } else {
-        callback = this.navigateToResult
+        callback = this.navigateToResult;
       }
     } else if (prevProps.score !== currentProps.score) {
-      callback = this.loadNextQuiz
+      callback = this.loadNextQuiz;
     }
 
     if (callback) {
       setTimeout(callback, timeout);
     }
-  }
+  };
 
   loadNextQuiz = () => {
     // show loading message after 1 second
@@ -158,13 +162,8 @@ class MainPage extends Component {
   }
 
   render() {
-    const {
-      answers,
-      screenshotUrl,
-      message,
-      chosenAnswer,
-      correctAnswer,
-    } = this.state;
+    const { answers, screenshotUrl, message, chosenAnswer, correctAnswer } =
+      this.state;
 
     const { finishedGames, score, lives } = this.props;
 

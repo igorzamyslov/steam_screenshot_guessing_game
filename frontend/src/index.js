@@ -4,17 +4,18 @@ import "./index.css";
 
 import React from "react";
 import ReactDOM from "react-dom";
-import combinedReducers from "reducers"
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
+import { Provider } from "react-redux";
+import combinedReducers from "reducers";
+import { createStore } from "redux";
 import { Router } from "Router";
+
 import reportWebVitals from "./reportWebVitals";
 
 const store = createStore(combinedReducers);
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store} >
+    <Provider store={store}>
       <Router />
     </Provider>
   </React.StrictMode>,
