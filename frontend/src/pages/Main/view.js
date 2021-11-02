@@ -155,8 +155,14 @@ class MainPage extends Component {
         className="screenshot"
         src={screenshotUrl}
         alt="The whole purpose of this website"
+        key="quiz-image"
       />,
-      <div className="flex-container buttons-block">{answerOptions}</div>,
+      <div
+        className="flex-container buttons-block"
+        key="quiz-answers"
+      >
+        {answerOptions}
+      </div>,
     ];
   }
 
