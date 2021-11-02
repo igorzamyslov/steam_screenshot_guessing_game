@@ -20,9 +20,9 @@ class ResultPage extends Component {
   }
 
   handlePlayAgainPress = () => {
-    this.props.onPlayAgainPress()
-    this.navigateToMain()
-  }
+    this.props.onPlayAgainPress();
+    this.navigateToMain();
+  };
 
   render() {
     return (

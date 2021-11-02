@@ -35,8 +35,8 @@ class MainPage extends Component {
       message: messages.loading,
     };
     this.loadingMessageTimeout = null;
-    this.navigateToResult = (score) => createNavigationHandler(
-      props.history, routes.resultPage, { score });
+    this.navigateToResult = (score) =>
+      createNavigationHandler(props.history, routes.resultPage, { score });
   }
 
   static selectRandomScreenshot = (app) => {
@@ -157,23 +157,15 @@ class MainPage extends Component {
         alt="The whole purpose of this website"
         key="quiz-image"
       />,
-      <div
-        className="flex-container buttons-block"
-        key="quiz-answers"
-      >
+      <div className="flex-container buttons-block" key="quiz-answers">
         {answerOptions}
       </div>,
     ];
   }
 
   render() {
-    const {
-      answers,
-      screenshotUrl,
-      message,
-      chosenAnswer,
-      correctAnswer
-    } = this.state;
+    const { answers, screenshotUrl, message, chosenAnswer, correctAnswer } =
+      this.state;
 
     const { finishedGames, score, lives } = this.props;
 
