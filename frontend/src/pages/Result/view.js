@@ -5,6 +5,8 @@ import { Component } from "react";
 import { createNavigationHandler, routes } from "Router";
 import MainTemplate from "templates/MainTemplate";
 
+import GamesList from "../../components/GamesList";
+
 class ResultPage extends Component {
   constructor(props) {
     super(props);
@@ -26,6 +28,7 @@ class ResultPage extends Component {
   };
 
   render() {
+    const { finishedGames } = this.props;
     return (
       <MainTemplate>
         <div className="score-block">
@@ -40,6 +43,7 @@ class ResultPage extends Component {
           <div>
             <ShareBlock />
           </div>
+          <GamesList games={finishedGames} />
         </div>
       </MainTemplate>
     );

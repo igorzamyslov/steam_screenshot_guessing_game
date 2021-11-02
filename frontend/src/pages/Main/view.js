@@ -9,6 +9,8 @@ import { createNavigationHandler, routes } from "Router";
 import SteamService from "services/SteamService";
 import MainTemplate from "templates/MainTemplate";
 
+import GamesList from "../../components/GamesList";
+
 const messages = {
   loading: "Steam app loading ...",
   error: "Error during Steam app loading!",
@@ -122,23 +124,6 @@ class MainPage extends Component {
     return <div className="flex-column-container">{res}</div>;
   }
 
-  renderGames(finishedGames) {
-    return (
-      <ul>
-        {finishedGames.map(({ appName, url }, i) => (
-          <a
-            href={url}
-            target="_blank"
-            rel="noreferrer"
-            key={`shown-game-${i}`}
-          >
-            <li className="shown-game">{appName}</li>
-          </a>
-        ))}
-      </ul>
-    );
-  }
-
   renderQuiz(screenshotUrl, answers, chosenAnswer, correctAnswer) {
     const answerOptions = answers.map((answer, i) => (
       <OptionButton
@@ -190,7 +175,7 @@ class MainPage extends Component {
             Score:
             <h1>{score}</h1>
             Games:
-            {this.renderGames(finishedGames)}
+            <GamesList games={finishedGames} />
           </div>
           <div className="flex-image-item">{content}</div>
         </div>
