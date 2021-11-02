@@ -1,8 +1,9 @@
-import ShareBlock from 'components/ShareBlock';
-import { Component } from 'react';
-import { createNavigationHandler, routes } from 'Router';
-import MainTemplate from 'templates/MainTemplate';
-import './style.css';
+import "./style.css";
+
+import ShareBlock from "components/ShareBlock";
+import { Component } from "react";
+import { createNavigationHandler, routes } from "Router";
+import MainTemplate from "templates/MainTemplate";
 
 class ResultPage extends Component {
   constructor(props) {

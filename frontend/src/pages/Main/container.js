@@ -1,7 +1,7 @@
-import * as gameActions from 'actions/game';
-import { connect } from 'react-redux';
+import * as gameActions from "actions/game";
+import { connect } from "react-redux";
 
-import View from './view';
+import View from "./view";
 
 const mapStateToProps = (state) => ({ ...state.game });
 const actions = {
