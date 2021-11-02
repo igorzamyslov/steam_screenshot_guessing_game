@@ -1,13 +1,12 @@
-import "./style.css";
-
-import LiveHeart from "components/LiveHeart";
-import OptionButton from "components/OptionButton";
-import { TIMEOUT_BEFORE_NEXT_QUESTION } from "config";
-import PropTypes from "prop-types";
-import { Component } from "react";
-import { createNavigationHandler, routes } from "Router";
-import SteamService from "services/SteamService";
-import MainTemplate from "templates/MainTemplate";
+import LiveHeart from 'components/LiveHeart';
+import OptionButton from 'components/OptionButton';
+import { TIMEOUT_BEFORE_NEXT_QUESTION } from 'config';
+import PropTypes from 'prop-types';
+import { Component } from 'react';
+import { createNavigationHandler, routes } from 'Router';
+import SteamService from 'services/SteamService';
+import MainTemplate from 'templates/MainTemplate';
+import './style.css';
 
 const messages = {
   loading: "Steam app loading ...",
@@ -36,10 +35,8 @@ class MainPage extends Component {
       message: messages.loading,
     };
     this.loadingMessageTimeout = null;
-    this.navigateToResult = createNavigationHandler(
-      props.history,
-      routes.resultPage
-    );
+    this.navigateToResult = (score) => createNavigationHandler(
+      props.history, routes.resultPage, { score });
   }
 
   static selectRandomScreenshot = (app) => {
@@ -52,6 +49,10 @@ class MainPage extends Component {
 
   componentDidUpdate(prevProps) {
     this.loadNextScreen(prevProps, this.props);
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.loadingMessageTimeout);
   }
 
   showMessage = (message) => {
@@ -70,7 +71,7 @@ class MainPage extends Component {
       if (currentProps.lives > 0) {
         callback = this.loadNextQuiz;
       } else {
-        callback = this.navigateToResult;
+        callback = this.navigateToResult(currentProps.score);
       }
     } else if (prevProps.score !== currentProps.score) {
       callback = this.loadNextQuiz;
@@ -149,21 +150,24 @@ class MainPage extends Component {
       />
     ));
 
-    return (
-      <div>
-        <img
-          className="screenshot"
-          src={screenshotUrl}
-          alt="The whole purpose of this website"
-        />
-        <div className="flex-container buttons-block">{answerOptions}</div>
-      </div>
-    );
+    return [
+      <img
+        className="screenshot"
+        src={screenshotUrl}
+        alt="The whole purpose of this website"
+      />,
+      <div className="flex-container buttons-block">{answerOptions}</div>,
+    ];
   }
 
   render() {
-    const { answers, screenshotUrl, message, chosenAnswer, correctAnswer } =
-      this.state;
+    const {
+      answers,
+      screenshotUrl,
+      message,
+      chosenAnswer,
+      correctAnswer
+    } = this.state;
 
     const { finishedGames, score, lives } = this.props;
 
@@ -181,19 +185,15 @@ class MainPage extends Component {
 
     return (
       <MainTemplate>
-        <div className="dark-back">
-          <div className="flex-container">
-            <div className="flex-item">
-              {this.renderLives(lives)}
-              Games:
-              {this.renderGames(finishedGames)}
-            </div>
-            <div className="flex-image-item">{content}</div>
-            <div className="flex-item">
-              Score:
-              <h1>{score}</h1>
-            </div>
+        <div className="flex-container main">
+          <div className="flex-item answers-block">
+            {this.renderLives(lives)}
+            Score:
+            <h1>{score}</h1>
+            Games:
+            {this.renderGames(finishedGames)}
           </div>
+          <div className="flex-image-item">{content}</div>
         </div>
       </MainTemplate>
     );
