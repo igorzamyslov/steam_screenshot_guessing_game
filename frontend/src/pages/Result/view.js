@@ -1,9 +1,10 @@
-import "./style.css";
+import ShareBlock from 'components/ShareBlock';
+import { Component } from 'react';
+import { createNavigationHandler, routes } from 'Router';
+import MainTemplate from 'templates/MainTemplate';
 
-import ShareBlock from "components/ShareBlock";
-import { Component } from "react";
-import { createNavigationHandler, routes } from "Router";
-import MainTemplate from "templates/MainTemplate";
+import GamesList from '../../components/GamesList';
+import './style.css';
 
 class ResultPage extends Component {
   constructor(props) {
@@ -26,6 +27,7 @@ class ResultPage extends Component {
   };
 
   render() {
+    const { finishedGames } = this.props;
     return (
       <MainTemplate>
         <div className="score-block">
@@ -40,6 +42,7 @@ class ResultPage extends Component {
           <div>
             <ShareBlock />
           </div>
+          <GamesList games={finishedGames} />
         </div>
       </MainTemplate>
     );

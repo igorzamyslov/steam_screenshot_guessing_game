@@ -54,21 +54,10 @@
   padding-top: 8px;
 }
 
-.shown-game {
-  font-size: medium;
-  text-align: left;
-}
-
 ul {
   margin-right: 8px;
   list-style-type: decimal;
   overflow: hidden;
   overflow-y: scroll;
   max-height: 50vh;
-
-  /* background-color: rgb(27 40 56 / 50%) */
-}
-
-.answers-block {
-
 }
