@@ -1,7 +1,5 @@
 .flex-container {
   display: flex;
-  height: 100%;
-  width: 100%;
   flex-wrap: nowrap;
   justify-content: center;
   max-width: 1600px;
@@ -20,24 +18,21 @@
 }
 
 .flex-item {
-  width: 300px;
+  flex-grow: 1;  
 }
 
-.flex-image-item {
+.image-block {  
+  max-width: 100%;
   margin: 0 16px;
   display: flex;
   flex-direction: column;
-  height: 100%;
   justify-content: flex-start;
 }
 
 .buttons-block {
   flex-wrap: wrap;
-  background-color: rgb(27 40 56 / 50%);
-  width: 100%;
-  padding: 8px;
-  min-height: 200px;
-  max-height: 400px;
+  background-color: rgb(27 40 56 / 50%);  
+  padding: 8px;  
 }
 
 .buttons-block > .flex-item {
@@ -47,10 +42,10 @@
 }
 
 .screenshot {
+  width: 100%;
+  height: 100%;
   background-color: rgb(27 40 56 / 50%);
-  object-fit: contain;
-  max-width: 100%;
-  max-height: calc(100% - 200px);
+  object-fit: contain;    
   padding-top: 8px;
 }
 

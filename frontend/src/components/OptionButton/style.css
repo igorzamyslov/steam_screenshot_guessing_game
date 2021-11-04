@@ -1,7 +1,3 @@
-.option-btn {
-  min-width: 320px;
-}
-
 .blink {
   animation-duration: 300ms;
   animation-timing-function: step-start;
@@ -21,6 +17,7 @@
 }
 
 .nice-button {
+  font-size: large;
   border-radius: 3px;
   padding: 4px;
   box-shadow: inset 0 0 20px rgb(255 255 255 / 0%);

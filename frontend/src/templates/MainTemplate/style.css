@@ -12,7 +12,7 @@ a {
   align-items: center;
   text-align: center;
   justify-content: flex-start;
-  font-size: calc(10px + 2vmin);
+  font-size: larger;
   color: white;
 }
 
@@ -21,7 +21,7 @@ a {
 }
 
 .content {
-  height: calc(100vh - 60px);
+  height: 100%;
 }
 
 h2 {

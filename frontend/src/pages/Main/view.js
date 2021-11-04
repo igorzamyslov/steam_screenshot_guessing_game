@@ -177,7 +177,7 @@ class MainPage extends Component {
             Games:
             <GamesList games={finishedGames} />
           </div>
-          <div className="flex-image-item">{content}</div>
+          <div className="flex-item image-block">{content}</div>
         </div>
       </MainTemplate>
     );
