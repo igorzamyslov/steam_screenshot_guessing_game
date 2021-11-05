@@ -2,7 +2,6 @@ import "./style.css";
 
 import ShareBlock from "components/ShareBlock";
 import { Component } from "react";
-import { PlayCircleFill } from "react-bootstrap-icons";
 import { createNavigationHandler, routes } from "Router";
 import MainTemplate from "templates/MainTemplate";
 
