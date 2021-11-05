@@ -9,16 +9,16 @@ const openUrl = (url) => () => {
 };
 
 const ShareBlock = (props) => {
-    let handleShare = () => {
-        let linkToShare = window.location.href + "&shared=true";
-        console.log(linkToShare);
-        navigator.clipboard.writeText(linkToShare)
-        alert("Link copied!")
-    }
+  let handleShare = () => {
+    let linkToShare = window.location.href + "&shared=true";
+    console.log(linkToShare);
+    navigator.clipboard.writeText(linkToShare);
+    alert("Link copied!");
+  };
 
-    let handleTwitter = () => {
-        alert("Under development!")
-    }
+  let handleTwitter = () => {
+    alert("Under development!");
+  };
 
   return (
     <div>

@@ -24,16 +24,16 @@
   padding-right: 8px;
 }
 
-.game-name{
+.game-name {
   flex-grow: 15;
   display: inline-block;
   padding-right: 8px;
 }
 
-.button-flex-container{
+.button-flex-container {
   display: flex;
   align-items: center;
-  flex-wrap: nowrap ;
+  flex-wrap: nowrap;
   justify-content: flex-start;
 }
 
