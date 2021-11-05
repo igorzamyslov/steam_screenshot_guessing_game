@@ -3,15 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
     "react": "^17.0.2",
     "react-bootstrap-icons": "^1.6.1",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.6",
     "react-router-dom": "^5.3.0",
-    "react-scripts": "4.0.3",
     "superagent": "^6.1.0",
     "web-vitals": "^1.0.1"
   },
@@ -46,9 +42,13 @@
     }
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
     "import-sort-style-module": "^6.0.0",
     "prettier": "^2.4.1",
     "prettier-plugin-import-sort": "^0.0.7",
+    "react-scripts": "^4.0.3",
     "stylelint": "^14.0.0",
     "stylelint-config-standard": "^23.0.0"
   }
