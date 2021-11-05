@@ -1,8 +1,7 @@
 .score-block {
   min-width: 50%;
   background-color: rgb(0 0 0 / 10%);
-  border-radius: 8px;
-  padding: 16px;
+  border-radius: 8px;  
 }
 
 .shown-game {

@@ -138,12 +138,12 @@ class MainPage extends Component {
 
     return [
       <img
-        className="screenshot"
+        className="screenshot flex-item"
         src={screenshotUrl}
         alt="The whole purpose of this website"
         key="quiz-image"
       />,
-      <div className="flex-container buttons-block" key="quiz-answers">
+      <div className="flex-item flex-container buttons-block" key="quiz-answers">
         {answerOptions}
       </div>,
     ];

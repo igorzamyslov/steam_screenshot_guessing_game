@@ -2,11 +2,12 @@ a {
   color: #61dafb;
 }
 
-.main-template {
+.main-template {    
+  position: relative;  
   background: rgb(23 26 33);
-  background: linear-gradient(135deg, rgb(23 26 33) 0%, rgb(42 71 94 / 100%) 35%, rgb(27 40 56 / 100%) 100%);
-  height: 100%;
+  background: linear-gradient(135deg, rgb(23 26 33) 0%, rgb(42 71 94 / 100%) 35%, rgb(27 40 56 / 100%) 100%);  
   width: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -14,18 +15,23 @@ a {
   justify-content: flex-start;
   font-size: larger;
   color: white;
+  
 }
 
-.header {
-  height: 60px;
+.header {  
+  height: 0px;
 }
 
-.content {
+.content {  
+  width: 1200px;
   height: 100%;
+  position: sticky;
+  left: 0;
 }
 
-h2 {
-  padding: 8px;
+h2 {  
+  position: absolute;
+  font-size: large;
   color: white;
   font-family: "Motiva Sans", sans-serif;
   text-shadow: 0 0 2px rgb(23 26 33);
