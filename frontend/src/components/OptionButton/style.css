@@ -17,10 +17,11 @@
 }
 
 .nice-button {
+  height: 2.2em;
+  max-height: 50%;
   margin: 4px;
   font-size: large;
-  border-radius: 3px;
-  padding: 4px;
+  border-radius: 3px;  
   box-shadow: inset 0 0 20px rgb(255 255 255 / 0%);  
   color: #fff;
   background-color: #1d61d7bb;
