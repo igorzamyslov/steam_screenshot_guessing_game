@@ -1,8 +1,9 @@
 // import Button from 'react-bootstrap/Button';
 import "./style.css";
 
-const OptionButton = (props) => {
-  let { answer, chosenAnswer, correctAnswer, className, ...otherProps } = props;
+const OptionButton = (props) => {  
+  let {prefix, answer, chosenAnswer, correctAnswer, className, ...otherProps } = props;  
+  console.log("prefix",prefix)
   // init/update className
   // todo: remove it?
   if (!className) {
@@ -21,7 +22,7 @@ const OptionButton = (props) => {
   }
   return (
     <button className={"nice-button " + className} {...otherProps}>
-      {answer.appName}
+      <span className="prefix">{prefix}</span><span className="game-name">{answer.appName}</span>
     </button>
   );
 };

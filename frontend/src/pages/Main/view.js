@@ -125,8 +125,10 @@ class MainPage extends Component {
   }
 
   renderQuiz(screenshotUrl, answers, chosenAnswer, correctAnswer) {
+    let prefixes = ["A", "B", "C", "D"]
     const answerOptions = answers.map((answer, i) => (
       <OptionButton
+        prefix={prefixes[i]}
         answer={answer}
         chosenAnswer={chosenAnswer}
         correctAnswer={correctAnswer}
