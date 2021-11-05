@@ -2,6 +2,13 @@
   margin-right: 4px;
   vertical-align: middle;
   height: 0.9em;
+}
+
+.icon.correct {
+  color: #97cc04;
+}
+
+.icon.incorrect {
   color: #f10472;
 }
 

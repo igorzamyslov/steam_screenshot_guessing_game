@@ -106,11 +106,13 @@ class MainPage extends Component {
     const correctAnswer = this.state.answers.find((a) => a.correct);
     this.setState({ chosenAnswer: answer, correctAnswer });
 
-    if (answer === correctAnswer) {
-      this.props.onCorrectAnswer(correctAnswer);
-    } else {
-      this.props.onIncorrectAnswer(correctAnswer);
-    }
+    const isGuessCorrect = (answer === correctAnswer)
+    const callback = isGuessCorrect ? this.props.onCorrectAnswer : this.props.onIncorrectAnswer;
+    callback({
+      name: correctAnswer.appName,
+      url: correctAnswer.url,
+      correct: isGuessCorrect,
+    });
   };
 
   renderLives(lives) {
