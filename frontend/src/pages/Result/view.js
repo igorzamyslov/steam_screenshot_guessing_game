@@ -4,7 +4,7 @@ import ShareBlock from "components/ShareBlock";
 import { Component } from "react";
 import { createNavigationHandler, routes } from "Router";
 import MainTemplate from "templates/MainTemplate";
-
+import { PlayCircleFill } from "react-bootstrap-icons";
 import GamesList from "../../components/GamesList";
 
 class ResultPage extends Component {
