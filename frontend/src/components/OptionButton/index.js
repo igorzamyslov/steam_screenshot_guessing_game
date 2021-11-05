@@ -2,8 +2,7 @@
 import "./style.css";
 
 const OptionButton = (props) => {  
-  let {prefix, answer, chosenAnswer, correctAnswer, className, ...otherProps } = props;  
-  console.log("prefix",prefix)
+  let {prefix, answer, chosenAnswer, correctAnswer, className, ...otherProps } = props;    
   // init/update className
   // todo: remove it?
   if (!className) {

@@ -34,16 +34,21 @@ class ResultPage extends Component {
         <div className="score-block">
           <h2>Your score:</h2>
           <h1>{this.state.score}</h1>
-          <button
-            className="play-again-button glow-on-hover"
-            onClick={this.handlePlayAgainPress}
-          >
-            Play again
-          </button>
+          <div>
+            <button
+              className="play-again-button glow-on-hover"
+              onClick={this.handlePlayAgainPress}
+            >
+              Play again
+            </button>
+          </div>
           <div>
             <ShareBlock />
+          </div>          
+          <div className="game-list-block">
+            <h2>Games:</h2>
+            <GamesList games={finishedGames} />
           </div>
-          <GamesList games={finishedGames} />
         </div>
       </MainTemplate>
     );

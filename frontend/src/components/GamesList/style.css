@@ -1,8 +1,15 @@
 .shown-game {
-  font-size: medium;
-  text-align: start;
+    font-size: medium;
+    text-align: start;
 }
 
-.game-list{  
-  text-align: start;
+.game-list {
+    text-align: start;
+}
+ul {
+    margin-top: 0;
+    margin-bottom: 0;
+    list-style-type: decimal;
+    overflow: hidden;
+    overflow-y: scroll;
 }

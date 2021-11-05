@@ -177,7 +177,9 @@ class MainPage extends Component {
             Score:
             <h1>{score}</h1>
             Games:
-            <GamesList games={finishedGames} />
+            <div className="games-list-block">
+              <GamesList games={finishedGames} />
+            </div>
           </div>
           <div className="flex-item image-block">{content}</div>
         </div>
