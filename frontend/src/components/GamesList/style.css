@@ -1,4 +1,8 @@
 .shown-game {
   font-size: medium;
-  text-align: left;
+  text-align: start;
+}
+
+.game-list{  
+  text-align: start;
 }
