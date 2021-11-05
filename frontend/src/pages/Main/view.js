@@ -106,8 +106,10 @@ class MainPage extends Component {
     const correctAnswer = this.state.answers.find((a) => a.correct);
     this.setState({ chosenAnswer: answer, correctAnswer });
 
-    const isGuessCorrect = (answer === correctAnswer)
-    const callback = isGuessCorrect ? this.props.onCorrectAnswer : this.props.onIncorrectAnswer;
+    const isGuessCorrect = answer === correctAnswer;
+    const callback = isGuessCorrect
+      ? this.props.onCorrectAnswer
+      : this.props.onIncorrectAnswer;
     callback({
       name: correctAnswer.appName,
       url: correctAnswer.url,
@@ -127,7 +129,7 @@ class MainPage extends Component {
   }
 
   renderQuiz(screenshotUrl, answers, chosenAnswer, correctAnswer) {
-    let prefixes = ["A", "B", "C", "D"]
+    let prefixes = ["A", "B", "C", "D"];
     const answerOptions = answers.map((answer, i) => (
       <OptionButton
         prefix={prefixes[i]}
@@ -147,7 +149,10 @@ class MainPage extends Component {
         alt="The whole purpose of this website"
         key="quiz-image"
       />,
-      <div className="flex-item flex-container buttons-block" key="quiz-answers">
+      <div
+        className="flex-item flex-container buttons-block"
+        key="quiz-answers"
+      >
         {answerOptions}
       </div>,
     ];

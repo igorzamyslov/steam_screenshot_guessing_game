@@ -13,15 +13,15 @@
 }
 
 .shown-game {
-    font-size: medium;
-    text-align: start;
-    margin-top: 0px;
-    margin-bottom: 4px;
-    vertical-align: middle;
+  font-size: medium;
+  text-align: start;
+  margin-top: 0;
+  margin-bottom: 4px;
+  vertical-align: middle;
 }
 
 .game-list {
-    text-align: start;
-    overflow: hidden;
-    overflow-y: scroll;
+  text-align: start;
+  overflow: hidden;
+  overflow-y: scroll;
 }

@@ -1,4 +1,4 @@
-.main{
+.main {
   height: 100%;
 }
 
@@ -7,7 +7,7 @@
   flex-wrap: nowrap;
   justify-content: flex-start;
   max-width: 1600px;
-  align-items: stretch;  
+  align-items: stretch;
 }
 
 .flex-column-container {
@@ -20,40 +20,40 @@
 }
 
 .flex-item {
-  flex-grow: 1;  
+  flex-grow: 1;
 }
 
-.answers-block{  
+.answers-block {
   flex: 0 0 20%;
 }
 
-.image-block {    
+.image-block {
   flex: 0 0 75%;
-  max-height: 100%;    
+  max-height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  background-image: linear-gradient(to top, rgba(255,0,0,0), rgb(27 40 56), rgba(255,0,0,0));  
+  background-image: linear-gradient(to top, rgb(255 0 0 / 0%), rgb(27 40 56), rgb(255 0 0 / 0%));
 }
 
 .buttons-block {
-  padding: 4px;  
+  padding: 4px;
   flex-grow: 1;
   max-height: 25%;
-  flex-wrap: wrap;  
+  flex-wrap: wrap;
 }
 
 .buttons-block > .flex-item {
   flex-basis: 40%;
-  flex-grow: 1;  
+  flex-grow: 1;
 }
 
-.screenshot {  
+.screenshot {
   max-height: 80%;
-  object-fit: contain;      
+  object-fit: contain;
 }
 
-.games-list-block{
+.games-list-block {
   margin: 8px;
   max-height: 50vh;
-} 
+}

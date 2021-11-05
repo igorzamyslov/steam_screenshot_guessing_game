@@ -2,9 +2,10 @@ import "./style.css";
 
 import ShareBlock from "components/ShareBlock";
 import { Component } from "react";
+import { PlayCircleFill } from "react-bootstrap-icons";
 import { createNavigationHandler, routes } from "Router";
 import MainTemplate from "templates/MainTemplate";
-import { PlayCircleFill } from "react-bootstrap-icons";
+
 import GamesList from "../../components/GamesList";
 
 class ResultPage extends Component {
@@ -44,7 +45,7 @@ class ResultPage extends Component {
           </div>
           <div>
             <ShareBlock />
-          </div>          
+          </div>
           <div className="game-list-block">
             <h2>Games:</h2>
             <GamesList games={finishedGames} />

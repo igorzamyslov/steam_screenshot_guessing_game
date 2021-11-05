@@ -16,14 +16,10 @@
   animation-name: blink-incorrect;
 }
 
-.prefix{
-  color: #F98A4E;
+.prefix {
+  color: #f98a4e;
   padding-left: 8px;
   padding-right: 8px;
-}
-
-.game-name {
-  
 }
 
 .nice-button {
@@ -32,8 +28,8 @@
   max-height: 50%;
   margin: 4px;
   font-size: large;
-  border-radius: 10px;  
-  box-shadow: inset 0 0 20px rgb(255 255 255 / 0%);  
+  border-radius: 10px;
+  box-shadow: inset 0 0 20px rgb(255 255 255 / 0%);
   color: #fff;
   background-color: #1d61d7bb;
   border: 0 solid;
@@ -66,4 +62,3 @@
     background-color: #f10472;
   }
 }
-
