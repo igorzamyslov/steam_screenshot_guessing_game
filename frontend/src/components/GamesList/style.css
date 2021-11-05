@@ -1,4 +1,27 @@
+.icon {
+  margin-right: 4px;
+  vertical-align: middle;
+  height: 0.9em;
+}
+
+.icon.correct {
+  color: #97cc04;
+}
+
+.icon.incorrect {
+  color: #f10472;
+}
+
 .shown-game {
   font-size: medium;
-  text-align: left;
+  text-align: start;
+  margin-top: 0;
+  margin-bottom: 4px;
+  vertical-align: middle;
+}
+
+.game-list {
+  text-align: start;
+  overflow: hidden;
+  overflow-y: scroll;
 }

@@ -9,10 +9,20 @@ const openUrl = (url) => () => {
 };
 
 const ShareBlock = (props) => {
-  let { fill } = props;
+  let handleShare = () => {
+    let linkToShare = window.location.href + "&shared=true";
+    console.log(linkToShare);
+    navigator.clipboard.writeText(linkToShare);
+    alert("Link copied!");
+  };
+
+  let handleTwitter = () => {
+    alert("Under development!");
+  };
+
   return (
     <div>
-      <button className="share-button">
+      <button className="share-button" onClick={handleShare}>
         <Share /> Share
       </button>
       <button
@@ -23,7 +33,7 @@ const ShareBlock = (props) => {
       >
         <Github /> Code
       </button>
-      <button className="share-button">
+      <button className="share-button" onClick={handleTwitter}>
         <Twitter /> Twitter
       </button>
     </div>

@@ -106,11 +106,15 @@ class MainPage extends Component {
     const correctAnswer = this.state.answers.find((a) => a.correct);
     this.setState({ chosenAnswer: answer, correctAnswer });
 
-    if (answer === correctAnswer) {
-      this.props.onCorrectAnswer(correctAnswer);
-    } else {
-      this.props.onIncorrectAnswer(correctAnswer);
-    }
+    const isGuessCorrect = answer === correctAnswer;
+    const callback = isGuessCorrect
+      ? this.props.onCorrectAnswer
+      : this.props.onIncorrectAnswer;
+    callback({
+      name: correctAnswer.appName,
+      url: correctAnswer.url,
+      correct: isGuessCorrect,
+    });
   };
 
   renderLives(lives) {
@@ -125,8 +129,10 @@ class MainPage extends Component {
   }
 
   renderQuiz(screenshotUrl, answers, chosenAnswer, correctAnswer) {
+    let prefixes = ["A", "B", "C", "D"];
     const answerOptions = answers.map((answer, i) => (
       <OptionButton
+        prefix={prefixes[i]}
         answer={answer}
         chosenAnswer={chosenAnswer}
         correctAnswer={correctAnswer}
@@ -138,12 +144,15 @@ class MainPage extends Component {
 
     return [
       <img
-        className="screenshot"
+        className="screenshot flex-item"
         src={screenshotUrl}
         alt="The whole purpose of this website"
         key="quiz-image"
       />,
-      <div className="flex-container buttons-block" key="quiz-answers">
+      <div
+        className="flex-item flex-container buttons-block"
+        key="quiz-answers"
+      >
         {answerOptions}
       </div>,
     ];
@@ -175,9 +184,11 @@ class MainPage extends Component {
             Score:
             <h1>{score}</h1>
             Games:
-            <GamesList games={finishedGames} />
+            <div className="games-list-block">
+              <GamesList games={finishedGames} />
+            </div>
           </div>
-          <div className="flex-image-item">{content}</div>
+          <div className="flex-item image-block">{content}</div>
         </div>
       </MainTemplate>
     );

@@ -2,6 +2,7 @@ import "./style.css";
 
 import ShareBlock from "components/ShareBlock";
 import { Component } from "react";
+import { PlayCircleFill } from "react-bootstrap-icons";
 import { createNavigationHandler, routes } from "Router";
 import MainTemplate from "templates/MainTemplate";
 
@@ -34,16 +35,21 @@ class ResultPage extends Component {
         <div className="score-block">
           <h2>Your score:</h2>
           <h1>{this.state.score}</h1>
-          <button
-            className="play-again-button glow-on-hover"
-            onClick={this.handlePlayAgainPress}
-          >
-            Play again
-          </button>
+          <div>
+            <button
+              className="play-again-button glow-on-hover"
+              onClick={this.handlePlayAgainPress}
+            >
+              Play again
+            </button>
+          </div>
           <div>
             <ShareBlock />
           </div>
-          <GamesList games={finishedGames} />
+          <div className="game-list-block">
+            <h2>Games:</h2>
+            <GamesList games={finishedGames} />
+          </div>
         </div>
       </MainTemplate>
     );

@@ -2,7 +2,14 @@
 import "./style.css";
 
 const OptionButton = (props) => {
-  let { answer, chosenAnswer, correctAnswer, className, ...otherProps } = props;
+  let {
+    prefix,
+    answer,
+    chosenAnswer,
+    correctAnswer,
+    className,
+    ...otherProps
+  } = props;
   // init/update className
   // todo: remove it?
   if (!className) {
@@ -20,8 +27,12 @@ const OptionButton = (props) => {
     }
   }
   return (
-    <button className={"nice-button " + className} {...otherProps}>
-      {answer.appName}
+    <button
+      className={"nice-button button-flex-container " + className}
+      {...otherProps}
+    >
+      <div className="prefix">{prefix}</div>
+      <div className="game-name">{answer.appName}</div>
     </button>
   );
 };
