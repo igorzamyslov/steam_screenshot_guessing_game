@@ -39,7 +39,7 @@
 .buttons-block {
   padding: 4px;  
   flex-grow: 1;
-  max-height: 16%;
+  max-height: 20%;
   flex-wrap: wrap;  
 }
 
@@ -49,7 +49,7 @@
 }
 
 .screenshot {  
-  max-height: 84%;
+  max-height: 80%;
   object-fit: contain;      
 }
 
