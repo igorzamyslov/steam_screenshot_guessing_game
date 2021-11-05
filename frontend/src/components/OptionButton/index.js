@@ -27,9 +27,9 @@ const OptionButton = (props) => {
     }
   }
   return (
-    <button className={"nice-button " + className} {...otherProps}>
-      <span className="prefix">{prefix}</span>
-      <span className="game-name">{answer.appName}</span>
+    <button className={"nice-button button-flex-container " + className} {...otherProps}>
+      <div className="prefix">{prefix}</div>
+      <div className="game-name">{answer.appName}</div>
     </button>
   );
 };

@@ -17,9 +17,24 @@
 }
 
 .prefix {
+  flex-grow: 0;
+  display: inline-block;
   color: #f98a4e;
   padding-left: 8px;
   padding-right: 8px;
+}
+
+.game-name{
+  flex-grow: 15;
+  display: inline-block;
+  padding-right: 8px;
+}
+
+.button-flex-container{
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap ;
+  justify-content: flex-start;
 }
 
 .nice-button {
