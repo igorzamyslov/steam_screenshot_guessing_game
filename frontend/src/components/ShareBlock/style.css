@@ -1,4 +1,5 @@
 .share-button {
+  position: relative;
   width: 160px;
   height: 48px;
   color: white;
@@ -26,4 +27,9 @@
   outline-color: rgb(255 255 255 / 0%);
   outline-offset: 8px;
   text-shadow: 1px 1px 2px #427388;
+}
+
+.share-button:active {
+  background: #4b84e7;
+  top: 1px;
 }
