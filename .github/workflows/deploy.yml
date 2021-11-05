@@ -9,11 +9,19 @@ jobs:
   deployment:
     runs-on: ubuntu-latest
     steps:
-      - name: executing remote ssh commands using password
+      - name: pull git
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
-          script: whoami
+          script: ./pull-code.sh
+      - name: rebuild and start containers
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          port: ${{ secrets.PORT }}
+          script: ./build-and-run-docker.sh
