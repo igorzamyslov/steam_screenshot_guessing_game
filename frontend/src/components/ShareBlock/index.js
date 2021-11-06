@@ -3,6 +3,7 @@ import "./style.css";
 import { Github } from "react-bootstrap-icons";
 import { Share } from "react-bootstrap-icons";
 import { Twitter } from "react-bootstrap-icons";
+import { Paypal } from "react-bootstrap-icons";
 
 const openUrl = (url) => () => {
   window.open(url, "_blank");
@@ -33,8 +34,17 @@ const ShareBlock = (props) => {
       >
         <Github /> Code
       </button>
-      <button className="share-button" onClick={handleTwitter}>
+      <button
+        className="share-button"
+        onClick={openUrl("https://twitter.com/ssgg_fun")}
+      >
         <Twitter /> Twitter
+      </button>
+      <button
+        className="share-button"
+        onClick={openUrl("https://www.patreon.com/ssgg_fun")}
+      >
+        <Paypal /> Patreon
       </button>
     </div>
   );
