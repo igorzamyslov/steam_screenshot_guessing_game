@@ -1,8 +1,11 @@
-h1 {
-  margin: 16px;
+
+.final-score {
+  margin-top: 16px;
+  font-size: xxx-large;
+  margin-bottom: 0px;
 }
 
-h2 {
+.title {
   margin-bottom: 8px;
 }
 
@@ -22,6 +25,7 @@ h2 {
 
 .game-list-block {
   display: inline-block;
+  margin-bottom: 16px;
 }
 
 .shown-game {
@@ -39,7 +43,7 @@ h2 {
 }
 
 .play-again-button {
-  width: 240px;
+  width: 272px;
   height: 80px;
   margin: 16px;
   flex-grow: 1;

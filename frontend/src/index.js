@@ -8,12 +8,14 @@ import { createStore } from "redux";
 import { Router } from "Router";
 
 import reportWebVitals from "./reportWebVitals";
+import {YMInitializer} from "react-yandex-metrika";
 
 const store = createStore(combinedReducers);
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
+      <YMInitializer accounts={[86201639]} options={{webvisor: true}} version="2" />
+      <Provider store={store}>
       <Router />
     </Provider>
   </React.StrictMode>,

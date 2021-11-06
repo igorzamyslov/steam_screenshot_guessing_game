@@ -32,8 +32,12 @@ class ResultPage extends Component {
     return (
       <MainTemplate>
         <div className="score-block">
-          <h2>Your score:</h2>
-          <h1>{this.state.score}</h1>
+          <h2 className="title">Your score:</h2>
+          <h1 className="final-score">{this.state.score}</h1>
+          <div className="game-list-block">
+            <h2 className="title">Games:</h2>
+            <GamesList games={finishedGames} />
+          </div>
           <div>
             <button
               className="play-again-button glow-on-hover"
@@ -44,10 +48,6 @@ class ResultPage extends Component {
           </div>
           <div>
             <ShareBlock />
-          </div>
-          <div className="game-list-block">
-            <h2>Games:</h2>
-            <GamesList games={finishedGames} />
           </div>
         </div>
       </MainTemplate>

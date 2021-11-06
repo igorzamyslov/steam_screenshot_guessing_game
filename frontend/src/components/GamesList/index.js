@@ -6,7 +6,6 @@ import { XCircleFill } from "react-bootstrap-icons";
 const GamesList = ({ games }) => (
   <div className="game-list">
     {
-      (console.log(games),
       games.map(({ name, url, correct }, i) => (
         <p className="shown-game" key={`game_${i}`}>
           <span>
@@ -26,7 +25,7 @@ const GamesList = ({ games }) => (
             <span>{name}</span>
           </a>
         </p>
-      )))
+      ))
     }
   </div>
 );
