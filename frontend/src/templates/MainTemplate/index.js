@@ -7,7 +7,10 @@ const MainTemplate = ({ children }) => (
     </h2>
     <div className="content">{children}</div>
     <div className="disclaimer">
-      <div>This website is a hobby project and is not affiliated with Valve or Steam.</div>
+      <div>
+        This website is a hobby project and is not affiliated
+        with Valve or Steam.
+      </div>
       <div>Steam and the Steam logo are trademarks of Valve Corporation.</div>
       <div>All other trademarks are property of their respective owners.</div>
     </div>
