@@ -1,3 +1,10 @@
+h2 {
+  font-size: large;
+  color: white;
+  font-family: "Motiva Sans", sans-serif;
+  text-shadow: 0 0 2px rgb(23 26 33);
+}
+
 a {
   color: #61dafb;
 }
@@ -24,22 +31,10 @@ a {
 }
 
 .content {
-  width: 2000px;
   height: 90%;
   position: sticky;
   left: 0;
-}
-
-@media (max-width: 2000px) {
-  .content {
-    width: 1400px;
-  }
-}
-
-@media (max-width: 1200px) {
-  .content {
-    width: 1000px;
-  }
+  flex-grow: 1;
 }
 
 @media (max-width: 500px) {
@@ -48,9 +43,28 @@ a {
   }
 }
 
-h2 {
-  font-size: large;
-  color: white;
-  font-family: "Motiva Sans", sans-serif;
-  text-shadow: 0 0 2px rgb(23 26 33);
+@media (min-width: 1200px) {
+  .content {
+    width: 1100px;
+  }
+}
+
+@media (min-width: 1600px) {
+  .content {
+    width: 1400px;
+  }
+}
+
+@media (min-width: 2000px) {
+  .content {
+    width: 1600px;
+  }
+}
+
+.disclaimer {
+  text-align: right;
+  font-size: small;
+  color: dimgray;
+  margin: 16px;
+  width: calc(100% - 32px);
 }
