@@ -2,23 +2,19 @@ version: "3.5"
 
 services:
   proxy:
-    image: nginx:alpine
+    image: ghcr.io/igorzamyslov/ssgg/proxy:master
     environment:
       VIRTUAL_HOST: ssgg.fun
       LETSENCRYPT_HOST: ssgg.fun
     depends_on:
       - frontend
       - backend-web
-    volumes:
-      - ./proxy.nginx.conf:/etc/nginx/nginx.conf
     networks:
       - proxy
       - ssgg
 
   backend-web:
-    build:
-      context: ./backend
-      dockerfile: web/Dockerfile
+    image: ghcr.io/igorzamyslov/ssgg/backend:master
     depends_on:
       - backend-db-upgrade
     volumes:
@@ -29,9 +25,7 @@ services:
       - ssgg
 
   backend-db-handler:
-    build:
-      context: ./backend
-      dockerfile: database_handler/Dockerfile
+    image: ghcr.io/igorzamyslov/ssgg/db-handler:master
     depends_on:
       - backend-db-upgrade
     volumes:
@@ -42,16 +36,14 @@ services:
       - default
 
   backend-db-upgrade:
-    build:
-      context: ./backend
-      dockerfile: database_migration/Dockerfile
+    image: ghcr.io/igorzamyslov/ssgg/db-upgrader:master
     volumes:
       - ssgg_database:$DB_FOLDER
     environment:
       SQLITE_PATH: $DB_PATH
 
   frontend:
-    build: ./frontend
+    image: ghcr.io/igorzamyslov/ssgg/frontend:master
     networks:
       - ssgg
 
