@@ -144,7 +144,7 @@ class MainPage extends Component {
 
     return [
       <img
-        className="screenshot flex-item"
+        className="screenshot"
         src={screenshotUrl}
         alt="The whole purpose of this website"
         key="quiz-image"
