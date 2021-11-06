@@ -16,7 +16,7 @@ env:
 
 
 jobs:
-  build-proxy:
+  build:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -111,7 +111,11 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta_db_upgrader.outputs.tags }}
           labels: ${{ steps.meta_db_upgrader.outputs.labels }}
-
+  
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
       # Update docker-compose
       - name: Update docker-compose on the server
         uses: appleboy/scp-action@master
@@ -126,13 +130,12 @@ jobs:
       # Deploy
       - name: Upgrade images on the server and deploy
         uses: appleboy/ssh-action@master
-        env:
-          COMPOSE_FILE: "ssgg-prod/docker-compose.production.yml"
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
           script: |
+            export COMPOSE_FILE=./ssgg-prod/docker-compose.production.yml
             docker-compose pull
             docker-compose up -d --remove-orphans
