@@ -16,7 +16,7 @@ env:
 
 
 jobs:
-  build:
+  build-proxy:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -121,17 +121,18 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
           source: "docker-compose.production.yml"
-          target: "ssgg-prod/docker-compose.yml"
+          target: "ssgg-prod"
 
       # Deploy
       - name: Upgrade images on the server and deploy
         uses: appleboy/ssh-action@master
+        env:
+          COMPOSE_FILE: "ssgg-prod/docker-compose.production.yml"
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            cd ssgg-prod
             docker-compose pull
             docker-compose up -d --remove-orphans
