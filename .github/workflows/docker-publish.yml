@@ -75,7 +75,7 @@ jobs:
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
           context: backend
-          file: web/Dockerfile
+          file: backend/web/Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta_backend.outputs.tags }}
           labels: ${{ steps.meta_backend.outputs.labels }}
@@ -91,7 +91,7 @@ jobs:
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
           context: backend
-          file: database_handler/Dockerfile
+          file: backend/database_handler/Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta_db_handler.outputs.tags }}
           labels: ${{ steps.meta_db_handler.outputs.labels }}
@@ -106,7 +106,8 @@ jobs:
       - name: Build and push SSGG Frontend image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
-          context: frontend
+          context: backend
+          file: backend/database_migration/Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta_db_upgrader.outputs.tags }}
           labels: ${{ steps.meta_db_upgrader.outputs.labels }}
