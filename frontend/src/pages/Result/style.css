@@ -10,7 +10,7 @@
 
 .score-block {
   min-width: 50%;
-  background-image: linear-gradient(to top, rgb(27 40 56), rgb(255 0 0 / 0%));
+  background-image: linear-gradient(to top, rgb(27 40 56), rgb(0 0 0 / 0%));
   border-radius: 8px;
   display: flex;
   flex-direction: column;
