@@ -10,6 +10,7 @@ import SteamService from "services/SteamService";
 import MainTemplate from "templates/MainTemplate";
 
 import GamesList from "../../components/GamesList";
+import ym from "react-yandex-metrika";
 
 const messages = {
   loading: "Steam app loading ...",
@@ -38,8 +39,10 @@ class MainPage extends Component {
       message: messages.loading,
     };
     this.loadingMessageTimeout = null;
-    this.navigateToResult = (score) =>
-      createNavigationHandler(props.history, routes.resultPage, { score });
+    this.navigateToResult = (score) => {
+      ym('reachGoal', 'finishedGame', {score: score});
+      return createNavigationHandler(props.history, routes.resultPage, {score});
+    }
   }
 
   static selectRandomScreenshot = (app) => {
