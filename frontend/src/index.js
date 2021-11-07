@@ -16,7 +16,7 @@ ReactDOM.render(
   <React.StrictMode>
     <YMInitializer
       accounts={[86201639]}
-      options={{ webvisor: true }}
+      options={{ webvisor: true , defer:true}}
       version="2"
     />
     <Provider store={store}>
