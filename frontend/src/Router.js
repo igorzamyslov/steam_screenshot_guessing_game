@@ -2,6 +2,7 @@ import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 
 import Main from "./pages/Main";
 import Result from "./pages/Result";
+import ym from 'react-yandex-metrika';
 
 export const routes = {
   resultPage: "/result",
@@ -13,8 +14,9 @@ export function createNavigationHandler(history, route, queryParams = {}) {
   if (queryParamsString) {
     queryParamsString = `?${queryParamsString}`;
   }
-
+  // Log yandex metrics navigation
   return () => {
+    ym('hit', route, {params: queryParams});
     history.push({
       pathname: route,
       search: queryParamsString,
