@@ -7,10 +7,15 @@ import { YMInitializer } from "react-yandex-metrika";
 import combinedReducers from "reducers";
 import { createStore } from "redux";
 import { Router } from "Router";
+import ga4 from "react-ga4";
 
 import reportWebVitals from "./reportWebVitals";
 
 const store = createStore(combinedReducers);
+
+function enableGA4() {
+    ga4.initialize("G-3VBTV1Z6NQ");
+}
 
 ReactDOM.render(
   <React.StrictMode>
@@ -30,3 +35,5 @@ ReactDOM.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+enableGA4()
