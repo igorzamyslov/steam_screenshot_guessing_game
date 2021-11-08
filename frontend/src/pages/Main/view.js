@@ -5,12 +5,12 @@ import OptionButton from "components/OptionButton";
 import { TIMEOUT_BEFORE_NEXT_QUESTION } from "config";
 import PropTypes from "prop-types";
 import { Component } from "react";
+import ym from "react-yandex-metrika";
 import { createNavigationHandler, routes } from "Router";
 import SteamService from "services/SteamService";
 import MainTemplate from "templates/MainTemplate";
 
 import GamesList from "../../components/GamesList";
-import ym from "react-yandex-metrika";
 
 const messages = {
   loading: "Steam app loading ...",
@@ -40,9 +40,11 @@ class MainPage extends Component {
     };
     this.loadingMessageTimeout = null;
     this.navigateToResult = (score) => {
-      ym('reachGoal', 'finishedGame', {score: score});
-      return createNavigationHandler(props.history, routes.resultPage, {score});
-    }
+      ym("reachGoal", "finishedGame", { score: score });
+      return createNavigationHandler(props.history, routes.resultPage, {
+        score,
+      });
+    };
   }
 
   static selectRandomScreenshot = (app) => {
