@@ -2,26 +2,31 @@ import "./index.css";
 
 import React from "react";
 import ReactDOM from "react-dom";
+import ga4 from "react-ga4";
 import { Provider } from "react-redux";
 import { YMInitializer } from "react-yandex-metrika";
 import combinedReducers from "reducers";
 import { createStore } from "redux";
 import { Router } from "Router";
-import ga4 from "react-ga4";
 
 import reportWebVitals from "./reportWebVitals";
 
 const store = createStore(combinedReducers);
 
 function enableGA4() {
-    ga4.initialize("G-3VBTV1Z6NQ");
+  ga4.initialize("G-3VBTV1Z6NQ");
 }
 
 ReactDOM.render(
   <React.StrictMode>
     <YMInitializer
       accounts={[86201639]}
-      options={{ webvisor: true, defer:true, trackLinks:true, clickmap:true}}
+      options={{
+        webvisor: true,
+        defer: true,
+        trackLinks: true,
+        clickmap: true,
+      }}
       version="2"
     />
     <Provider store={store}>
@@ -36,4 +41,4 @@ ReactDOM.render(
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
 
-enableGA4()
+enableGA4();
