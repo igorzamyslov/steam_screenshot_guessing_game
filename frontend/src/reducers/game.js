@@ -1,5 +1,5 @@
-import * as actionTypes from "actions/types";
-import { MAX_LIVES } from "config";
+import * as actionTypes from "@/actions/types";
+import { MAX_LIVES } from "@/config";
 
 const defaultState = {
   score: 0,
