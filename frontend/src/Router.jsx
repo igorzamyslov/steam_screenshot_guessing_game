@@ -1,8 +1,8 @@
 import About from "@/pages/About";
-import Menu from "@/pages/Menu";
-import Main from "@/pages/Main";
-import Result from "@/pages/Result";
 import Leaderboard from "@/pages/Leaderboard";
+import Main from "@/pages/Main";
+import Menu from "@/pages/Menu";
+import Result from "@/pages/Result";
 import ga4 from "react-ga4";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import ym from "react-yandex-metrika";

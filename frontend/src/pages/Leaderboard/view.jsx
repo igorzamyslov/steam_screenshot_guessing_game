@@ -1,11 +1,10 @@
 import "./style.css";
 
-import { Component } from "react";
-import { createNavigationHandler, routes } from "@/Router";
-import MainTemplate from "@/templates/MainTemplate";
-
 import ScoreBoard from "@/components/ScoreBoard";
 import ShareBlock from "@/components/ShareBlock";
+import { createNavigationHandler, routes } from "@/Router";
+import MainTemplate from "@/templates/MainTemplate";
+import { Component } from "react";
 
 class AboutPage extends Component {
   constructor(props) {

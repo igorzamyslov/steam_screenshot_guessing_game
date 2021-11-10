@@ -5,17 +5,17 @@
   color: white;
   border-radius: 10px;
   font-size: large;
-  background: rgb(255 255 255 / 0%) ;
+  background: rgb(255 255 255 / 0%);
   border: #1d4e89;
   border: 1px solid;
-
   font-weight: 900;
   letter-spacing: 1px;
   padding: 4px;
   margin: 4px;
 
-  /*outline: 0 solid;*/
-  /*outline-color: rgb(255 255 255 / 50%);*/
+  /* outline: 0 solid; */
+
+  /* outline-color: rgb(255 255 255 / 50%); */
   outline-offset: 0;
   text-shadow: none;
   transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
