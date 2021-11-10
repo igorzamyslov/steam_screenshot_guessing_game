@@ -4,15 +4,21 @@ import {Component} from "react";
 import {createNavigationHandler, routes} from "@/Router";
 
 import ShareBlock from "@/components/ShareBlock";
+import LocalStorageService from "@/services/LocalStorageService";
 
 class MenuPage extends Component {
     constructor(props) {
         super(props);
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSaveNick = this.handleSaveNick.bind(this);
+
+        //preload nick from local storage
+        const userInfo = LocalStorageService.getUserInfo()
+
         this.state = {
             nick: ""
         };
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSaveNick = this.handleSaveNick.bind(this);
 
         this.navigateToMain = createNavigationHandler(
             props.history,
@@ -22,16 +28,20 @@ class MenuPage extends Component {
             props.history,
             routes.leaderboardPage
         );
-
     }
 
     handleChange(event) {
         this.setState({nick: event.target.value});
-        console.log(this.state.nick)
     }
 
-    handleSaveNick(event) {
-        this.setState({nick: event.target.value});
+    handleSaveNick() {
+        const nick = this.state.nick
+        if (!nick || nick.length === 0) {
+            return;
+        }
+        LocalStorageService.saveUserInfo({
+            nick: nick
+        });
     }
 
     render() {
@@ -45,15 +55,20 @@ class MenuPage extends Component {
                         <h1 className="logo-title">GAME</h1>
                     </div>
                     <div className="text-block">
-                        <div className="nick-form" >
+                        <div className="nick-form">
                             <input
                                 placeholder="Your nickname"
                                 className="nick-input"
                                 type="text"
                                 maxLength="24"
                                 value={this.state.nick}
-                                onChange={this.handleChange} />
-                            <button className="save-nick-button">Save</button>
+                                onChange={this.handleChange}/>
+                            <button
+                                onClick={this.handleSaveNick}
+                                className="save-nick-button"
+                            >
+                                Save
+                            </button>
                         </div>
                     </div>
                     <div>
