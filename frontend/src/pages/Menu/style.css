@@ -36,10 +36,6 @@
   margin: 4px 4px 4px 0;
 }
 
-.share-block {
-  margin: 50px;
-}
-
 .nick-input:focus {
   text-align: center;
 }
@@ -55,4 +51,13 @@
 
 .leader-board-block {
   margin-bottom: 16px;
+}
+
+.share-block {
+  position: relative;
+  bottom: 16px;
+}
+
+.main-template {
+  justify-content: space-around
 }

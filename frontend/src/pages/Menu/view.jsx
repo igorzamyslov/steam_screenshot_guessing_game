@@ -78,7 +78,7 @@ class MenuPage extends Component {
               className="play-again-button glow-on-hover"
               onClick={this.navigateToMain}
             >
-              Play
+              PLAY
             </button>
           </div>
           <div className="leader-board-block">
@@ -89,9 +89,9 @@ class MenuPage extends Component {
               Leaderboard
             </button>
           </div>
-          <div>
-            <ShareBlock className="share-block" />
-          </div>
+        </div>
+        <div className="share-block" >
+          <ShareBlock/>
         </div>
       </div>
     );
