@@ -65,7 +65,7 @@ class MenuPage extends Component {
                                 onChange={this.handleChange}/>
                             <button
                                 onClick={this.handleSaveNick}
-                                className="save-nick-button"
+                                className="save-nick-button primary-button"
                             >
                                 Save
                             </button>
