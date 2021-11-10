@@ -1,0 +1,52 @@
+.logo-title{
+  font-family: "Impact";
+  font-size: xxx-large;
+  text-align: left;
+  margin: 0px;
+}
+
+.logo-container{
+  width: 300px;
+
+}
+
+.main-block{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.nick-form{
+   width: 300px;
+  display: flex;
+  flex-direction: row;
+  justify-content: stretch;
+  margin-bottom: 4px;
+
+}
+
+.nick-input{
+  border-radius: 10px;
+  flex-grow: 3;
+  font-size: large;
+  border: 0px;
+  margin-right: 8px ;
+}
+
+.save-nick-button{
+  flex-grow: 1;height: 48px;
+  color: white;
+  border-radius: 10px;
+  font-size: large;
+  background: #0d6efd;
+  font-weight: 900;
+  letter-spacing: 1px;
+  border: 0 solid;
+  outline: 0 solid;
+  outline-color: rgb(255 255 255 / 50%);
+  outline-offset: 0;
+  text-shadow: none;
+  transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
+  background-image: linear-gradient(180deg, rgb(255 255 255 / 15%), rgb(255 255 255 / 0%));
+}
+
