@@ -1,9 +1,9 @@
-import "./../../styles/style.css";
+import "@/styles/style.css";
 import "./style.css"
 import {Component} from "react";
-import {createNavigationHandler, routes} from "Router";
+import {createNavigationHandler, routes} from "@/Router";
 
-import ShareBlock from "../../components/ShareBlock";
+import ShareBlock from "@/components/ShareBlock";
 
 class MenuPage extends Component {
     constructor(props) {

@@ -1,4 +1,5 @@
 import About from "@/pages/About";
+import Menu from "@/pages/Menu";
 import Main from "@/pages/Main";
 import Result from "@/pages/Result";
 import Leaderboard from "@/pages/Leaderboard";
