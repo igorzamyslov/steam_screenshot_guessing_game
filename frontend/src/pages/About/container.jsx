@@ -1,4 +1,4 @@
-import * as gameActions from "actions/game";
+import * as gameActions from "@/actions/game";
 import { connect } from "react-redux";
 
 import View from "./view";

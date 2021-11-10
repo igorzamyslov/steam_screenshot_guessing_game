@@ -1,10 +1,9 @@
 import "./style.css";
 
+import ShareBlock from "@/components/ShareBlock";
+import { createNavigationHandler, routes } from "@/Router";
+import MainTemplate from "@/templates/MainTemplate";
 import { Component } from "react";
-import { createNavigationHandler, routes } from "Router";
-import MainTemplate from "templates/MainTemplate";
-
-import ShareBlock from "../../components/ShareBlock";
 
 class AboutPage extends Component {
   constructor(props) {

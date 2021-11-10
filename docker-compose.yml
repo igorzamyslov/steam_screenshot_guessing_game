@@ -7,7 +7,7 @@ services:
       - frontend
       - backend-web
     ports:
-      - 127.0.0.1:9000:80
+      - "127.0.0.1:9000:80"
 
   backend-web:
     build:
@@ -68,9 +68,7 @@ services:
     working_dir: /app
     volumes:
       - ./frontend:/app
-    environment:
-      PORT: 80
-    command: "bash -c 'npm install; npm run start'"
+    command: "bash -c 'npm install; npm run dev'"
 
   frontend-prettify:
     image: node:lts-slim

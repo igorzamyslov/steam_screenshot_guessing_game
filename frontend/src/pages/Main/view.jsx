@@ -1,16 +1,15 @@
 import "./style.css";
 
-import LiveHeart from "components/LiveHeart";
-import OptionButton from "components/OptionButton";
-import { TIMEOUT_BEFORE_NEXT_QUESTION } from "config";
+import GamesList from "@/components/GamesList";
+import LiveHeart from "@/components/LiveHeart";
+import OptionButton from "@/components/OptionButton";
+import { TIMEOUT_BEFORE_NEXT_QUESTION } from "@/config";
+import { createNavigationHandler, routes } from "@/Router";
+import SteamService from "@/services/SteamService";
+import MainTemplate from "@/templates/MainTemplate";
 import PropTypes from "prop-types";
 import { Component } from "react";
 import ym from "react-yandex-metrika";
-import { createNavigationHandler, routes } from "Router";
-import SteamService from "services/SteamService";
-import MainTemplate from "templates/MainTemplate";
-
-import GamesList from "../../components/GamesList";
 
 const messages = {
   loading: "Steam app loading ...",

@@ -1,11 +1,10 @@
 import "./style.css";
 
-import ShareBlock from "components/ShareBlock";
+import GamesList from "@/components/GamesList";
+import ShareBlock from "@/components/ShareBlock";
+import { createNavigationHandler, routes } from "@/Router";
+import MainTemplate from "@/templates/MainTemplate";
 import { Component } from "react";
-import { createNavigationHandler, routes } from "Router";
-import MainTemplate from "templates/MainTemplate";
-
-import GamesList from "../../components/GamesList";
 
 class ResultPage extends Component {
   constructor(props) {
