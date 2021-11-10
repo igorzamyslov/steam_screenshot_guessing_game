@@ -51,7 +51,7 @@ class AboutPage extends Component {
             <ScoreBoard userScores={this.state.userScores} />
           </div>
           <div>
-            <button className="play-button" onClick={this.navigateToMain}>
+            <button className="primary-button" onClick={this.navigateToMain}>
               Play the game
             </button>
           </div>

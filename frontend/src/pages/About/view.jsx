@@ -33,7 +33,7 @@ class AboutPage extends Component {
             <p>You can support our project or just enjoy it!</p>
           </div>
           <div>
-            <button className="play-button" onClick={this.navigateToMain}>
+            <button className="primary-button" onClick={this.navigateToMain}>
               Play the game
             </button>
           </div>

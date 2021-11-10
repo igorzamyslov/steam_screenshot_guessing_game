@@ -9,7 +9,7 @@ class MenuPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            nick: "Player1"
+            nick: ""
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSaveNick = this.handleSaveNick.bind(this);
@@ -37,7 +37,7 @@ class MenuPage extends Component {
     render() {
         return (
             <div className="main-template">
-                <div className="main-block">
+                <div className="menu-block">
                     <div className="logo-container">
                         <h1 className="logo-title">STEAM</h1>
                         <h1 className="logo-title">SCREENSHOT</h1>
@@ -45,19 +45,24 @@ class MenuPage extends Component {
                         <h1 className="logo-title">GAME</h1>
                     </div>
                     <div className="text-block">
-                        <div>Nickname:</div>
                         <div className="nick-form" >
-                            <input className="nick-input" type="text" value={this.state.nick} onChange={this.handleChange} />
+                            <input
+                                placeholder="Your nickname"
+                                className="nick-input"
+                                type="text"
+                                maxLength="24"
+                                value={this.state.nick}
+                                onChange={this.handleChange} />
                             <button className="save-nick-button">Save</button>
                         </div>
                     </div>
                     <div>
-                        <button className="play-button" onClick={this.navigateToMain}>
+                        <button className="play-again-button glow-on-hover" onClick={this.navigateToMain}>
                             Play
                         </button>
                     </div>
-                    <div>
-                        <button className="play-button" onClick={this.navigateToLeaderboard}>
+                    <div className="leader-board-block">
+                        <button className="primary-button" onClick={this.navigateToLeaderboard}>
                             Leaderboard
                         </button>
                     </div>
