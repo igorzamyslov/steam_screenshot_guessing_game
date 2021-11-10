@@ -1,13 +1,13 @@
 import "./index.css";
 
+import combinedReducers from "@/reducers";
+import { Router } from "@/Router";
 import React from "react";
 import ReactDOM from "react-dom";
 import ga4 from "react-ga4";
 import { Provider } from "react-redux";
 import { YMInitializer } from "react-yandex-metrika";
-import combinedReducers from "@/reducers";
 import { createStore } from "redux";
-import { Router } from "@/Router";
 
 import reportWebVitals from "./reportWebVitals";
 
