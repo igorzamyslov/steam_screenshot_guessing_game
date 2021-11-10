@@ -1,0 +1,113 @@
+h2 {
+  font-size: large;
+  color: white;
+  font-family: "Motiva Sans", sans-serif;
+  text-shadow: 0 0 2px rgb(23 26 33);
+}
+
+a {
+  color: #61dafb;
+}
+
+.main-template {
+  position: relative;
+  background: rgb(23 26 33);
+  background:
+          linear-gradient(
+                  135deg,
+                  rgb(23 26 33) 0%,
+                  rgb(42 71 94 / 100%) 35%,
+                  rgb(27 40 56 / 100%) 100%
+          );
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: flex-start;
+  font-size: larger;
+  color: white;
+}
+
+.content {
+  height: 90%;
+  position: sticky;
+  left: 0;
+  flex-grow: 1;
+}
+
+.main-block {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.play-button {
+  flex-grow: 0;
+  width: 300px;
+  height: 48px;
+  color: white;
+  border-radius: 10px;
+  font-size: large;
+  background: #0d6efd;
+  font-weight: 900;
+  letter-spacing: 1px;
+  padding: 4px;
+  margin: 4px;
+  border: 0 solid;
+  outline: 0 solid;
+  outline-color: rgb(255 255 255 / 50%);
+  outline-offset: 0;
+  text-shadow: none;
+  transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
+  background-image: linear-gradient(180deg, rgb(255 255 255 / 15%), rgb(255 255 255 / 0%));
+}
+
+.play-button:hover {
+  background-color: #2179fd;
+  border-color: #4b84e7;
+  border: 0 solid;
+  box-shadow: inset 0 0 4px rgb(255 255 255 / 30%), 0 0 4px rgb(255 255 255 / 10%);
+  outline-color: rgb(255 255 255 / 0%);
+  outline-offset: 8px;
+  text-shadow: 1px 1px 2px #427388;
+}
+
+.play-button:active {
+  background: #4b84e7;
+  top: 1px;
+}
+
+@media (max-width: 500px) {
+  .content {
+    width: 500px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .content {
+    width: 1100px;
+  }
+}
+
+@media (min-width: 1600px) {
+  .content {
+    width: 1400px;
+  }
+}
+
+@media (min-width: 2000px) {
+  .content {
+    width: 1600px;
+  }
+}
+
+.disclaimer {
+  position: absolute;
+  right: 16px;
+  text-align: right;
+  font-size: small;
+  text-decoration: none;
+}
