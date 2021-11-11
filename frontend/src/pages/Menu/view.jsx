@@ -12,6 +12,7 @@ class MenuPage extends Component {
     super(props);
     this.state = {
       nick: "",
+      nickEditMode: true,
     };
 
     this.navigateToMain = createNavigationHandler(
@@ -23,8 +24,9 @@ class MenuPage extends Component {
       routes.leaderboardPage
     );
 
-    this.handleSaveNick = () => {
+    this.saveNickAndNavigate = () => {
       LocalStorageService.saveUsersNick(this.state.nick);
+      this.navigateToMain();
     };
   }
 
@@ -37,6 +39,21 @@ class MenuPage extends Component {
     this.setState({ nick: event.target.value });
   };
 
+  renderNickNameBlock() {
+    return (
+      <div className="nick-form">
+        <input
+          placeholder="Your nickname"
+          className="nick-input"
+          type="text"
+          maxLength="24"
+          value={this.state.nick}
+          onChange={this.handleChange}
+        />
+      </div>
+    );
+  }
+
   render() {
     return (
       <div className="main-template">
@@ -47,28 +64,11 @@ class MenuPage extends Component {
             <h1 className="logo-title">GUESSING</h1>
             <h1 className="logo-title">GAME</h1>
           </div>
-          <div className="text-block">
-            <div className="nick-form">
-              <input
-                placeholder="Your nickname"
-                className="nick-input"
-                type="text"
-                maxLength="24"
-                value={this.state.nick}
-                onChange={this.handleChange}
-              />
-              <button
-                onClick={this.handleSaveNick}
-                className="save-nick-button primary-button"
-              >
-                Save
-              </button>
-            </div>
-          </div>
+          <div className="text-block">{this.renderNickNameBlock()}</div>
           <div>
             <button
               className="play-again-button glow-on-hover"
-              onClick={this.navigateToMain}
+              onClick={this.saveNickAndNavigate}
             >
               PLAY
             </button>

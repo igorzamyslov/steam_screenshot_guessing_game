@@ -26,16 +26,20 @@
 }
 
 .nick-input {
+  color: white;
+  height: 48px;
   min-width: 0;
   text-align: center;
   border-radius: 10px;
   flex-grow: 3;
   flex-basis: 70%;
   font-size: x-large;
-  border: 0;
+  font-weight: 600;
+  border: 1px solid white;
   padding-left: 16px;
   padding-right: 16px;
   margin: 4px 4px 4px 0;
+  background: transparent;
 }
 
 .nick-input:focus {

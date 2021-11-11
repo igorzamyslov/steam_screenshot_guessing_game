@@ -1,5 +1,6 @@
 class LocalStorageService {
   static saveUsersNick = (usersNick) => {
+    console.log("save nick");
     localStorage.setItem("usersNick", !!usersNick ? usersNick : "");
   };
   static getUsersNick = () => {
