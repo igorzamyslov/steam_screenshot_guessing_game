@@ -1,13 +1,13 @@
 class LocalStorageService {
-  static saveUserInfo = (userInfo) => {
-    localStorage.setItem("userInfo", userInfo);
+  static saveUsersNick = (usersNick) => {
+    localStorage.setItem("usersNick", !!usersNick ? usersNick : "");
   };
-  static getUserInfo = () => {
-    const userInfo = localStorage.getItem("userInfo");
-    if (!userInfo) {
-      return {};
+  static getUsersNick = () => {
+    const usersNick = localStorage.getItem("usersNick");
+    if (!usersNick) {
+      return "";
     }
-    return localStorage.getItem("userInfo");
+    return usersNick;
   };
 }
 

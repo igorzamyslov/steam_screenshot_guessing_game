@@ -10,13 +10,6 @@ import { Component } from "react";
 class MenuPage extends Component {
   constructor(props) {
     super(props);
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSaveNick = this.handleSaveNick.bind(this);
-
-    //preload nick from local storage
-    const userInfo = LocalStorageService.getUserInfo();
-
     this.state = {
       nick: "",
     };
@@ -29,21 +22,20 @@ class MenuPage extends Component {
       props.history,
       routes.leaderboardPage
     );
+
+    this.handleSaveNick = () => {
+      LocalStorageService.saveUsersNick(this.state.nick);
+    };
   }
 
-  handleChange(event) {
+  componentDidMount() {
+    const nick = LocalStorageService.getUsersNick();
+    this.setState({ nick });
+  }
+
+  handleChange = (event) => {
     this.setState({ nick: event.target.value });
-  }
-
-  handleSaveNick() {
-    const nick = this.state.nick;
-    if (!nick || nick.length === 0) {
-      return;
-    }
-    LocalStorageService.saveUserInfo({
-      nick: nick,
-    });
-  }
+  };
 
   render() {
     return (
@@ -90,8 +82,8 @@ class MenuPage extends Component {
             </button>
           </div>
         </div>
-        <div className="share-block" >
-          <ShareBlock/>
+        <div className="share-block">
+          <ShareBlock />
         </div>
       </div>
     );
