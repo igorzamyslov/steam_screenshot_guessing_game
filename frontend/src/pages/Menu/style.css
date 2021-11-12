@@ -1,0 +1,70 @@
+.logo-title {
+  font-family: Impact, sans-serif;
+  font-size: xxx-large;
+  text-align: left;
+  margin: 0;
+}
+
+.logo-container {
+  width: 300px;
+  margin-bottom: 16px;
+  margin-top: 16px;
+}
+
+.menu-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-image: linear-gradient(180deg, rgb(0 0 0 / 20%), rgb(255 255 255 / 0%));
+}
+
+.nick-form {
+  width: 300px;
+  display: flex;
+  flex-direction: row;
+  justify-content: stretch;
+}
+
+.nick-input {
+  color: white;
+  height: 48px;
+  min-width: 0;
+  text-align: center;
+  border-radius: 10px;
+  flex-grow: 3;
+  flex-basis: 70%;
+  font-size: x-large;
+  font-weight: 600;
+  border: 1px solid white;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin: 4px 4px 4px 0;
+  background: transparent;
+}
+
+.nick-input:focus {
+  text-align: center;
+}
+
+.nick-input:focus::placeholder {
+  color: transparent;
+}
+
+.save-nick-button {
+  flex-grow: 1;
+  margin-right: 0;
+  flex-basis: 30%;
+}
+
+.leader-board-block {
+  margin-bottom: 16px;
+}
+
+.share-block {
+  position: relative;
+  bottom: 16px;
+}
+
+.main-template {
+  justify-content: space-around;
+}

@@ -1,0 +1,22 @@
+.leader-table {
+  padding: 8px;
+  background-image: linear-gradient(to top, rgb(0 0 0 / 0%), rgb(27 40 56), rgb(0 0 0 / 0%));
+}
+
+.position {
+  margin: 8px;
+}
+
+.score {
+  margin: 8px;
+}
+
+.nick {
+  margin: 8px;
+}
+
+.user-list {
+  text-align: start;
+  overflow: hidden;
+  overflow-y: scroll;
+}

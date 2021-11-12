@@ -1,0 +1,15 @@
+.main-block {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.scores-block {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: center;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}

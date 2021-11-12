@@ -22,16 +22,16 @@ services:
       SQLITE_PATH: $DB_PATH
     command: "uvicorn web.app:app --host 0.0.0.0 --port 80 --reload"
 
-  backend-db-handler:
-    build:
-      context: ./backend
-      dockerfile: database_handler/Dockerfile
-    depends_on:
-      - backend-db-upgrade
-    volumes:
-      - ssgg_database:$DB_FOLDER
-    environment:
-      SQLITE_PATH: $DB_PATH
+#  backend-db-handler:
+#    build:
+#      context: ./backend
+#      dockerfile: database_handler/Dockerfile
+#    depends_on:
+#      - backend-db-upgrade
+#    volumes:
+#      - ssgg_database:$DB_FOLDER
+#    environment:
+#      SQLITE_PATH: $DB_PATH
 
   backend-db-upgrade:
     build:
