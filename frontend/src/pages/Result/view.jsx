@@ -51,7 +51,7 @@ class ResultPage extends Component {
         <div className="vertical-container">
           <div className="score-block">
             <h2 className="title">Your score:</h2>
-            <h1 className="final-score">{this.state.score}</h1>
+            <h1 className="final-score">{this.score}</h1>
             <div className="game-list-block">
               {finishedGames.length > 0 && <h2 className="title">Games:</h2>}
               <GamesList games={finishedGames} />
