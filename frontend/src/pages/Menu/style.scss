@@ -1,3 +1,5 @@
+@import "./src/styles/buttons_style";
+
 .logo-title {
   font-family: Impact, sans-serif;
   font-size: xxx-large;
@@ -15,7 +17,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-image: linear-gradient(180deg, rgb(0 0 0 / 20%), rgb(255 255 255 / 0%));
+  background-image: linear-gradient(
+    180deg,
+    rgb(0 0 0 / 20%),
+    rgb(255 255 255 / 0%)
+  );
 }
 
 .nick-form {
@@ -26,7 +32,7 @@
 }
 
 .nick-input {
-  color: white;
+  color: $primary-white;
   height: 48px;
   min-width: 0;
   text-align: center;
@@ -35,7 +41,7 @@
   flex-basis: 70%;
   font-size: x-large;
   font-weight: 600;
-  border: 1px solid white;
+  border: 1px solid $primary-white;
   padding-left: 16px;
   padding-right: 16px;
   margin: 4px 4px 4px 0;
@@ -60,11 +66,11 @@
   margin-bottom: 16px;
 }
 
-.share-block {
-  position: relative;
-  bottom: 16px;
-}
-
 .main-template {
   justify-content: space-around;
+
+  .share-block {
+    position: relative;
+    bottom: 16px;
+  }
 }
