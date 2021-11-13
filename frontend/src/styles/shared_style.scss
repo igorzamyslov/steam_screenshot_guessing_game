@@ -1,0 +1,86 @@
+$primary-color: #333;
+$steam-black-color: #171a21;
+$steam-dark-blue: #1b2838;
+$steam-light-blue: #2a475e;
+$primary-white: #f6f8ff;
+
+h2 {
+  font-size: large;
+  color: $primary-white;
+  font-family: "Motiva Sans", sans-serif;
+  text-shadow: 0 0 2px rgb(23 26 33);
+}
+
+a {
+  color: #61dafb;
+}
+
+.logo-font {
+  font-family: Impact, sans-serif;
+}
+
+.main-template {
+  position: relative;
+  background: rgb(23 26 33);
+  background: linear-gradient(
+    135deg,
+    $steam-black-color 0%,
+    $steam-light-blue 35%,
+    $steam-dark-blue 100%
+  );
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: flex-start;
+  font-size: larger;
+  color: $primary-white;
+}
+
+.content {
+  height: 90%;
+  position: sticky;
+  left: 0;
+  flex-grow: 1;
+}
+
+.main-block {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+}
+
+@media (max-width: 500px) {
+  .content {
+    width: 500px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .content {
+    width: 1100px;
+  }
+}
+
+@media (min-width: 1600px) {
+  .content {
+    width: 1400px;
+  }
+}
+
+@media (min-width: 2000px) {
+  .content {
+    width: 1600px;
+  }
+}
+
+.disclaimer {
+  position: absolute;
+  right: 16px;
+  text-align: right;
+  font-size: small;
+  text-decoration: none;
+}

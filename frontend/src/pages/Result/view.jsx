@@ -1,4 +1,4 @@
-import "./style.css";
+import "./style.scss";
 
 import GamesList from "@/components/GamesList";
 import ScoreBoard from "@/components/ScoreBoard";
@@ -48,27 +48,25 @@ class ResultPage extends Component {
     const { userScores } = this.state;
     return (
       <MainTemplate>
-        <div className="score-block">
-          <h2 className="title">Your score:</h2>
-          <h1 className="final-score">{this.score}</h1>
-          <div className="game-list-block">
-            {finishedGames.length > 0 && <h2 className="title">Games:</h2>}
-            <GamesList games={finishedGames} />
+        <div className="vertical-container">
+          <div className="score-block">
+            <h2 className="title">Your score:</h2>
+            <h1 className="final-score">{this.state.score}</h1>
+            <div className="game-list-block">
+              {finishedGames.length > 0 && <h2 className="title">Games:</h2>}
+              <GamesList games={finishedGames} />
+            </div>
+            <div>
+              <button
+                className="play-again-button glow-on-hover"
+                onClick={this.handlePlayAgainPress}
+              >
+                Play again
+              </button>
+            </div>
+            {userScores && <center><ScoreBoard userScores={userScores} /></center>}
           </div>
-          <div>
-            <button
-              className="play-again-button glow-on-hover"
-              onClick={this.handlePlayAgainPress}
-            >
-              Play again
-            </button>
-          </div>
-          {userScores && (
-            <center>
-              <ScoreBoard userScores={userScores} />
-            </center>
-          )}
-          <div>
+          <div className="bottom-share-block">
             <ShareBlock />
           </div>
         </div>

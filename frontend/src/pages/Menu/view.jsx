@@ -1,6 +1,4 @@
-import "@/styles/style.css";
-
-import "./style.css";
+import "./style.scss";
 
 import ShareBlock from "@/components/ShareBlock";
 import { createNavigationHandler, routes } from "@/Router";
