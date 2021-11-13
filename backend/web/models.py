@@ -1,5 +1,5 @@
 import random
-from datetime import date
+from datetime import date, datetime
 from typing import List, Optional
 from urllib.parse import urljoin
 
@@ -7,7 +7,7 @@ from pydantic import BaseModel, Field, HttpUrl
 from sqlalchemy.orm import Session
 
 from common.steam_database import db
-from .db_operations import get_application
+from .steam_db_operations import get_application
 
 STEAM_STORE_URL = "https://store.steampowered.com/app/"
 
@@ -73,3 +73,10 @@ class Quiz(BaseModel):
                               correct=is_correct)
                    for app, is_correct in answer_apps]
         return cls(screenshot_url=random.choice(app.screenshots).url, answers=answers)
+
+
+class LeaderboardEntry(BaseModel):
+    """ Leaderboard model """
+    name: str
+    score: int
+    timestamp: datetime

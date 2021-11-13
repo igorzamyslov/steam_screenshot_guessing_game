@@ -1,10 +1,12 @@
+from typing import List
 from fastapi import Depends, FastAPI, HTTPException
 from pydantic.main import BaseModel
 
-from common.steam_database import db
-from .db_operations import (DatabaseOperationError, get_application,
-                            get_known_app_ids, get_random_application)
-from .models import AppInfo, Quiz
+from common.steam_database import db as steam_db
+from .ssgg_database import db as ssgg_db
+from .steam_db_operations import (DatabaseOperationError, get_application,
+                                  get_known_app_ids, get_random_application)
+from .models import AppInfo, LeaderboardEntry, Quiz
 
 app = FastAPI(servers=[{"url": "/api", "description": "Behind proxy"},
                        {"url": "/", "description": "Direct"}])
@@ -17,7 +19,7 @@ class ErrorResponse(BaseModel):
 
 @app.get("/quiz/random", response_model=Quiz,
          responses={500: {"model": ErrorResponse}})
-async def get_random_quiz(session=Depends(db.get_session)):
+async def get_random_quiz(session=Depends(steam_db.get_session)):
     """
     Generate a quiz for a random app.
     - A screenshot for the main app is chosen at random from the available pool
@@ -38,25 +40,31 @@ async def get_random_quiz(session=Depends(db.get_session)):
     return Quiz.from_db_app(session, steam_app, list(known_similar_app_ids))
 
 
-@app.get("/app/random", response_model=AppInfo,
-         responses={500: {"model": ErrorResponse}})
-async def get_random_app_info(session=Depends(db.get_session)):
-    """
-    Get information about a random Steam app, which contains screenshots
-    NOTE: Filters are hardcoded for now
-    """
-    try:
-        return get_random_application(session)
-    except DatabaseOperationError as error:
-        raise HTTPException(status_code=500, detail="No applications found") from error
+# @app.post("/update_leaderboard")
+# async def get_app_info(session=Depends(ssgg_db.get_session)):
+#     """ Get leaderboard information """
+#     name = "asfasdfasdfsadf"
+#     user = session.query(ssgg_db.User).filter_by(name=name).one_or_none()
+#     if user is None:
+#         user = ssgg_db.User(name=name)
+
+#     import random
+#     score = random.randrange(1, 100)
+#     score = ssgg_db.Score(score=score, user=user)
+
+#     session.add(score)
+#     session.commit()
 
 
-@app.get("/app/{app_id}", response_model=AppInfo,
-         responses={404: {"model": ErrorResponse}})
-async def get_app_info(app_id: int, session=Depends(db.get_session)):
-    """ Get information about the requested Steam app """
-    try:
-        return get_application(session, app_id)
-    except DatabaseOperationError as error:
-        raise HTTPException(status_code=404,
-                            detail=f"Application with ID {app_id} not found") from error
+@app.get("/leaderboard", response_model=List[LeaderboardEntry])
+async def get_app_info(session=Depends(ssgg_db.get_session)):
+    """ Get leaderboard information """
+    fields = ["name", "score", "timestamp"]
+    entries = (
+        session.query(ssgg_db.Score)
+        .join(ssgg_db.User)
+        .with_entities(ssgg_db.User.name, ssgg_db.Score.score, ssgg_db.Score.timestamp)
+        .order_by(ssgg_db.Score.score.desc(), ssgg_db.Score.timestamp.desc())
+        .limit(10)
+        .all())
+    return [dict(zip(fields, entry)) for entry in entries]

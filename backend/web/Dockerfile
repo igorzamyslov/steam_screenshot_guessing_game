@@ -7,5 +7,7 @@ COPY ${SERVICE}/requirements.txt ./main_requirements.txt
 RUN pip install --no-cache-dir -r common_requirements.txt -r main_requirements.txt
 
 COPY common ./common
-COPY ${SERVICE} ./main
-CMD ["uvicorn", "main.app:app", "--host", "0.0.0.0", "--port", "80"]
+COPY ${SERVICE} ./${SERVICE}
+
+ENV SERVICE=${SERVICE}
+CMD ["uvicorn", "${SERVICE}.app:app", "--host", "0.0.0.0", "--port", "80"]

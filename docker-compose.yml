@@ -1,7 +1,7 @@
 version: "3.5"
 
 services:
-  # Project services
+  # --- Project services ---
   proxy:
     build: proxy
     depends_on:
@@ -11,19 +11,21 @@ services:
       - "127.0.0.1:9000:80"
 
   backend-web:
+    &backend_web
     build:
       context: ./backend
       dockerfile: web/Dockerfile
     volumes:
       - ./backend/common:/app/common
-      - ./backend/web:/app/main
+      - ./backend/web:/app/web
       - ssgg_database:$DB_FOLDER
     environment:
-      SQLITE_PATH: $STEAM_DB_PATH
-    command: "uvicorn main.app:app --host 0.0.0.0 --port 80 --reload"
+      STEAM_DB_PATH: $STEAM_DB_PATH
+      SSGG_DB_PATH: $SSGG_DB_PATH
+    command: "uvicorn web.app:app --host 0.0.0.0 --port 80 --reload"
 
   steam-db-handler:
-    &steam_db
+    &steam_db_handler
     build:
       context: ./backend
       dockerfile: steam_db_handler/Dockerfile
@@ -32,7 +34,7 @@ services:
       - ./backend/steam_db_handler:/app/main
       - ssgg_database:$DB_FOLDER
     environment:
-      SQLITE_PATH: $STEAM_DB_PATH
+      STEAM_DB_PATH: $STEAM_DB_PATH
     profiles:
       - disabled
 
@@ -43,18 +45,32 @@ services:
       - ./frontend:/app
     command: "bash -c 'npm install; npm run dev'"
 
-  # Helper services
+  # --- Helper services ---
   steam-db-revision:
     # Create a revision of steam database
-    <<: *steam_db
+    <<: *steam_db_handler
     command: alembic -c common/steam_database/alembic/alembic.ini revision --autogenerate
     profiles:
       - disabled
 
   steam-db-reset:
     # Remove steam database
-    <<: *steam_db
+    <<: *steam_db_handler
     command: rm $STEAM_DB_PATH
+    profiles:
+      - disabled
+
+  ssgg-db-revision:
+    # create a revision of ssgg database
+    <<: *backend_web
+    command: alembic -c web/ssgg_database/alembic/alembic.ini revision --autogenerate
+    profiles:
+      - disabled
+
+  ssgg-db-reset:
+    # create a revision of ssgg database
+    <<: *backend_web
+    command: rm $SSGG_DB_PATH
     profiles:
       - disabled
 

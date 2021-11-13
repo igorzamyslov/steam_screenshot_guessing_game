@@ -2,8 +2,8 @@ from logging.config import fileConfig
 
 from alembic import context
 
-from common.steam_database.config import get_connection_config
-from common.steam_database.db import Base, engine
+from web.ssgg_database.config import get_connection_config
+from web.ssgg_database.db import Base, engine
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

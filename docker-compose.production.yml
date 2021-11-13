@@ -18,7 +18,8 @@ services:
     volumes:
       - ssgg_database:$DB_FOLDER
     environment:
-      SQLITE_PATH: $STEAM_DB_PATH
+      STEAM_DB_PATH: $STEAM_DB_PATH
+      SSGG_DB_PATH: $SSGG_DB_PATH
     networks:
       - ssgg
 
@@ -27,7 +28,7 @@ services:
     volumes:
       - ssgg_database:$DB_FOLDER
     environment:
-      SQLITE_PATH: $STEAM_DB_PATH
+      STEAM_DB_PATH: $STEAM_DB_PATH
     networks:
       - default
 

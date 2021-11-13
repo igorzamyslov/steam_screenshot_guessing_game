@@ -7,7 +7,7 @@ class ConnectionConfig(BaseSettings):
     path: str
 
     class Config:
-        env_prefix = "steam_db_"
+        env_prefix = "ssgg_db_"
 
     @property
     def connection_string(self):
