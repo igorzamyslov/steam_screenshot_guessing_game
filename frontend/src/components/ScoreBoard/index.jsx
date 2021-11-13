@@ -4,7 +4,7 @@ import * as React from "react";
 import { useTable } from "react-table";
 
 const ScoreBoard = ({ userScores }) => {
-  const data = userScores.map((e, i) => ({...e, rank: i + 1}))
+  const data = userScores.map((e, i) => ({ ...e, rank: i + 1 }));
   const columns = React.useMemo(
     () => [
       {

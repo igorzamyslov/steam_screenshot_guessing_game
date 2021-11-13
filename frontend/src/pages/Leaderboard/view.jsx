@@ -3,8 +3,8 @@ import "./style.css";
 import ScoreBoard from "@/components/ScoreBoard";
 import ShareBlock from "@/components/ShareBlock";
 import { createNavigationHandler, routes } from "@/Router";
-import MainTemplate from "@/templates/MainTemplate";
 import SSGGService from "@/services/SSGGService";
+import MainTemplate from "@/templates/MainTemplate";
 import { Component } from "react";
 
 class AboutPage extends Component {
@@ -22,12 +22,12 @@ class AboutPage extends Component {
 
   componentDidMount() {
     SSGGService.getLeaderboard()
-      .then(response => {
-        this.setState({ userScores: response.body })
+      .then((response) => {
+        this.setState({ userScores: response.body });
       })
       .catch(() => {
         this.navigateToMain();
-      })
+      });
   }
 
   render() {

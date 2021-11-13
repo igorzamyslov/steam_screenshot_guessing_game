@@ -4,17 +4,17 @@ import GamesList from "@/components/GamesList";
 import ScoreBoard from "@/components/ScoreBoard";
 import ShareBlock from "@/components/ShareBlock";
 import { createNavigationHandler, routes } from "@/Router";
-import MainTemplate from "@/templates/MainTemplate";
-import { Component } from "react";
 import LocalStorageService from "@/services/LocalStorageService";
 import SSGGService from "@/services/SSGGService";
+import MainTemplate from "@/templates/MainTemplate";
+import { Component } from "react";
 
 class ResultPage extends Component {
   constructor(props) {
     super(props);
     let queryParams = new URLSearchParams(props.location.search);
     this.score = queryParams.get("score") || 0;
-    this.name = LocalStorageService.getUsersNick()
+    this.name = LocalStorageService.getUsersNick();
     this.state = {
       userScores: [],
     };
@@ -22,20 +22,19 @@ class ResultPage extends Component {
       props.history,
       routes.mainPage
     );
-
   }
 
   componentDidMount() {
     if (this.name && this.score > 0 && this.props.finishedGames.length > 0) {
       SSGGService.updateLeaderboard(this.name, this.score).then(() => {
         SSGGService.getLeaderboard().then((response) => {
-          this.setState({ userScores: response.body })
-        })
-      })
+          this.setState({ userScores: response.body });
+        });
+      });
     } else {
       SSGGService.getLeaderboard().then((response) => {
-        this.setState({ userScores: response.body })
-      })
+        this.setState({ userScores: response.body });
+      });
     }
   }
 
@@ -64,7 +63,11 @@ class ResultPage extends Component {
               Play again
             </button>
           </div>
-          {userScores && <center><ScoreBoard userScores={userScores} /></center>}
+          {userScores && (
+            <center>
+              <ScoreBoard userScores={userScores} />
+            </center>
+          )}
           <div>
             <ShareBlock />
           </div>
