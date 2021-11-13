@@ -40,20 +40,18 @@ async def get_random_quiz(session=Depends(steam_db.get_session)):
     return Quiz.from_db_app(session, steam_app, list(known_similar_app_ids))
 
 
-# @app.post("/update_leaderboard")
-# async def get_app_info(session=Depends(ssgg_db.get_session)):
-#     """ Get leaderboard information """
-#     name = "asfasdfasdfsadf"
-#     user = session.query(ssgg_db.User).filter_by(name=name).one_or_none()
-#     if user is None:
-#         user = ssgg_db.User(name=name)
-
-#     import random
-#     score = random.randrange(1, 100)
-#     score = ssgg_db.Score(score=score, user=user)
-
-#     session.add(score)
-#     session.commit()
+@app.post("/update_leaderboard")
+async def get_app_info(name: str, score: int, session=Depends(ssgg_db.get_session)):
+    """
+    Update leaderboard information
+    Stupid endpoint to update leaderboard with whatever client sends
+    """
+    user = session.query(ssgg_db.User).filter_by(name=name).one_or_none()
+    if user is None:
+        user = ssgg_db.User(name=name)
+    score = ssgg_db.Score(score=score, user=user)
+    session.add(score)
+    session.commit()
 
 
 @app.get("/leaderboard", response_model=List[LeaderboardEntry])

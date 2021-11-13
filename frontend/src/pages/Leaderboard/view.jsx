@@ -4,41 +4,30 @@ import ScoreBoard from "@/components/ScoreBoard";
 import ShareBlock from "@/components/ShareBlock";
 import { createNavigationHandler, routes } from "@/Router";
 import MainTemplate from "@/templates/MainTemplate";
+import SSGGService from "@/services/SSGGService";
 import { Component } from "react";
 
 class AboutPage extends Component {
   constructor(props) {
     super(props);
-    var userScores = [
-      {
-        nick: "Nagibator",
-        score: 17,
-        rank: 1,
-      },
-      {
-        nick: "Ubivator",
-        score: 5,
-        rank: 2,
-      },
-      {
-        nick: "Dominator",
-        score: 3,
-        rank: 3,
-      },
-    ];
-
     this.state = {
-      userScores: userScores,
+      userScores: [],
     };
 
     this.navigateToMain = createNavigationHandler(
       props.history,
       routes.mainPage
     );
-    this.navigateToMain = createNavigationHandler(
-      props.history,
-      routes.mainPage
-    );
+  }
+
+  componentDidMount() {
+    SSGGService.getLeaderboard()
+      .then(response => {
+        this.setState({ userScores: response.body })
+      })
+      .catch(() => {
+        this.navigateToMain();
+      })
   }
 
   render() {

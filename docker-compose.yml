@@ -22,7 +22,7 @@ services:
     environment:
       STEAM_DB_PATH: $STEAM_DB_PATH
       SSGG_DB_PATH: $SSGG_DB_PATH
-    command: "uvicorn web.app:app --host 0.0.0.0 --port 80 --reload"
+    command: "uvicorn web.app:app --host 0.0.0.0 --port 80 --reload --debug"
 
   steam-db-handler:
     &steam_db_handler
@@ -36,7 +36,7 @@ services:
     environment:
       STEAM_DB_PATH: $STEAM_DB_PATH
     profiles:
-      - disabled
+     - disabled
 
   frontend:
     image: node:lts-slim

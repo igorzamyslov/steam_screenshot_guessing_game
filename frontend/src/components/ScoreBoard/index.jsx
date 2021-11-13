@@ -4,14 +4,7 @@ import * as React from "react";
 import { useTable } from "react-table";
 
 const ScoreBoard = ({ userScores }) => {
-  userScores = userScores.sort(function (a, b) {
-    if (a.rank < b.rank) return -1;
-    if (a.rank > b.rank) return 1;
-    return 0;
-  });
-
-  const data = React.useMemo(() => userScores, []);
-
+  const data = userScores.map((e, i) => ({...e, rank: i + 1}))
   const columns = React.useMemo(
     () => [
       {
@@ -19,8 +12,8 @@ const ScoreBoard = ({ userScores }) => {
         accessor: "rank", // accessor is the "key" in the data
       },
       {
-        Header: "Nick",
-        accessor: "nick",
+        Header: "Name",
+        accessor: "name",
       },
       {
         Header: "Score",

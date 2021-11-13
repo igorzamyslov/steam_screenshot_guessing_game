@@ -5,7 +5,7 @@ import LiveHeart from "@/components/LiveHeart";
 import OptionButton from "@/components/OptionButton";
 import { TIMEOUT_BEFORE_NEXT_QUESTION } from "@/config";
 import { createNavigationHandler, routes } from "@/Router";
-import SteamService from "@/services/SteamService";
+import SSGGService from "@/services/SSGGService";
 import MainTemplate from "@/templates/MainTemplate";
 import PropTypes from "prop-types";
 import { Component } from "react";
@@ -94,7 +94,7 @@ class MainPage extends Component {
     this.loadingMessageTimeout = setTimeout(() => {
       this.showMessage(messages.loading);
     }, 1000);
-    SteamService.getQuizRandomAppData()
+    SSGGService.getQuizRandomAppData()
       .then((response) => {
         clearTimeout(this.loadingMessageTimeout);
         const quiz = response.body;
