@@ -5,7 +5,6 @@ from sqlalchemy import (Column, DateTime, ForeignKey, Integer,
                         MetaData, String, create_engine)
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import Session, relationship, sessionmaker
-from sqlalchemy.sql.expression import null
 
 from .config import get_connection_config
 
