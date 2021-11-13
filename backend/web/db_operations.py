@@ -5,7 +5,7 @@ from sqlalchemy import func
 from sqlalchemy.exc import MultipleResultsFound, NoResultFound
 from sqlalchemy.orm import Session, selectinload
 
-import common.database as db
+from common.steam_database import db
 
 
 class DatabaseOperationError(Exception):

@@ -3,7 +3,7 @@ from functools import cache
 from pydantic import BaseSettings
 
 
-class SQLiteConnectionConfig(BaseSettings):
+class SteamDBConnectionConfig(BaseSettings):
     path: str
 
     class Config:
@@ -15,6 +15,6 @@ class SQLiteConnectionConfig(BaseSettings):
 
 
 @cache
-def get_sqlite_connection_config():
-    """ Returns an instance of SQLiteConnectionConfig """
-    return SQLiteConnectionConfig()
+def get_steam_db_connection_config():
+    """ Returns an instance of SteamDBConnectionConfig """
+    return SteamDBConnectionConfig()

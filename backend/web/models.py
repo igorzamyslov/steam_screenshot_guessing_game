@@ -6,7 +6,7 @@ from urllib.parse import urljoin
 from pydantic import BaseModel, Field, HttpUrl
 from sqlalchemy.orm import Session
 
-import common.database as db
+from common.steam_database import db
 from .db_operations import get_application
 
 STEAM_STORE_URL = "https://store.steampowered.com/app/"

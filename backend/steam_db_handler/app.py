@@ -4,7 +4,7 @@ from typing import Any, Dict, Optional, Set, Type, TypeVar
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
-import common.database as db
+from common.steam_database import db
 from .steam_handler import SteamAppDataError, SteamAppHandler, SteamAppResponseError
 
 REQUESTS_DELAY = 0.0  # sec

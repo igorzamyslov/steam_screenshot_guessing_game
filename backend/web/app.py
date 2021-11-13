@@ -1,9 +1,9 @@
 from fastapi import Depends, FastAPI, HTTPException
 from pydantic.main import BaseModel
 
-import common.database as db
-from .db_operations import DatabaseOperationError, get_application, get_known_app_ids, \
-    get_random_application
+from common.steam_database import db
+from .db_operations import (DatabaseOperationError, get_application,
+                            get_known_app_ids, get_random_application)
 from .models import AppInfo, Quiz
 
 app = FastAPI(servers=[{"url": "/api", "description": "Behind proxy"},

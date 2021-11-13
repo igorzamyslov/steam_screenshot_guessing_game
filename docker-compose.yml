@@ -1,6 +1,7 @@
 version: "3.5"
 
 services:
+  # Project services
   proxy:
     build: proxy
     depends_on:
@@ -13,55 +14,27 @@ services:
     build:
       context: ./backend
       dockerfile: web/Dockerfile
-    depends_on:
-      - backend-db-upgrade
     volumes:
-      - ./backend:/app
+      - ./backend/common:/app/common
+      - ./backend/web:/app/main
       - ssgg_database:$DB_FOLDER
     environment:
-      SQLITE_PATH: $DB_PATH
-    command: "uvicorn web.app:app --host 0.0.0.0 --port 80 --reload"
+      SQLITE_PATH: $STEAM_DB_PATH
+    command: "uvicorn main.app:app --host 0.0.0.0 --port 80 --reload"
 
-#  backend-db-handler:
-#    build:
-#      context: ./backend
-#      dockerfile: database_handler/Dockerfile
-#    depends_on:
-#      - backend-db-upgrade
-#    volumes:
-#      - ssgg_database:$DB_FOLDER
-#    environment:
-#      SQLITE_PATH: $DB_PATH
-
-  backend-db-upgrade:
+  steam-db-handler:
+    &steam_db
     build:
       context: ./backend
-      dockerfile: database_migration/Dockerfile
+      dockerfile: steam_db_handler/Dockerfile
     volumes:
+      - ./backend/common:/app/common
+      - ./backend/steam_db_handler:/app/main
       - ssgg_database:$DB_FOLDER
     environment:
-      SQLITE_PATH: $DB_PATH
-
-  backend-db-revision:
-    build:
-      context: ./backend
-      dockerfile: database_migration/Dockerfile
-    volumes:
-      - ssgg_database:$DB_FOLDER
-      - ./backend/database_migration/alembic/versions:/app/alembic/versions
-    environment:
-      SQLITE_PATH: $DB_PATH
+      SQLITE_PATH: $STEAM_DB_PATH
     profiles:
       - disabled
-    command: alembic revision --autogenerate
-
-  backend-db-reset:
-    image: node:lts-slim  # any already used image
-    volumes:
-      - ssgg_database:$DB_FOLDER
-    profiles:
-      - disabled
-    command: rm $DB_FOLDER/$DB_NAME
 
   frontend:
     image: node:lts-slim
@@ -70,7 +43,23 @@ services:
       - ./frontend:/app
     command: "bash -c 'npm install; npm run dev'"
 
+  # Helper services
+  steam-db-revision:
+    # Create a revision of steam database
+    <<: *steam_db
+    command: alembic -c common/steam_database/alembic/alembic.ini revision --autogenerate
+    profiles:
+      - disabled
+
+  steam-db-reset:
+    # Remove steam database
+    <<: *steam_db
+    command: rm $STEAM_DB_PATH
+    profiles:
+      - disabled
+
   frontend-prettify:
+    # Prettify frontend code
     image: node:lts-slim
     working_dir: /app
     volumes:
