@@ -53,7 +53,20 @@ a {
   justify-content: center;
 }
 
-@media (max-width: 500px) {
+
+@media (max-width: 375px) {
+  .content {
+    width: 375px;
+  }
+  .flex-container{
+    flex-direction: column;
+  }
+  .buttons-block {
+    flex-wrap: inherit;
+  }
+}
+
+@media (min-width: 500px) {
   .content {
     width: 500px;
   }
