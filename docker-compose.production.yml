@@ -15,32 +15,22 @@ services:
 
   backend-web:
     image: ghcr.io/igorzamyslov/ssgg/backend:master
-    depends_on:
-      - backend-db-upgrade
     volumes:
       - ssgg_database:$DB_FOLDER
     environment:
-      SQLITE_PATH: $DB_PATH
+      STEAM_DB_PATH: $STEAM_DB_PATH
+      SSGG_DB_PATH: $SSGG_DB_PATH
     networks:
       - ssgg
 
-  backend-db-handler:
-    image: ghcr.io/igorzamyslov/ssgg/db-handler:master
-    depends_on:
-      - backend-db-upgrade
+  steam-db-handler:
+    image: ghcr.io/igorzamyslov/ssgg/steam-db-handler:master
     volumes:
       - ssgg_database:$DB_FOLDER
     environment:
-      SQLITE_PATH: $DB_PATH
+      STEAM_DB_PATH: $STEAM_DB_PATH
     networks:
       - default
-
-  backend-db-upgrade:
-    image: ghcr.io/igorzamyslov/ssgg/db-upgrader:master
-    volumes:
-      - ssgg_database:$DB_FOLDER
-    environment:
-      SQLITE_PATH: $DB_PATH
 
   frontend:
     image: ghcr.io/igorzamyslov/ssgg/frontend:master

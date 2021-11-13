@@ -5,7 +5,7 @@
 The backend contains the following services:
 
 - `database_migration` - migration of the database
-- `database_handler` - populating database with steam apps
+- `steam_db_handler` - populating database with steam apps
 - `web` - web-service to provide frontend with applications
 
 ## Docker build

@@ -6,9 +6,9 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import Session, relationship
 from sqlalchemy.orm import sessionmaker
 
-from .configs import get_sqlite_connection_config
+from .config import get_connection_config
 
-engine = create_engine(get_sqlite_connection_config().connection_string)
+engine = create_engine(get_connection_config().connection_string)
 DBSession = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base: Any = declarative_base(metadata=MetaData())
 

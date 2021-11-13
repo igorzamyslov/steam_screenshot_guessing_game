@@ -8,8 +8,8 @@ import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import ym from "react-yandex-metrika";
 
 export const routes = {
-  menuPage: "/menu",
-  mainPage: "/",
+  menuPage: "/",
+  mainPage: "/game",
   resultPage: "/result",
   aboutPage: "/about",
   leaderboardPage: "/leaderboard",
@@ -39,7 +39,7 @@ export const Router = () => (
       <Route exact path={routes.resultPage} component={Result} />
       <Route exact path={routes.aboutPage} component={About} />
       <Route exact path={routes.leaderboardPage} component={Leaderboard} />
-      <Redirect to={routes.mainPage} />
+      <Redirect to={routes.menuPage} />
     </Switch>
   </BrowserRouter>
 );

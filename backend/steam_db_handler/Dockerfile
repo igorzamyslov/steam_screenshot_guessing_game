@@ -1,6 +1,6 @@
 FROM python:3-slim
 WORKDIR /app
-ARG SERVICE=database_handler
+ARG SERVICE=steam_db_handler
 
 COPY common/requirements.txt ./common_requirements.txt
 COPY ${SERVICE}/requirements.txt ./main_requirements.txt
