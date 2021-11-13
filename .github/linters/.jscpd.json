@@ -5,7 +5,8 @@
   ],
   "ignore": [
     "**/__snapshots__/**",
-    "/github/workspace/backend/database_migration/alembic/versions/*"
+    "/github/workspace/backend/common/steam_database/alembic/**",
+    "/github/workspace/backend/web/ssgg_database/alembic/**"
   ],
   "absolute": true
 }

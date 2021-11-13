@@ -13,6 +13,7 @@ config.set_main_option("sqlalchemy.url", db_connection_string)
 # for 'autogenerate' support
 target_metadata = Base.metadata
 
+
 def run_migrations_offline():
     """
     Run migrations in 'offline' mode.

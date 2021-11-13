@@ -1,3 +1,5 @@
 [flake8]
 max-line-length = 100
-exclude = /github/workspace/backend/database_migration/alembic/versions/*
+exclude =
+    /github/workspace/backend/common/steam_database/alembic,
+    /github/workspace/backend/web/ssgg_database/alembic

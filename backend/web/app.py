@@ -4,9 +4,8 @@ from pydantic.main import BaseModel
 
 from common.steam_database import db as steam_db
 from .ssgg_database import db as ssgg_db
-from .steam_db_operations import (DatabaseOperationError, get_application,
-                                  get_known_app_ids, get_random_application)
-from .models import AppInfo, LeaderboardEntry, Quiz
+from .steam_db_operations import DatabaseOperationError, get_known_app_ids, get_random_application
+from .models import LeaderboardEntry, Quiz
 
 app = FastAPI(servers=[{"url": "/api", "description": "Behind proxy"},
                        {"url": "/", "description": "Direct"}])
@@ -41,7 +40,7 @@ async def get_random_quiz(session=Depends(steam_db.get_session)):
 
 
 @app.post("/update_leaderboard")
-async def get_app_info(name: str, score: int, session=Depends(ssgg_db.get_session)):
+async def post_leaderboard(name: str, score: int, session=Depends(ssgg_db.get_session)):
     """
     Update leaderboard information
     Stupid endpoint to update leaderboard with whatever client sends
@@ -55,7 +54,7 @@ async def get_app_info(name: str, score: int, session=Depends(ssgg_db.get_sessio
 
 
 @app.get("/leaderboard", response_model=List[LeaderboardEntry])
-async def get_app_info(session=Depends(ssgg_db.get_session)):
+async def get_leaderboard(session=Depends(ssgg_db.get_session)):
     """ Get leaderboard information """
     fields = ["name", "score", "timestamp"]
     entries = (

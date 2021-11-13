@@ -64,7 +64,11 @@ class ResultPage extends Component {
                 Play again
               </button>
             </div>
-            {userScores && <center><ScoreBoard userScores={userScores} /></center>}
+            {userScores && (
+              <center>
+                <ScoreBoard userScores={userScores} />
+              </center>
+            )}
           </div>
           <div className="bottom-share-block">
             <ShareBlock />

@@ -1,11 +1,10 @@
 from datetime import datetime
 from typing import Any
 
-from sqlalchemy import (Boolean, Column, DateTime, ForeignKey, Integer, MetaData,
-                        String, Table, create_engine)
+from sqlalchemy import (Column, DateTime, ForeignKey, Integer,
+                        MetaData, String, create_engine)
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import Session, relationship
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import Session, relationship, sessionmaker
 from sqlalchemy.sql.expression import null
 
 from .config import get_connection_config
