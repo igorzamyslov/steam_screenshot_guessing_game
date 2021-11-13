@@ -53,12 +53,11 @@ a {
   justify-content: center;
 }
 
-
 @media (max-width: 375px) {
   .content {
     width: 375px;
   }
-  .flex-container{
+  .flex-container {
     flex-direction: column;
   }
   .buttons-block {
