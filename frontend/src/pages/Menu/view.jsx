@@ -83,6 +83,11 @@ class MenuPage extends Component {
         <div className="share-block">
           <ShareBlock />
         </div>
+        <div>
+          <a className="bottom-disclaimer" href="/about">
+            About
+          </a>
+        </div>
       </div>
     );
   }
