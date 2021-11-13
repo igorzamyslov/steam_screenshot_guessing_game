@@ -10,4 +10,4 @@ COPY common ./common
 COPY ${SERVICE} ./${SERVICE}
 
 ENV SERVICE=${SERVICE}
-CMD ["uvicorn", "${SERVICE}.app:app", "--host", "0.0.0.0", "--port", "80"]
+CMD ["uvicorn", "web.app:app", "--host", "0.0.0.0", "--port", "80"]
