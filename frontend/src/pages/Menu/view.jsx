@@ -24,6 +24,7 @@ class MenuPage extends Component {
 
     this.saveNickAndNavigate = () => {
       LocalStorageService.saveUsersNick(this.state.nick);
+      props.onPlayAgainPress();
       this.navigateToMain();
     };
   }
