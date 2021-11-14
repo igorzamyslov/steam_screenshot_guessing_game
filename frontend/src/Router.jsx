@@ -1,6 +1,6 @@
 import About from "@/pages/About";
+import Game from "@/pages/Game";
 import Leaderboard from "@/pages/Leaderboard";
-import Main from "@/pages/Main";
 import Menu from "@/pages/Menu";
 import Result from "@/pages/Result";
 import ga4 from "react-ga4";
@@ -9,7 +9,7 @@ import ym from "react-yandex-metrika";
 
 export const routes = {
   menuPage: "/",
-  mainPage: "/game",
+  gamePage: "/game",
   resultPage: "/result",
   aboutPage: "/about",
   leaderboardPage: "/leaderboard",
@@ -35,7 +35,7 @@ export const Router = () => (
   <BrowserRouter>
     <Switch>
       <Route exact path={routes.menuPage} component={Menu} />
-      <Route exact path={routes.mainPage} component={Main} />
+      <Route exact path={routes.gamePage} component={Game} />
       <Route exact path={routes.resultPage} component={Result} />
       <Route exact path={routes.aboutPage} component={About} />
       <Route exact path={routes.leaderboardPage} component={Leaderboard} />

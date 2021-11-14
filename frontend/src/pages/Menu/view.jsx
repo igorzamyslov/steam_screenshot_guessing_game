@@ -15,7 +15,7 @@ class MenuPage extends Component {
 
     this.navigateToMain = createNavigationHandler(
       props.history,
-      routes.mainPage
+      routes.gamePage
     );
     this.navigateToLeaderboard = createNavigationHandler(
       props.history,
@@ -24,6 +24,7 @@ class MenuPage extends Component {
 
     this.saveNickAndNavigate = () => {
       LocalStorageService.saveUsersNick(this.state.nick);
+      props.onPlayAgainPress();
       this.navigateToMain();
     };
   }
@@ -82,6 +83,11 @@ class MenuPage extends Component {
         </div>
         <div className="share-block">
           <ShareBlock />
+        </div>
+        <div>
+          <a className="bottom-disclaimer" href="/about">
+            About
+          </a>
         </div>
       </div>
     );

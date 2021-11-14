@@ -10,11 +10,11 @@ class AboutPage extends Component {
     super(props);
     this.navigateToMain = createNavigationHandler(
       props.history,
-      routes.mainPage
+      routes.gamePage
     );
     this.navigateToMain = createNavigationHandler(
       props.history,
-      routes.mainPage
+      routes.gamePage
     );
   }
 

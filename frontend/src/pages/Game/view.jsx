@@ -24,7 +24,7 @@ const cleanState = {
   correctAnswer: null,
 };
 
-class MainPage extends Component {
+class GamePage extends Component {
   static propTypes = {
     match: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
@@ -199,4 +199,4 @@ class MainPage extends Component {
   }
 }
 
-export default MainPage;
+export default GamePage;
