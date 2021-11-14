@@ -15,7 +15,7 @@ class MenuPage extends Component {
 
     this.navigateToMain = createNavigationHandler(
       props.history,
-      routes.mainPage
+      routes.gamePage
     );
     this.navigateToLeaderboard = createNavigationHandler(
       props.history,

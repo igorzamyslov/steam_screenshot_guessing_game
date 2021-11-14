@@ -20,7 +20,7 @@ class ResultPage extends Component {
     };
     this.navigateToMain = createNavigationHandler(
       props.history,
-      routes.mainPage
+      routes.gamePage
     );
 
     this.navigateToLeaderboard = createNavigationHandler(
