@@ -22,6 +22,11 @@ class ResultPage extends Component {
       props.history,
       routes.mainPage
     );
+
+    this.navigateToLeaderboard = createNavigationHandler(
+        props.history,
+        routes.leaderboardPage
+    );
   }
 
   componentDidMount() {
@@ -62,6 +67,14 @@ class ResultPage extends Component {
                 onClick={this.handlePlayAgainPress}
               >
                 Play again
+              </button>
+            </div>
+            <div className="leader-board-block">
+              <button
+                  className="primary-button"
+                  onClick={this.navigateToLeaderboard}
+              >
+                Leaderboard
               </button>
             </div>
             {userScores && (

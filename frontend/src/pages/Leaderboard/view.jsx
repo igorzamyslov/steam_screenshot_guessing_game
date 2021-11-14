@@ -14,9 +14,9 @@ class AboutPage extends Component {
       userScores: [],
     };
 
-    this.navigateToMain = createNavigationHandler(
+    this.navigateToMenu = createNavigationHandler(
       props.history,
-      routes.mainPage
+      routes.menuPage
     );
   }
 
@@ -26,7 +26,7 @@ class AboutPage extends Component {
         this.setState({ userScores: response.body });
       })
       .catch(() => {
-        this.navigateToMain();
+        this.navigateToMenu();
       });
   }
 
@@ -39,8 +39,8 @@ class AboutPage extends Component {
             <ScoreBoard userScores={this.state.userScores} />
           </div>
           <div>
-            <button className="primary-button" onClick={this.navigateToMain}>
-              Play the game
+            <button className="primary-button" onClick={this.navigateToMenu}>
+              Back to Menu
             </button>
           </div>
           <ShareBlock />
