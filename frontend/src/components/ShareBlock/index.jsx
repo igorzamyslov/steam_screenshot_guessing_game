@@ -29,7 +29,7 @@ const ShareBlock = (props) => {
       <button
         className="share-button"
         onClick={openUrl(
-          "https://github.com/igorzamyslov/steam_screenshot_guessing_game"
+          "https://github.com/igorzamyslov/ssgg"
         )}
       >
         <Github /> Code
