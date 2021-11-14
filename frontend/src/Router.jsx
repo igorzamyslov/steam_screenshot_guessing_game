@@ -1,6 +1,6 @@
 import About from "@/pages/About";
-import Leaderboard from "@/pages/Leaderboard";
 import Game from "@/pages/Game";
+import Leaderboard from "@/pages/Leaderboard";
 import Menu from "@/pages/Menu";
 import Result from "@/pages/Result";
 import ga4 from "react-ga4";

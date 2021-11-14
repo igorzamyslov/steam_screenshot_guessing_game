@@ -24,8 +24,12 @@ class ResultPage extends Component {
     );
 
     this.navigateToLeaderboard = createNavigationHandler(
-        props.history,
-        routes.leaderboardPage
+      props.history,
+      routes.leaderboardPage
+    );
+    this.navigateToMenu = createNavigationHandler(
+      props.history,
+      routes.menuPage
     );
   }
 
@@ -69,19 +73,19 @@ class ResultPage extends Component {
                 Play again
               </button>
             </div>
-            <div className="leader-board-block">
+            <div className="navigation-button">
               <button
-                  className="primary-button"
-                  onClick={this.navigateToLeaderboard}
+                className="primary-button"
+                onClick={this.navigateToLeaderboard}
               >
                 Leaderboard
               </button>
             </div>
-            {userScores && (
-              <center>
-                <ScoreBoard userScores={userScores} />
-              </center>
-            )}
+            <div className="navigation-button">
+              <button className="primary-button" onClick={this.navigateToMenu}>
+                Main Menu
+              </button>
+            </div>
           </div>
           <div className="bottom-share-block">
             <ShareBlock />
