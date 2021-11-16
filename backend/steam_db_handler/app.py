@@ -10,10 +10,13 @@ from .steam_handler import SteamAppDataError, SteamAppHandler, SteamAppResponseE
 REQUESTS_DELAY = 0.0  # sec
 
 
-def get_db_app_ids() -> Set[int]:
+def get_db_app_ids(with_no_tags: bool = False) -> Set[int]:
     """ Get all App IDs from the database """
     with db.DBSession() as session:
-        return {_id for [_id] in session.query(db.Application.id).all()}
+        query = session.query(db.Application.id)
+        if with_no_tags:
+            query = query.filter(~db.Application.tags.any())
+        return {_id for [_id] in query.all()}
 
 
 def init_parser(app_id: int) -> Optional[SteamAppHandler]:
@@ -80,6 +83,10 @@ def populate_app_from_parser(app: db.Application, parser: SteamAppHandler):
                       for g in parser.get_genres()]
         app.similar_apps = [db.ApplicationReference(id=s_app_id)
                             for s_app_id in parser.get_similar_app_ids()]
+        app.tags = []
+        for name, count in parser.get_tags():
+            tag = get_from_db_or_create(session, db.Tag, {"name": name})
+            app.tags.append(db.AppTag(tag=tag, count=count))
 
 
 def create_db_app(app_id: int, app_name: str):
@@ -99,9 +106,33 @@ def create_db_app(app_id: int, app_name: str):
             session.commit()
         except IntegrityError as error:
             print(f"ERROR: Commit App ID {app_id}: {error}")
+            return
     # Log
     empty = "" if parser else " (empty)"
     print(f"INFO: Added to DB{empty}: App '{app_name}' (ID: {app_id})")
+
+
+def update_db_app_tags(app_id: int):
+    """ Parse application's page and get its user tags """
+    parser = SteamAppHandler(app_id, populate_app_data=False)
+    try:
+        parsed_tags = parser.get_tags()
+    except Exception as error:
+        print(f"ERROR: Error while parsing tags: {error}")
+        return
+
+    with db.DBSession() as session:
+        app = session.query(db.Application).filter_by(id=app_id).one()
+        app.tags = []
+        for name, count in parsed_tags:
+            tag = get_from_db_or_create(session, db.Tag, {"name": name})
+            app.tags.append(db.AppTag(tag=tag, count=count))
+        try:
+            session.commit()
+        except IntegrityError as error:
+            print(f"ERROR: Update tags - Commit App ID {app_id}: {error}")
+            return
+        print(f"INFO: Tags added to the App '{app.name}' (ID: {app_id})")
 
 
 def main():
@@ -110,6 +141,12 @@ def main():
     2. Gradually populate database with unknown apps
     """
     while True:
+        apps_to_update = get_db_app_ids(with_no_tags=True)
+        while apps_to_update:
+            # Update applications with no tags
+            steam_app_id = apps_to_update.pop()
+            update_db_app_tags(steam_app_id)
+
         added_apps = get_db_app_ids()
         steam_apps = SteamAppHandler.get_steam_apps()
         apps_to_add = list(set(steam_apps.keys()) - added_apps)

@@ -67,6 +67,7 @@ class Application(Base):
     developers = relationship("Developer", secondary=_app_developers, back_populates="applications")
     publishers = relationship("Publisher", secondary=_app_publishers, back_populates="applications")
     genres = relationship("Genre", secondary=_app_genres, back_populates="applications")
+    tags = relationship("AppTag", back_populates="application")
     screenshots = relationship("Screenshot")
     type = relationship("Type")
     similar_apps = relationship("ApplicationReference", secondary=_similar_apps)
@@ -97,6 +98,27 @@ class Category(Base):
 
     applications = relationship("Application", secondary=_app_categories,
                                 back_populates="categories")
+
+
+class AppTag(Base):
+    """ Tag of a given application """
+    __tablename__ = "application_tags"
+    app_id = Column("app_id", ForeignKey("applications.id"), primary_key=True, index=True)
+    tag_id = Column("tag_id", ForeignKey("tags.id"), primary_key=True, index=True)
+    count = Column("count", Integer, nullable=False)
+
+    tag = relationship("Tag")
+    application = relationship("Application")
+
+
+class Tag(Base):
+    """
+    User Tag of the application
+    Observed values: Probably a super-set of categories
+    """
+    __tablename__ = "tags"
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, nullable=False, unique=True, index=True)
 
 
 class Developer(Base):
