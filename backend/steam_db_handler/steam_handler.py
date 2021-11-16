@@ -1,7 +1,8 @@
+from functools import cached_property
 import re
 from dataclasses import dataclass
 from datetime import date, datetime
-from typing import Dict, Optional, Set
+from typing import Dict, Optional, Set, Tuple
 
 import requests
 
@@ -17,9 +18,13 @@ class SteamAppResponseError(Exception):
 @dataclass
 class SteamAppHandler:
     app_id: int
+    populate_app_data: bool = True
 
     def __post_init__(self):
-        """ Init app data """
+        """ Init app data if required """
+        if not self.populate_app_data:
+            return
+
         response = requests.get("https://store.steampowered.com/api/"
                                 f"appdetails?appids={self.app_id}")
         try:
@@ -91,10 +96,26 @@ class SteamAppHandler:
         """ Parse app data and return genres of the app """
         return set(c["description"] for c in self.app_data.get("genres", []))
 
+    @cached_property
+    def steam_page(self) -> str:
+        """ Query Steam Page """
+        return requests.get(f"https://store.steampowered.com/app/{self.app_id}").text
+
+    def get_tags(self) -> Set[Tuple[str, int]]:
+        """
+        Parse app store page to get user-defined tags
+        Returns a set of tuples (name, count)
+        """
+        tags_string_match = re.search(r"InitAppTagModal\( \d+,[\n\s]+\[(.*?)]", self.steam_page)
+        if tags_string_match is None:
+            raise RuntimeError("User tags not found in returned HTML")
+        iterator = re.finditer(r"\{.*?name\":\"(.*?)\".*?count\":(\d+),.*?}",
+                               tags_string_match.group(1))
+        return set(m.group(1, 2) for m in iterator)
+
     def get_similar_app_ids(self) -> Set[int]:
         """ Parse app store page ("More like this" section) to get similar app ids """
-        response = requests.get(f"https://store.steampowered.com/app/{self.app_id}")
-        ids_string_match = re.search(r"RenderMoreLikeThisBlock\( \[(.*?)]", response.text)
+        ids_string_match = re.search(r"RenderMoreLikeThisBlock\( \[(.*?)]", self.steam_page)
         if ids_string_match is None:
             raise RuntimeError("Similar apps not found in returned HTML")
         return set(map(int, re.findall(r"\"(.*?)\"", ids_string_match.group(0))))
