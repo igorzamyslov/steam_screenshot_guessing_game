@@ -118,7 +118,7 @@ def update_db_app_tags(app_id: int):
     try:
         parsed_tags = parser.get_tags()
     except Exception as error:
-        print(f"ERROR: Error while parsing tags: {error}")
+        print(f"ERROR: Error while parsing tags for App ID {app_id}: {error}")
         return
 
     with db.DBSession() as session:
