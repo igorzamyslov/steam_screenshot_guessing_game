@@ -1,7 +1,7 @@
 import time
 from typing import Any, Dict, Optional, Set, Type, TypeVar
 
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import IntegrityError, OperationalError
 from sqlalchemy.orm import Session
 
 from common.steam_database import db
@@ -104,7 +104,7 @@ def create_db_app(app_id: int, app_name: str):
         session.merge(db_app)
         try:
             session.commit()
-        except IntegrityError as error:
+        except (IntegrityError, OperationalError) as error:
             print(f"ERROR: Commit App ID {app_id}: {error}")
             return
     # Log
@@ -129,7 +129,7 @@ def update_db_app_tags(app_id: int):
             app.tags.append(db.AppTag(tag=tag, count=count))
         try:
             session.commit()
-        except IntegrityError as error:
+        except (IntegrityError, OperationalError) as error:
             print(f"ERROR: Update tags - Commit App ID {app_id}: {error}")
             return
         print(f"INFO: Tags added to the App '{app.name}' (ID: {app_id})")
