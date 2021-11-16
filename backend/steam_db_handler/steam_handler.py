@@ -111,7 +111,8 @@ class SteamAppHandler:
             raise RuntimeError("User tags not found in returned HTML")
         iterator = re.finditer(r"\{.*?name\":\"(.*?)\".*?count\":(\d+),.*?}",
                                tags_string_match.group(1))
-        return set(m.group(1, 2) for m in iterator)
+        intermediate_output = set(m.group(1, 2) for m in iterator)
+        return set((name, int(count)) for name, count in intermediate_output)
 
     def get_similar_app_ids(self) -> Set[int]:
         """ Parse app store page ("More like this" section) to get similar app ids """
