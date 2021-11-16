@@ -29,24 +29,21 @@ def get_application(session: Session, app_id: int) -> db.Application:
         raise DatabaseOperationError from error
 
 
-def get_random_application(session: Session) -> db.Application:
-    """
-    Get random application based on the filters
-    NOTE: Filters are hardcoded for now
-    """
+def get_random_application(session: Session,
+                           minimum_reviews: int,
+                           filter_nudity: bool) -> db.Application:
+    """ Get random application based on the filters """
     query = (session.query(db.Application)
              .join(db.Screenshot, db.Type)
              .filter(db.Type.name == "game")
+             .filter(db.Application.reviews_count >= minimum_reviews)
              .group_by(db.Application.id)
              .order_by(func.random())
              .options(selectinload(db.Application.screenshots),
                       selectinload(db.Application.similar_apps)))
-    query_with_filters = query.filter(db.Application.reviews_count >= 500)
-    app = query_with_filters.first()
-    if app is None:
-        # For dev purposes:
-        # If app with filters is not found - fallback to any app
-        app = query_with_filters.first()
+    if filter_nudity:
+        query = query.join(db.Genre).filter(db.Genre.name not in ["Sexual Content", "Nudity"])
+    app = query.first()
     if app is None:
         raise DatabaseOperationError("No applications found")
     return app
