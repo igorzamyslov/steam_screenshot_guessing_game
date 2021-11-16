@@ -99,7 +99,11 @@ class SteamAppHandler:
     @cached_property
     def steam_page(self) -> str:
         """ Query Steam Page """
-        return requests.get(f"https://store.steampowered.com/app/{self.app_id}").text
+        response = requests.get(f"https://store.steampowered.com/app/{self.app_id}",
+                                allow_redirects=False)
+        if response.status_code == 302 or response.status_code >= 400:
+            raise RuntimeError("Steam page cannot be obtained")
+        return response.text
 
     def get_tags(self) -> Set[Tuple[str, int]]:
         """
