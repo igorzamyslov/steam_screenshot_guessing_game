@@ -51,7 +51,12 @@ class GamePage extends Component {
   };
 
   componentDidMount() {
-    this.loadNextScreen(undefined, this.props, 0);
+    if (this.props.score > 0) {
+      // dirty state, reload the page
+      location.reload()
+    } else {
+      this.loadNextScreen(undefined, this.props, 0);
+    }
   }
 
   componentDidUpdate(prevProps) {
