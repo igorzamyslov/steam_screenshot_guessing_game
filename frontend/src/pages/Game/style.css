@@ -37,10 +37,19 @@
   background-image: linear-gradient(to top, rgb(0 0 0 / 0%), rgb(27 40 56), rgb(0 0 0 / 0%));
 }
 
+.screenshot {
+  max-height:100%;
+  max-width:100%;
+  object-fit: contain;
+}
+
+.screenshot-container {
+  max-height: 70%;
+}
+
 .buttons-block {
   padding: 4px;
-  flex-grow: 1;
-  max-height: 25%;
+  min-height: 25%;
   flex-wrap: wrap;
 }
 
@@ -49,10 +58,6 @@
   flex-grow: 1;
 }
 
-.screenshot {
-  width: 100%;
-  height: auto;
-}
 
 .games-list-block {
   margin: 8px;

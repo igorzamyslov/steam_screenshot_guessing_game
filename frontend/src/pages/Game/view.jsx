@@ -152,12 +152,14 @@ class GamePage extends Component {
     ));
 
     return [
-      <img
-        className="screenshot"
-        src={screenshotUrl}
-        alt="The whole purpose of this website"
-        key="quiz-image"
-      />,
+        <div className="screenshot-container">
+          <img
+            className="screenshot"
+            src={screenshotUrl}
+            alt="The whole purpose of this website"
+            key="quiz-image"
+          />
+        </div>,
       <div
         className="flex-item flex-container buttons-block"
         key="quiz-answers"

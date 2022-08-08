@@ -21,6 +21,11 @@ class MenuPage extends Component {
       props.history,
       routes.leaderboardPage
     );
+    this.navigateToGeneratedQuiz = createNavigationHandler(
+        props.history,
+        routes.generatedQuiz
+    );
+
 
     this.saveNickAndNavigate = () => {
       LocalStorageService.saveUsersNick(this.state.nick);
@@ -78,6 +83,14 @@ class MenuPage extends Component {
               onClick={this.navigateToLeaderboard}
             >
               Leaderboard
+            </button>
+          </div>
+          <div className="leader-board-block">
+            <button
+                className="primary-button"
+                onClick={this.navigateToGeneratedQuiz}
+            >
+              AI Quiz
             </button>
           </div>
         </div>
