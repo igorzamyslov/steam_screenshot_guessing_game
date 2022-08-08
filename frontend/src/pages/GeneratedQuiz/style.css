@@ -1,0 +1,31 @@
+.main-block {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.scores-block {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: center;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.generated-image {
+  max-height: 1000px;
+  max-width: 70%;
+}
+
+
+.description-test:hover {
+  color: rgba(0, 0, 0, 1);
+}
+
+.description-test{
+  padding: 8px;
+  color: rgba(0, 0, 0, 0);
+  background: white;
+}
