@@ -1,0 +1,59 @@
+$primary-color: #333;
+$steam-black-color: #171a21;
+$steam-dark-blue: #1b2838;
+$steam-light-blue: #2a475e;
+$primary-white: #f6f8ff;
+
+.main-block {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.scores-block {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: center;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.generated-image {
+  max-height: 70vh;
+}
+
+
+.description-test:hover {
+  color: rgba(255, 255, 255, 1);
+}
+
+.description-test{
+  margin: 8px;
+  padding: 8px;
+  background: rgba(42, 70, 94, 0.7);
+  color: rgba(255, 255, 255, 0);
+}
+
+
+.text-input {
+  color: $primary-white;
+  height: 48px;
+  min-width: 0;
+  text-align: center;
+  border-radius: 10px;
+  flex-grow: 3;
+  flex-basis: 70%;
+  font-size: x-large;
+  font-weight: 600;
+  border: 1px solid $primary-white;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin: 4px 4px 4px 0;
+  background: transparent;
+}
+
+.text-input:focus {
+  text-align: center;
+}
