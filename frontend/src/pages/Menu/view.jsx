@@ -25,6 +25,10 @@ class MenuPage extends Component {
         props.history,
         routes.generatedQuiz
     );
+    this.navigateAiPage = createNavigationHandler(
+        props.history,
+        routes.aiPage
+    );
 
 
     this.saveNickAndNavigate = () => {
@@ -93,6 +97,14 @@ class MenuPage extends Component {
               AI Quiz
             </button>
           </div>
+        </div>
+        <div className="leader-board-block">
+          <button
+              className="primary-button"
+              onClick={this.navigateAiPage}
+          >
+            AI Page
+          </button>
         </div>
         <div className="share-block">
           <ShareBlock />
