@@ -6,6 +6,7 @@ from sqlalchemy.orm import Session
 from loguru import logger
 
 from common.steam_database import db
+from steam_db_handler.playwright_parser import PlaywriteParser
 from .steam_handler import SteamAppDataError, SteamAppHandler, SteamAppResponseError
 
 REQUESTS_DELAY = 0.0  # sec
@@ -66,15 +67,22 @@ def populate_app_from_parser(app: db.Application, parser: SteamAppHandler):
     """ Populate DB App instance with additional data """
     logger.info(f"Populating app {app.name} (ID: {app.id})")
     # Populate direct fields in the app
+    
     app.is_free = parser.get_is_free()
     app.description = parser.get_description()
     app.release_date = parser.get_release_date()
     app.reviews_count = parser.get_reviews_count()
     app.screenshots = [db.Screenshot(url=url) for url in parser.get_screenshot_urls()]
+    
+    
     # Populate dependent fields in the app
     with db.DBSession() as session:
         # Get existing db instances or create new ones if they don't exist
         app.type = get_from_db_or_create(session, db.Type, {"name": parser.get_type()})
+        if app.type.name != "game":
+            logger.info(f"Skipping non game app: {app.name} (ID: {app.id})")
+            return
+    
         app.categories = [get_from_db_or_create(session, db.Category, {"name": c})
                           for c in parser.get_categories()]
         app.developers = [get_from_db_or_create(session, db.Developer, {"name": d})
@@ -83,8 +91,11 @@ def populate_app_from_parser(app: db.Application, parser: SteamAppHandler):
                           for p in parser.get_publishers()]
         app.genres = [get_from_db_or_create(session, db.Genre, {"name": g})
                       for g in parser.get_genres()]
+        
+        playwriteParser = PlaywriteParser(app.id).parse()
         app.similar_apps = [db.ApplicationReference(id=s_app_id)
-                            for s_app_id in parser.get_similar_app_ids()]
+                            for s_app_id in playwriteParser.similar_app_ids]
+        
         app.tags = []
         for name, count in parser.get_tags():
             tag = get_from_db_or_create(session, db.Tag, {"name": name})
