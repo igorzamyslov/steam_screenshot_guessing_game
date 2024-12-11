@@ -1,11 +1,11 @@
 from functools import cached_property
-import re
+from loguru import logger
 from dataclasses import dataclass
 from datetime import date, datetime
 from typing import Dict, Optional, Set, Tuple
 
 import requests
-
+import re
 
 class SteamAppDataError(Exception):
     """ Raised in case acquired app data wasn't successful """
@@ -18,6 +18,7 @@ class SteamAppResponseError(Exception):
 @dataclass
 class SteamAppHandler:
     app_id: int
+    app_name: str
     populate_app_data: bool = True
 
     def __post_init__(self):
@@ -34,6 +35,7 @@ class SteamAppHandler:
             raise SteamAppResponseError from error
 
         if not app_dict["success"]:
+            # logger.info(f"Error while parsing tags for App ID {self.app_data}")
             raise SteamAppDataError(f"Response for the app with ID {self.app_id} is not successful")
         self.app_data = app_dict["data"]
 
@@ -50,7 +52,9 @@ class SteamAppHandler:
 
     def get_screenshot_urls(self) -> Set[str]:
         """ Parse app data and return all screenshot URLs """
-        return set(s["path_full"] for s in self.app_data.get("screenshots", []))
+        res = set(s["path_full"] for s in self.app_data.get("screenshots", []))
+        # print(f"Screenshots: {res}")
+        return res
 
     def get_reviews_count(self) -> Optional[int]:
         """ Parse app data and return reviews count """
@@ -99,11 +103,21 @@ class SteamAppHandler:
     @cached_property
     def steam_page(self) -> str:
         """ Query Steam Page """
-        response = requests.get(f"https://store.steampowered.com/app/{self.app_id}",
-                                allow_redirects=False)
+        name_url_part = self.name_to_url_part(self.app_name)
+        url = f"https://store.steampowered.com/app/{self.app_id}/{name_url_part}"
+        logger.debug(f"URL: {url}")
+        response = requests.get(url, allow_redirects=False)
         if response.status_code == 302 or response.status_code >= 400:
             raise RuntimeError("Steam page cannot be obtained")
         return response.text
+    
+    def name_to_url_part(self, name: str) -> str:
+        """ Convert game name to URL-friendly format """
+        # Replace spaces and colons with underscores
+        url_part = re.sub(r'[:\s]', '_', name)
+        # Remove any other non-alphanumeric characters
+        url_part = re.sub(r'[^\w]', '', url_part)
+        return f"/{url_part}"
 
     def get_tags(self) -> Set[Tuple[str, int]]:
         """
@@ -120,7 +134,8 @@ class SteamAppHandler:
 
     def get_similar_app_ids(self) -> Set[int]:
         """ Parse app store page ("More like this" section) to get similar app ids """
-        ids_string_match = re.search(r"RenderMoreLikeThisBlock\( \[(.*?)]", self.steam_page)
+        ids_string_match = re.search(r"RenderMoreLikeThisBlock\( \[(.*?)]", self.steam_page)        
         if ids_string_match is None:
+            # logger.info(f"Steam page: {self.steam_page}")
             raise RuntimeError("Similar apps not found in returned HTML")
         return set(map(int, re.findall(r"\"(.*?)\"", ids_string_match.group(0))))
