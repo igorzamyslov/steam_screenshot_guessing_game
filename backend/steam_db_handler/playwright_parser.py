@@ -13,7 +13,7 @@ class PlaywriteParser:
             # create browser instance
             browser = pw.chromium.launch(
                 # we can choose either a Headful (With GUI) or Headless mode:
-                headless=False,
+                headless=True,
             )
             # create context
             # using context we can define page properties like viewport dimensions

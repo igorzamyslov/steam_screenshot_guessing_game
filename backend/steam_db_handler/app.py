@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from loguru import logger
 
 from common.steam_database import db
-from steam_db_handler.playwright_parser import PlaywriteParser
+from .playwright_parser import PlaywriteParser
 from .steam_handler import SteamAppDataError, SteamAppHandler, SteamAppResponseError
 
 REQUESTS_DELAY = 0.0  # sec
@@ -80,7 +80,7 @@ def populate_app_from_parser(app: db.Application, parser: SteamAppHandler):
         # Get existing db instances or create new ones if they don't exist
         app.type = get_from_db_or_create(session, db.Type, {"name": parser.get_type()})
         if app.type.name != "game":
-            logger.info(f"Skipping non game app: {app.name} (ID: {app.id})")
+            logger.info(f"Skipping non game {app.type.name}: {app.name} (ID: {app.id})")
             return
     
         app.categories = [get_from_db_or_create(session, db.Category, {"name": c})

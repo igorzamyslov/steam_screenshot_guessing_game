@@ -53,7 +53,6 @@ class SteamAppHandler:
     def get_screenshot_urls(self) -> Set[str]:
         """ Parse app data and return all screenshot URLs """
         res = set(s["path_full"] for s in self.app_data.get("screenshots", []))
-        # print(f"Screenshots: {res}")
         return res
 
     def get_reviews_count(self) -> Optional[int]:
@@ -103,8 +102,8 @@ class SteamAppHandler:
     @cached_property
     def steam_page(self) -> str:
         """ Query Steam Page """
-        name_url_part = self.name_to_url_part(self.app_name)
-        url = f"https://store.steampowered.com/app/{self.app_id}/{name_url_part}"
+        # name_url_part = self.name_to_url_part(self.app_name)
+        url = f"https://store.steampowered.com/app/{self.app_id}"
         logger.debug(f"URL: {url}")
         response = requests.get(url, allow_redirects=False)
         if response.status_code == 302 or response.status_code >= 400:
