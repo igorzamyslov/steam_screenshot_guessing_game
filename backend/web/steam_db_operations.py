@@ -33,8 +33,8 @@ def get_random_application(session: Session,
                            minimum_reviews: int,
                            filter_nudity: bool) -> db.Application:
     """ Get random application based on the filters """
-    query = (session.query(db.Application)
-             .join(db.Screenshot, db.Type)
+    query = (session.query(db.Application)                           
+             .join(db.Screenshot, db.Screenshot.app_id == db.Application.id)
              .filter(db.Type.name == "game")
              .filter(db.Application.reviews_count >= minimum_reviews)
              .group_by(db.Application.id)
