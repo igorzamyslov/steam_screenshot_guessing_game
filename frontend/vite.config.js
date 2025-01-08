@@ -11,11 +11,23 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  exports :{
+    devServer: {
+      hot: false,
+      liveReload: false
+    }
+  },
   server: {
     host: "0.0.0.0",
     port: "80",
     hmr: {
-      clientPort: 9000,
+      host: "localhost",
+      protocol: "ws",      
     },
+    proxy: {
+      '/api': {
+        target:'http://127.0.0.1:8000'
+      }
+    }
   },
 });
