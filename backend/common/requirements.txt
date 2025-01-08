@@ -1,3 +1,3 @@
 alembic
-pydantic
+pydantic==1.*
 sqlalchemy

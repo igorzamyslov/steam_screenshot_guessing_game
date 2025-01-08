@@ -1,10 +1,21 @@
-FROM python:3-slim
-WORKDIR /app
+FROM python:3.12-slim as base
 ARG SERVICE=steam_db_handler
 
-COPY common/requirements.txt ./common_requirements.txt
-COPY ${SERVICE}/requirements.txt ./main_requirements.txt
-RUN pip install --no-cache-dir -r common_requirements.txt -r main_requirements.txt
+# Setup environment
+FROM base AS python-deps
+# Install pipenv and compilation dependencies
+RUN pip install pipenv
+# Install python dependencies in /.venv
+COPY ${SERVICE}/Pipfile ${SERVICE}/Pipfile.lock ./
+ENV PIPENV_VENV_IN_PROJECT=1
+RUN pipenv install --deploy
+
+# Setup runtime
+FROM base AS runtime
+# Copy virtual env from python-deps stage
+COPY --from=python-deps /.venv /.venv
+ENV PATH="/.venv/bin:$PATH"
+RUN playwright install --with-deps chromium
 
 COPY common ./common
 COPY ${SERVICE} ./main

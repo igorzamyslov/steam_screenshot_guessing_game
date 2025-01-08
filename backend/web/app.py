@@ -71,3 +71,5 @@ async def get_leaderboard(session=Depends(ssgg_db.get_session)):
         .limit(10)
         .all())
     return [dict(zip(fields, entry)) for entry in entries]
+
+app.mount("/api", app)

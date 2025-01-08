@@ -3,8 +3,10 @@ from typing import Any, Dict, Optional, Set, Type, TypeVar
 
 from sqlalchemy.exc import IntegrityError, OperationalError
 from sqlalchemy.orm import Session
+from loguru import logger
 
 from common.steam_database import db
+from .playwright_parser import PlaywriteParser
 from .steam_handler import SteamAppDataError, SteamAppHandler, SteamAppResponseError
 
 REQUESTS_DELAY = 0.0  # sec
@@ -19,7 +21,7 @@ def get_db_app_ids(with_no_tags: bool = False) -> Set[int]:
         return {_id for [_id] in query.all()}
 
 
-def init_parser(app_id: int) -> Optional[SteamAppHandler]:
+def init_parser(app_id: int, app_name: str) -> Optional[SteamAppHandler]:
     """
     Init and return Steam App parser, taking into account possible init errors.
     On "Too Many Requests" increases the global delay between requests for the app.
@@ -28,7 +30,7 @@ def init_parser(app_id: int) -> Optional[SteamAppHandler]:
     parser: Optional[SteamAppHandler]
     while True:
         try:
-            parser = SteamAppHandler(app_id)
+            parser = SteamAppHandler(app_id, app_name)
             break
         except SteamAppResponseError:
             # Too Many Requests ban, try to wait it out for current app
@@ -37,7 +39,7 @@ def init_parser(app_id: int) -> Optional[SteamAppHandler]:
                 global REQUESTS_DELAY
                 REQUESTS_DELAY += 0.05
                 global_delay_increased = True
-                print(f"INFO: Delay increased, current delay: {REQUESTS_DELAY:.2f}s")
+                logger.info(f"Delay increased, current delay: {REQUESTS_DELAY:.2f}s")
             time.sleep(30)  # sec
         except SteamAppDataError:
             parser = None
@@ -63,16 +65,24 @@ def get_from_db_or_create(session: Session,
 
 def populate_app_from_parser(app: db.Application, parser: SteamAppHandler):
     """ Populate DB App instance with additional data """
+    logger.info(f"Populating app {app.name} (ID: {app.id})")
     # Populate direct fields in the app
+    
     app.is_free = parser.get_is_free()
     app.description = parser.get_description()
     app.release_date = parser.get_release_date()
     app.reviews_count = parser.get_reviews_count()
     app.screenshots = [db.Screenshot(url=url) for url in parser.get_screenshot_urls()]
+    
+    
     # Populate dependent fields in the app
     with db.DBSession() as session:
         # Get existing db instances or create new ones if they don't exist
         app.type = get_from_db_or_create(session, db.Type, {"name": parser.get_type()})
+        if app.type.name != "game":
+            logger.info(f"Skipping non game {app.type.name}: {app.name} (ID: {app.id})")
+            return
+    
         app.categories = [get_from_db_or_create(session, db.Category, {"name": c})
                           for c in parser.get_categories()]
         app.developers = [get_from_db_or_create(session, db.Developer, {"name": d})
@@ -81,8 +91,11 @@ def populate_app_from_parser(app: db.Application, parser: SteamAppHandler):
                           for p in parser.get_publishers()]
         app.genres = [get_from_db_or_create(session, db.Genre, {"name": g})
                       for g in parser.get_genres()]
+        
+        playwriteParser = PlaywriteParser(app.id).parse()
         app.similar_apps = [db.ApplicationReference(id=s_app_id)
-                            for s_app_id in parser.get_similar_app_ids()]
+                            for s_app_id in playwriteParser.similar_app_ids]
+        
         app.tags = []
         for name, count in parser.get_tags():
             tag = get_from_db_or_create(session, db.Tag, {"name": name})
@@ -93,23 +106,26 @@ def create_db_app(app_id: int, app_name: str):
     """ Create app in the database """
     # Create db instance
     db_app = db.Application(id=app_id, name=app_name)
-    if (parser := init_parser(app_id)) is not None:
+    if (parser := init_parser(app_id, app_name)) is not None:        
         try:
             populate_app_from_parser(db_app, parser)
         except Exception as error:
-            print(f"ERROR: Parse App ID {app_id}: {error}")
+            logger.error(f"Parse App ID {app_id}: {error}")
             return
+    else:
+        logger.warning(f"Empty parser: {app_id}")
+                    
     # Commit
     with db.DBSession() as session:
         session.merge(db_app)
         try:
             session.commit()
         except (IntegrityError, OperationalError) as error:
-            print(f"ERROR: Commit App ID {app_id}: {error}")
+            logger.error(f"Commit App ID {app_id}: {error}")
             return
     # Log
     empty = "" if parser else " (empty)"
-    print(f"INFO: Added to DB{empty}: App '{app_name}' (ID: {app_id})")
+    logger.info(f"Added to DB{empty}: App '{app_name}' (ID: {app_id})")
 
 
 def update_db_app_tags(app_id: int):
@@ -118,7 +134,7 @@ def update_db_app_tags(app_id: int):
     try:
         parsed_tags = parser.get_tags()
     except Exception as error:
-        print(f"ERROR: Error while parsing tags for App ID {app_id}: {error}")
+        logger.error(f"Error while parsing tags for App ID {app_id}: {error}")
         return
 
     with db.DBSession() as session:
@@ -130,9 +146,9 @@ def update_db_app_tags(app_id: int):
         try:
             session.commit()
         except (IntegrityError, OperationalError) as error:
-            print(f"ERROR: Update tags - Commit App ID {app_id}: {error}")
+            logger.error(f"Update tags - Commit App ID {app_id}: {error}")
             return
-        print(f"INFO: Tags added to the App '{app.name}' (ID: {app_id})")
+        logger.info(f"Tags added to the App '{app.name}' (ID: {app_id})")
 
 
 def main():
@@ -142,10 +158,10 @@ def main():
     """
     while True:
         apps_to_update = get_db_app_ids(with_no_tags=True)
-        while apps_to_update:
-            # Update applications with no tags
-            steam_app_id = apps_to_update.pop()
-            update_db_app_tags(steam_app_id)
+        # while apps_to_update:
+        #     # Update applications with no tags
+        #     steam_app_id = apps_to_update.pop()
+        #     update_db_app_tags(steam_app_id)
 
         added_apps = get_db_app_ids()
         steam_apps = SteamAppHandler.get_steam_apps()

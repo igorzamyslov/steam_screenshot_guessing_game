@@ -13,26 +13,20 @@ services:
   backend-web:
     &backend_web
     build:
-      context: ./backend
-      dockerfile: web/Dockerfile
-    volumes:
-      - ./backend/common:/app/common
-      - ./backend/web:/app/web
-      - ssgg_database:$DB_FOLDER
+      dockerfile: backend/web/Dockerfile
+    volumes:      
+      - ./backend/database:$CONTAINER_DB_FOLDER
     environment:
       STEAM_DB_PATH: $STEAM_DB_PATH
       SSGG_DB_PATH: $SSGG_DB_PATH
-    command: "uvicorn web.app:app --host 0.0.0.0 --port 80 --reload --debug"
+    command: "uvicorn web.app:app --host 0.0.0.0 --port 80 --reload"
 
   steam-db-handler:
     &steam_db_handler
     build:
-      context: ./backend
       dockerfile: steam_db_handler/Dockerfile
     volumes:
-      - ./backend/common:/app/common
-      - ./backend/steam_db_handler:/app/main
-      - ssgg_database:$DB_FOLDER
+      - ./backend/database:$CONTAINER_DB_FOLDER
     environment:
       STEAM_DB_PATH: $STEAM_DB_PATH
     profiles:
@@ -60,31 +54,27 @@ services:
     profiles:
       - disabled
 
-  ssgg-db-revision:
-    # create a revision of ssgg database
-    <<: *backend_web
-    command: alembic -c web/ssgg_database/alembic/alembic.ini revision --autogenerate
-    profiles:
-      - disabled
+  # ssgg-db-revision:
+  #   # create a revision of ssgg database
+  #   <<: *backend_web
+  #   command: alembic -c web/ssgg_database/alembic/alembic.ini revision --autogenerate
+  #   profiles:
+  #     - disabled
 
-  ssgg-db-reset:
-    # create a revision of ssgg database
-    <<: *backend_web
-    command: rm $SSGG_DB_PATH
-    profiles:
-      - disabled
+  # ssgg-db-reset:
+  #   # create a revision of ssgg database
+  #   <<: *backend_web
+  #   command: rm $SSGG_DB_PATH
+  #   profiles:
+  #     - disabled
 
-  frontend-prettify:
-    # Prettify frontend code
-    image: node:lts-slim
-    working_dir: /app
-    volumes:
-      - ./frontend:/app
-    command: npm run prettify
-    profiles:
-      - disabled
+  # frontend-prettify:
+  #   # Prettify frontend code
+  #   image: node:lts-slim
+  #   working_dir: /app
+  #   volumes:
+  #     - ./frontend:/app
+  #   command: npm run prettify
+  #   profiles:
+  #     - disabled
 
-
-volumes:
-  ssgg_database:
-    external: true

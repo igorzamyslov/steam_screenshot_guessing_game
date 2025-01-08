@@ -1,13 +1,24 @@
-FROM python:3-slim
-WORKDIR /app
+FROM python:3.12-slim as base
 ARG SERVICE=web
 
-COPY common/requirements.txt ./common_requirements.txt
-COPY ${SERVICE}/requirements.txt ./main_requirements.txt
-RUN pip install --no-cache-dir -r common_requirements.txt -r main_requirements.txt
+# Setup environment
+FROM base AS python-deps
+# Install pipenv and compilation dependencies
+RUN pip install pipenv
+# Install python dependencies in /.venv
+COPY ./backend/${SERVICE}/Pipfile ./backend/${SERVICE}/Pipfile.lock ./
+ENV PIPENV_VENV_IN_PROJECT=1
+RUN pipenv install --deploy
 
-COPY common ./common
-COPY ${SERVICE} ./${SERVICE}
 
+# Setup runtime
+FROM base AS runtime
+# Copy virtual env from python-deps stage
+COPY --from=python-deps /.venv /.venv
+ENV PATH="/.venv/bin:$PATH"
+
+WORKDIR /app
+COPY ./backend/common ./common
+COPY ./backend/${SERVICE} ./${SERVICE}
 ENV SERVICE=${SERVICE}
-CMD ["uvicorn", "web.app:app", "--host", "0.0.0.0", "--port", "80"]
+CMD ["uvicorn", "web.app:app", "--host", "0.0.0.0", "--port", "80", "--log-level", "debug"]
